@@ -16,6 +16,10 @@ body {
   @apply bg-white text-slate-900;
 }
 
+.font-poppins {
+  font-family: var(--font-poppins), system-ui, sans-serif;
+}
+
 .font-montserrat {
   font-family: var(--font-montserrat), system-ui, sans-serif;
 }

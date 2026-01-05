@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Poppins, Inter } from "next/font/google";
+import { Poppins, Inter, Montserrat } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Kemitraan - Home Steril (Landing Page Demo)",
@@ -21,6 +21,13 @@ const inter = Inter({
   display: "swap",
 });
 
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,7 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={`${inter.variable} ${poppins.variable}`}>{children}</body>
+      <body className={`${inter.variable} ${poppins.variable} ${montserrat.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
