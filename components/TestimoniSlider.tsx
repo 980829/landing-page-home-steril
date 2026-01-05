@@ -65,8 +65,30 @@ export default function TestimoniSlider() {
   const s = slides[idx];
 
   return (
-    <div className="rounded-[28px] bg-white shadow-sm ring-1 ring-black/10 overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] items-center gap-6 px-8 py-10">
+    <div
+      className="
+        group
+        relative
+        rounded-[28px] bg-white overflow-hidden
+        ring-1 ring-black/10 shadow-sm
+        transition-all duration-300 ease-out
+        hover:-translate-y-1 hover:shadow-xl hover:ring-2 hover:ring-red-700/20
+        active:scale-[0.99]
+      "
+    >
+      {/* glow layer */}
+      <div
+        className="
+          pointer-events-none
+          absolute inset-0
+          opacity-0
+          transition-opacity duration-300
+          group-hover:opacity-100
+          bg-[radial-gradient(120%_120%_at_50%_0%,rgba(220,38,38,0.12),transparent_60%)]
+        "
+      />
+
+      <div className="relative grid grid-cols-1 md:grid-cols-[300px_1fr] items-center gap-6 px-8 py-10">
         {/* Foto */}
         <div className="flex justify-center md:justify-start">
           <div className="relative h-[220px] w-[220px]">

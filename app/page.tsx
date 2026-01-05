@@ -52,6 +52,24 @@ function StatCard({
 }
 
 export default function Home() {
+  const [openVideo, setOpenVideo] = useState(false);
+  type CityKey = "Jakarta" | "Bogor" | "Depok" | "Tangerang" | "Bekasi";
+
+  const CITY_PRESET: Record<CityKey, { x: number; y: number; scale: number }> =
+    {
+      Jakarta: { x: -60, y: 20, scale: 1.45 },
+      Bogor: { x: -40, y: -10, scale: 1.45 },
+      Depok: { x: -30, y: 10, scale: 1.45 },
+      Tangerang: { x: -10, y: 20, scale: 1.45 },
+      Bekasi: { x: -80, y: 10, scale: 1.45 },
+    };
+
+  const [activeCity, setActiveCity] = useState<CityKey | null>(null);
+
+  const mapTransform = activeCity
+    ? `translate(${CITY_PRESET[activeCity].x}px, ${CITY_PRESET[activeCity].y}px) scale(${CITY_PRESET[activeCity].scale})`
+    : "translate(0px, 0px) scale(1)";
+
   const [openJasa, setOpenJasa] = useState(false);
   const jasaRef = useRef<HTMLDivElement | null>(null);
 
@@ -69,7 +87,7 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4">
+        <div className="mx-auto max-w-7xl px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <a href="/" className="h-9 w-auto object-contain">
@@ -85,7 +103,6 @@ export default function Home() {
 
             {/* Nav */}
             <nav className="hidden md:flex items-center gap-6 text-sm text-slate-700">
-
               {/* DROPDOWN PILIHAN JASA (CLICK-BASED) */}
               <div ref={jasaRef} className="relative">
                 <button
@@ -115,14 +132,14 @@ export default function Home() {
                 {openJasa && (
                   <div className="absolute left-0 top-full z-50 mt-3 w-[520px] rounded-xl border border-slate-200 bg-white shadow-xl">
                     <div className="grid grid-cols-2 gap-4 p-4 text-sm">
-
                       <a
                         href="https://home-steril.com/services/jasa-asisten-rumah-tangga"
                         className="rounded-lg p-3 hover:bg-slate-50"
                         onClick={() => setOpenJasa(false)}
                       >
                         <p className="font-semibold text-slate-900">
-                          JASA ASISTEN RUMAH TANGGA | BERGARANSI* & GRATIS TRANSPORT*
+                          JASA ASISTEN RUMAH TANGGA | BERGARANSI* & GRATIS
+                          TRANSPORT*
                         </p>
                         <p className="text-slate-500 text-xs mt-1">
                           Asisten harian profesional & terpercaya
@@ -135,10 +152,12 @@ export default function Home() {
                         onClick={() => setOpenJasa(false)}
                       >
                         <p className="font-semibold text-slate-900">
-                          JASA KEBERSIHAN RUMAH | BERGARANSI* & GRATIS TRANSPORT*
+                          JASA KEBERSIHAN RUMAH | BERGARANSI* & GRATIS
+                          TRANSPORT*
                         </p>
                         <p className="text-slate-500 text-xs mt-1">
-                          jasa pembersih rumah terdekat harga mulai Rp 90 Rb an saja!!
+                          jasa pembersih rumah terdekat harga mulai Rp 90 Rb an
+                          saja!!
                         </p>
                       </a>
 
@@ -148,7 +167,8 @@ export default function Home() {
                         onClick={() => setOpenJasa(false)}
                       >
                         <p className="font-semibold text-slate-900">
-                          JASA DEEP CLEANING RUMAH | BERGARANSI* & GRATIS TRANSPORT*
+                          JASA DEEP CLEANING RUMAH | BERGARANSI* & GRATIS
+                          TRANSPORT*
                         </p>
                         <p className="text-slate-500 text-xs mt-1">
                           jasa bersih kamar mandi bergaransi
@@ -161,24 +181,40 @@ export default function Home() {
                         onClick={() => setOpenJasa(false)}
                       >
                         <p className="font-semibold text-slate-900">
-                          JASA CUCI SOFA - LAUNDRY SOFA | BERGARANSI* & GRATIS TRANSPORT*
+                          JASA CUCI SOFA - LAUNDRY SOFA | BERGARANSI* & GRATIS
+                          TRANSPORT*
                         </p>
                         <p className="text-slate-500 text-xs mt-1">
-                          Jasa Cuci Sofa, Cuci Kursi Kantor dan Cuci Kursi Makan Bergaransi* 
+                          Jasa Cuci Sofa, Cuci Kursi Kantor dan Cuci Kursi Makan
+                          Bergaransi*
                         </p>
                       </a>
-
                     </div>
                   </div>
                 )}
               </div>
 
               {/* MENU LAIN */}
-              <a className="hover:text-slate-950" href="#faq">FAQ</a>
-              <a className="hover:text-slate-950" href="#kemitraan">Kemitraan</a>
-              <a className="hover:text-slate-950" href="https://home-steril.com/blog">Blog</a>
-              <a className="hover:text-slate-950" href="https://home-steril.com/about">Tentang Kami</a>
+              <a className="hover:text-slate-950" href="#faq">
+                FAQ
+              </a>
+              <a className="hover:text-slate-950" href="#kemitraan">
+                Kemitraan
+              </a>
+              <a
+                className="hover:text-slate-950"
+                href="https://home-steril.com/blog"
+              >
+                Blog
+              </a>
+              <a
+                className="hover:text-slate-950"
+                href="https://home-steril.com/about"
+              >
+                Tentang Kami
+              </a>
             </nav>
+
             {/* CTA */}
             <div className="flex items-center gap-3">
               <button
@@ -212,7 +248,7 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      <main className="mx-auto max-w-6xl px-4">
+      <main className="mx-auto max-w-7xl px-4">
         <section className="grid grid-cols-1 gap-10 py-10 md:grid-cols-2 md:py-14">
           {/* Left */}
           <div className="flex flex-col justify-center">
@@ -220,17 +256,29 @@ export default function Home() {
               <span className="text-slate-950">BANGUN BISNIS ANDA</span>{" "}
               <span className="text-red-700">BERSAMA HOME STERIL</span>
             </h1>
+
             <p className="mt-4 text-lg md:text-xl font-semibold text-slate-800">
               Platform Kemitraan Jasa Kebersihan Modern & Terpercaya
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
-                href="#daftar"
-                className="inline-flex items-center gap-3 rounded-2xl bg-red-700 px-5 py-3 text-sm font-semibold text-white shadow-md hover:bg-red-800"
+                href="https://api.whatsapp.com/send/?phone=62888908769669&text=Halo+Home+Steril%2C+saya+ingin+info+kemitraan.&type=phone_number&app_absent=0"
+                className="
+            inline-flex items-center gap-3 rounded-2xl bg-red-700 px-5 py-3 text-sm font-semibold text-white shadow-md
+            transition-all duration-300 ease-out
+            hover:bg-red-800 hover:-translate-y-0.5 hover:shadow-lg
+            active:translate-y-0 active:scale-[0.99]
+          "
               >
                 Daftar Kemitraan Sekarang
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-white/15">
+                <span
+                  className="
+              inline-flex h-8 w-8 items-center justify-center rounded-xl bg-white/15
+              transition-transform duration-300 ease-out
+              group-hover:translate-x-0.5
+            "
+                >
                   ➜
                 </span>
               </a>
@@ -242,72 +290,134 @@ export default function Home() {
               pertama.
             </p>
           </div>
+
           {/* Right */}
           <div className="relative md:translate-x-[20px]">
-            <div className="relative overflow-hidden rounded-[28px] p-6">
+            <div
+              className="
+          relative overflow-hidden rounded-[28px] p-6
+          transition-all duration-300 ease-out
+        "
+            >
               {/* Frame gambar */}
-              <div className="relative w-full overflow-hidden rounded-2xl bg-[#E9E0D6]">
+              <div
+                className="
+            relative w-full overflow-hidden rounded-2xl bg-[#E9E0D6]
+            transition-all duration-300 ease-out
+            hover:shadow-lg
+          "
+              >
                 {/* tinggi frame */}
                 <div className="relative h-[260px] sm:h-[300px]">
                   <Image
                     src="/mitra-home-steril.jpg"
                     alt="Mitra Home Steril"
                     fill
-                    className="object-contain"
+                    className="
+                object-contain
+                transition-transform duration-500 ease-out
+                hover:scale-[1.02]
+              "
                     priority
                   />
                 </div>
 
-                {/* tombol overlay transparan */}
-                <a
+                {/* tombol overlay transparan (BUKAN LINK, buka modal) */}
+                <button
                   id="video"
-                  href="https://youtu.be/m4lyu12QJik?si=fkrS8E6xI374e3z6"
+                  type="button"
+                  onClick={() => setOpenVideo(true)}
                   className={`
-                    absolute left-1/2 top-1/2
-                    -translate-x-1/2 -translate-y-1/2
-                    flex items-center justify-center gap-3
-                    rounded-full
-                    border border-white/40
-                    bg-transparent
-                    px-6 py-3
-                    font-montserrat text-[14px] font-medium text-white
-                    backdrop-blur-[2px]
-                    hover:bg-white/5
-                    whitespace-nowrap w-auto
-                  `}
+              absolute left-1/2 top-1/2
+              -translate-x-1/2 -translate-y-1/2
+              flex items-center justify-center gap-3
+              rounded-full
+              border border-white/40
+              bg-transparent
+              px-6 py-3
+              font-montserrat text-[14px] font-medium text-white
+              backdrop-blur-[2px]
+              whitespace-nowrap w-auto
+
+              transition-all duration-300 ease-out
+              hover:bg-white/10 hover:shadow-[0_10px_30px_rgba(255,255,255,0.18)]
+              hover:scale-[1.02]
+              active:scale-[0.99]
+            `}
                 >
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition-transform duration-300 ease-out hover:scale-110">
                     ▶
                   </span>
                   Lihat Bagaimana Sistem Kami Bekerja
-                </a>
+                </button>
               </div>
 
               {/* Stats row */}
               <div className="mt-4 grid grid-cols-3 gap-3">
-                <StatCard
-                  title="Rating"
-                  main="5.0"
-                  right="(1,203 review)"
-                  icon={<span className="text-2xl">⭐</span>}
-                />
-                <StatCard
-                  title="Tim"
-                  main="100+"
-                  right="Mitra & Crew"
-                  icon={<span className="text-2xl">👥</span>}
-                />
-                <StatCard
-                  title="Dukungan"
-                  main="100%"
-                  right="Pelatihan Mitra"
-                  icon={<span className="text-2xl">🎓</span>}
-                />
+                <div className="transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg rounded-xl">
+                  <StatCard
+                    title="Rating"
+                    main="5.0"
+                    right="(1,203 review)"
+                    icon={<span className="text-2xl">⭐</span>}
+                  />
+                </div>
+
+                <div className="transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg rounded-xl">
+                  <StatCard
+                    title="Tim"
+                    main="100+"
+                    right="Mitra & Crew"
+                    icon={<span className="text-2xl">👥</span>}
+                  />
+                </div>
+
+                <div className="transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg rounded-xl">
+                  <StatCard
+                    title="Dukungan"
+                    main="100%"
+                    right="Pelatihan Mitra"
+                    icon={<span className="text-2xl">🎓</span>}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </section>
 
+        {/* MODAL VIDEO (taruh setelah hero / sebelum section lain juga boleh) */}
+        {openVideo && (
+          <div
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-4"
+            onClick={() => setOpenVideo(false)}
+          >
+            <div
+              className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-black shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close */}
+              <button
+                type="button"
+                onClick={() => setOpenVideo(false)}
+                className="absolute right-3 top-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white text-xl hover:bg-black"
+                aria-label="Tutup video"
+              >
+                ✕
+              </button>
+
+              {/* 16:9 responsive */}
+              <div className="relative aspect-video w-full">
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src="https://www.youtube.com/embed/m4lyu12QJik?autoplay=1&mute=1"
+                  title="Video Home Steril"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </div>
+        )}
         {/* Section Keuntungan Jadi Mitra HOME STERIL */}
         <section id="kemitraan" className="py-16">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
@@ -390,10 +500,40 @@ export default function Home() {
                 ].map((x) => (
                   <div
                     key={x.t}
-                    className="rounded-2xl bg-red-800 p-7 text-white shadow-sm"
+                    className="
+      group
+      rounded-2xl
+      bg-red-800
+      p-7
+      text-white
+      shadow-sm
+      transition-all
+      duration-300
+      ease-out
+      hover:-translate-y-2
+      hover:shadow-xl
+      hover:shadow-red-900/30
+      hover:ring-2
+      hover:ring-white/20
+    "
                   >
                     <div className="flex items-center justify-center">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
+                      <div
+                        className="
+          flex
+          h-12
+          w-12
+          items-center
+          justify-center
+          rounded-xl
+          bg-white/10
+          transition-transform
+          duration-300
+          ease-out
+          group-hover:scale-110
+          group-hover:rotate-3
+        "
+                      >
                         {x.icon}
                       </div>
                     </div>
@@ -440,10 +580,11 @@ export default function Home() {
                 text-slate-600
               "
             >
-              Home Steril adalah jasa laundry kasur terpercaya di Jabodetabek dengan
-              rating dan review tertinggi di Google Bisnis. Kami menghadirkan layanan
-              cuci kasur bergaransi dengan transportasi gratis, teknologi vakum kering
-              express, serta perlindungan anti alergi untuk kenyamanan tidur Anda.
+              Home Steril adalah jasa laundry kasur terpercaya di Jabodetabek
+              dengan rating dan review tertinggi di Google Bisnis. Kami
+              menghadirkan layanan cuci kasur bergaransi dengan transportasi
+              gratis, teknologi vakum kering express, serta perlindungan anti
+              alergi untuk kenyamanan tidur Anda.
             </p>
 
             {/* Paragraf 2 */}
@@ -457,10 +598,11 @@ export default function Home() {
                 text-slate-600
               "
             >
-              Dengan standar profesional dan jaminan kualitas, Home Steril memastikan
-              hasil bersih maksimal, cepat kering, higienis, dan nyaman digunakan
-              kembali. Kami menjadi pilihan utama masyarakat Jabodetabek untuk layanan
-              cuci kasur terdekat, terpercaya, dan terbaik.
+              Dengan standar profesional dan jaminan kualitas, Home Steril
+              memastikan hasil bersih maksimal, cepat kering, higienis, dan
+              nyaman digunakan kembali. Kami menjadi pilihan utama masyarakat
+              Jabodetabek untuk layanan cuci kasur terdekat, terpercaya, dan
+              terbaik.
             </p>
           </div>
         </section>
@@ -502,8 +644,8 @@ export default function Home() {
                   text-slate-600
                 "
               >
-                Kami percaya bahwa kebersihan bukan sekadar rutinitas, tetapi bagian
-                penting dari gaya hidup sehat dan lingkungan yang nyaman.
+                Kami percaya bahwa kebersihan bukan sekadar rutinitas, tetapi
+                bagian penting dari gaya hidup sehat dan lingkungan yang nyaman.
               </p>
 
               {/* Content */}
@@ -512,7 +654,12 @@ export default function Home() {
                 <div className="flex items-start gap-4">
                   {/* Icon Visi */}
                   <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-red-100">
-                    <Image src="/visi.png" alt="Icon Visi" width={28} height={28} />
+                    <Image
+                      src="/visi.png"
+                      alt="Icon Visi"
+                      width={28}
+                      height={28}
+                    />
                   </div>
 
                   {/* Text Visi */}
@@ -521,9 +668,10 @@ export default function Home() {
                       Visi
                     </h3>
                     <p className="mt-2 font-montserrat text-[18px] leading-[24px] font-normal text-slate-600">
-                      Menciptakan lingkungan hunian dan ruang kerja yang lebih bersih,
-                      sehat, dan higienis melalui layanan kemitraan kebersihan yang
-                      profesional, terpercaya, dan ramah lingkungan.
+                      Menciptakan lingkungan hunian dan ruang kerja yang lebih
+                      bersih, sehat, dan higienis melalui layanan kemitraan
+                      kebersihan yang profesional, terpercaya, dan ramah
+                      lingkungan.
                     </p>
                   </div>
                 </div>
@@ -532,7 +680,12 @@ export default function Home() {
                 <div className="flex items-start gap-4">
                   {/* Icon Misi */}
                   <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-red-100">
-                    <Image src="/misi.png" alt="Icon Misi" width={28} height={28} />
+                    <Image
+                      src="/misi.png"
+                      alt="Icon Misi"
+                      width={28}
+                      height={28}
+                    />
                   </div>
 
                   {/* Text Misi */}
@@ -565,7 +718,7 @@ export default function Home() {
 
         {/* Section: Kenapa Harus Bergabung Sekarang */}
         <section id="bergabung-sekarang" className="py-15">
-          <div className="mx-auto max-w-6xl px-20">
+          <div className="mx-auto max-w-7xl px-20">
             <div className="grid grid-cols-1 items-center gap-3 md:grid-cols-2">
               {/* Left: Image */}
               <div className="relative">
@@ -589,8 +742,12 @@ export default function Home() {
 
                     {/* Badge: top-right (MASUK ke dalam frame) */}
                     <div className="absolute top-3 right-1 rounded-2xl bg-red-800 px-5 py-4 text-center text-white shadow-md">
-                      <div className="text-sm leading-none opacity-90">Pasar</div>
-                      <div className="text-2xl font-extrabold leading-none">Naik</div>
+                      <div className="text-sm leading-none opacity-90">
+                        Pasar
+                      </div>
+                      <div className="text-2xl font-extrabold leading-none">
+                        Naik
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -634,8 +791,9 @@ export default function Home() {
                     text-slate-600
                   "
                 >
-                  Kesempatan terbaik tidak datang dua kali. Home Steril terus berkembang,
-                  dan saat ini adalah momen paling tepat untuk ikut tumbuh bersama kami.
+                  Kesempatan terbaik tidak datang dua kali. Home Steril terus
+                  berkembang, dan saat ini adalah momen paling tepat untuk ikut
+                  tumbuh bersama kami.
                 </p>
 
                 {/* Cards */}
@@ -669,18 +827,34 @@ export default function Home() {
                     <div
                       key={x.t}
                       className="
-                        rounded-2xl
-                        bg-white
-                        p-1
-                        shadow-sm
-                        ring-1 ring-black/5
-                        w-full
-                        max-w-[400px]
-                        mx-auto
-                      "
+    group
+    rounded-2xl
+    bg-white
+    p-1
+    shadow-sm
+    ring-1 ring-black/5
+    w-full
+    max-w-[400px]
+    mx-auto
+    transition-all
+    duration-300
+    ease-out
+    hover:-translate-y-2
+    hover:shadow-xl
+    hover:ring-2
+    hover:ring-red-700/15
+  "
                     >
                       {/* ICON (Figma style) */}
-                      <div className="h-12 w-12">
+                      <div
+                        className="
+    h-12 w-12
+    transition-transform
+    duration-300
+    ease-out
+    group-hover:scale-110
+  "
+                      >
                         <Image
                           src={x.iconSrc}
                           alt={x.iconAlt}
@@ -707,7 +881,7 @@ export default function Home() {
 
         {/* Section: Google Review / Testimoni */}
         <section id="review" className="py-24">
-          <div className="mx-auto max-w-6xl px-5">
+          <div className="mx-auto max-w-7xl px-5">
             {/* Header row */}
             <div className="max-w-4xl">
               <h2 className="font-montserrat text-[40px] leading-[40px] font-bold tracking-normal text-slate-900 whitespace-nowrap">
@@ -718,9 +892,9 @@ export default function Home() {
               </h2>
 
               <p className="mt-4 font-montserrat text-[18px] leading-[24px] font-normal tracking-normal text-slate-600">
-                Dipercaya oleh ratusan pelanggan karena kualitas, ketepatan waktu, dan
-                hasil kerja yang memuaskan. Lihat apa kata mereka tentang pengalaman
-                bersama kami.
+                Dipercaya oleh ratusan pelanggan karena kualitas, ketepatan
+                waktu, dan hasil kerja yang memuaskan. Lihat apa kata mereka
+                tentang pengalaman bersama kami.
               </p>
 
               {/* Button pindah ke bawah */}
@@ -776,19 +950,27 @@ export default function Home() {
                 <div
                   key={s.sub}
                   className="
-                    flex
-                    items-center
-                    gap-4
-                    rounded-2xl
-                    bg-white
-                    px-5
-                    py-4
-                    shadow-md
-                    ring-1 ring-black/5
-                  "
+    group
+    flex
+    items-center
+    gap-4
+    rounded-2xl
+    bg-white
+    px-5
+    py-4
+    shadow-md
+    ring-1 ring-black/5
+    transition-all
+    duration-300
+    ease-out
+    hover:-translate-y-1
+    hover:shadow-xl
+    hover:ring-2
+    hover:ring-red-700/15
+  "
                 >
                   {/* Icon */}
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-700">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-700 transition-transform duration-300 ease-out group-hover:scale-110">
                     <Image
                       src={s.img}
                       alt={s.alt}
@@ -819,48 +1001,52 @@ export default function Home() {
                   name: "Sarah Wijaya",
                   time: "2 minggu yang lalu",
                   rating: 5,
-                  text:
-                    "Pertama kali coba jasa cuci kasur Home Steril dan hasilnya memuaskan sekali. Kasur yang tadinya punya noda dan bau apek jadi bersih, wangi, dan cepat kering. Pelayanannya profesional, teknisi datang tepat waktu dan ramah. Sangat direkomendasikan untuk yang cari laundry kasur terpercaya di Jabodetabek!",
+                  text: "Pertama kali coba jasa cuci kasur Home Steril dan hasilnya memuaskan sekali. Kasur yang tadinya punya noda dan bau apek jadi bersih, wangi, dan cepat kering. Pelayanannya profesional, teknisi datang tepat waktu dan ramah. Sangat direkomendasikan untuk yang cari laundry kasur terpercaya di Jabodetabek!",
                 },
                 {
                   initial: "B",
                   name: "Budi Santoso",
                   time: "1 bulan yang lalu",
                   rating: 5,
-                  text:
-                    "Anak saya sering bersin-bersin karena alergi debu. Setelah pakai jasa laundry kasur Home Steril, tungau benar-benar hilang dan tidurnya jadi lebih nyaman. Teknologi vakum keringnya luar biasa, proses cepat dan tidak merepotkan. Sekarang kasur lebih higienis dan aman untuk keluarga.",
+                  text: "Anak saya sering bersin-bersin karena alergi debu. Setelah pakai jasa laundry kasur Home Steril, tungau benar-benar hilang dan tidurnya jadi lebih nyaman. Teknologi vakum keringnya luar biasa, proses cepat dan tidak merepotkan. Sekarang kasur lebih higienis dan aman untuk keluarga.",
                 },
                 {
                   initial: "M",
                   name: "Maya Putri",
                   time: "3 minggu yang lalu",
                   rating: 5,
-                  text:
-                    "Saya suka karena Home Steril memberi layanan gratis transport dan garansi cuci ulang. Sangat praktis, saya tinggal booking, tim datang ke rumah, dan dalam sehari kasur sudah bisa dipakai lagi. Harga terjangkau, hasilnya sebanding bahkan lebih dari ekspektasi. Recommended banget!",
+                  text: "Saya suka karena Home Steril memberi layanan gratis transport dan garansi cuci ulang. Sangat praktis, saya tinggal booking, tim datang ke rumah, dan dalam sehari kasur sudah bisa dipakai lagi. Harga terjangkau, hasilnya sebanding bahkan lebih dari ekspektasi. Recommended banget!",
                 },
                 {
                   initial: "A",
                   name: "Ahmad Rizki",
                   time: "2 minggu yang lalu",
                   rating: 5,
-                  text:
-                    "Sudah beberapa kali menggunakan jasa cuci kasur Home Steril dan selalu puas dengan hasilnya. Rating tinggi di Google memang benar adanya, pelayanan ramah, profesional, dan kualitas terbaik. Kasur jadi bersih maksimal, wangi, dan terasa seperti baru lagi.",
+                  text: "Sudah beberapa kali menggunakan jasa cuci kasur Home Steril dan selalu puas dengan hasilnya. Rating tinggi di Google memang benar adanya, pelayanan ramah, profesional, dan kualitas terbaik. Kasur jadi bersih maksimal, wangi, dan terasa seperti baru lagi.",
                 },
               ].map((r) => (
                 <div
                   key={r.name}
                   className="
-                    rounded-2xl
-                    bg-white
-                    p-6
-                    shadow-md
-                    ring-1 ring-black/5
-                  "
+    group
+    rounded-2xl
+    bg-white
+    p-6
+    shadow-md
+    ring-1 ring-black/5
+    transition-all
+    duration-300
+    ease-out
+    hover:-translate-y-1.5
+    hover:shadow-xl
+    hover:ring-2
+    hover:ring-red-700/10
+  "
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-4">
                       {/* Avatar */}
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-700 text-white font-montserrat font-bold">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-700 text-white font-montserrat font-bold transition-transform duration-300 ease-out group-hover:scale-105">
                         {r.initial}
                       </div>
 
@@ -889,7 +1075,9 @@ export default function Home() {
                               <span
                                 key={i}
                                 className={
-                                  i < r.rating ? "text-yellow-500" : "text-slate-300"
+                                  i < r.rating
+                                    ? "text-yellow-500"
+                                    : "text-slate-300"
                                 }
                               >
                                 ★
@@ -916,7 +1104,7 @@ export default function Home() {
 
         {/* Section: Paket Franchise */}
         <section id="paket-franchise" className="py-20">
-          <div className="mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
               <h2 className="font-montserrat text-[40px] leading-[40px] font-bold tracking-normal text-slate-900">
@@ -925,9 +1113,11 @@ export default function Home() {
               </h2>
 
               <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[18px] leading-[24px] font-normal tracking-normal text-slate-600">
-                Saatnya wujudkan impian punya usaha sendiri di bidang kebersihan!
+                Saatnya wujudkan impian punya usaha sendiri di bidang
+                kebersihan!
                 <br />
-                Dengan modal terjangkau, Anda bisa langsung menjalankan bisnis bersama Home Steril.
+                Dengan modal terjangkau, Anda bisa langsung menjalankan bisnis
+                bersama Home Steril.
               </p>
             </div>
 
@@ -983,21 +1173,30 @@ export default function Home() {
                   <div
                     key={p.title}
                     className="
-                      rounded-[24px]
-                      bg-white
-                      px-7
-                      pt-8
-                      pb-6
-                      shadow-sm
-                      ring-1 ring-black/5
-                    "
+    group
+    rounded-[24px]
+    bg-white
+    px-7
+    pt-8
+    pb-6
+    shadow-sm
+    ring-1 ring-black/5
+    transition-all
+    duration-300
+    ease-out
+    hover:-translate-y-2
+    hover:shadow-xl
+    hover:ring-2
+    hover:ring-red-700/15
+    active:scale-[0.99]
+  "
                   >
                     {/* Title + Price */}
                     <div className="text-center">
                       <div className="font-montserrat text-[20px] font-bold text-slate-900">
                         {p.title}
                       </div>
-                      <div className="mt-1 font-montserrat text-[28px] leading-[32px] font-extrabold text-red-700">
+                      <div className="mt-1 font-montserrat text-[28px] leading-[32px] font-extrabold text-red-700 transition-transform duration-300 ease-out group-hover:scale-[1.03]">
                         {p.price}
                       </div>
                     </div>
@@ -1035,12 +1234,14 @@ export default function Home() {
 
                     {/* Cocok untuk */}
                     <p className="mt-8 font-montserrat text-[13px] leading-[18px] text-slate-500">
-                      <span className="font-bold text-slate-700">Cocok untuk:</span>{" "}
+                      <span className="font-bold text-slate-700">
+                        Cocok untuk:
+                      </span>{" "}
                       {p.cocok}
                     </p>
 
                     {/* Bonus */}
-                    <div className="mt-6 flex flex-col items-center justify-end min-h-[110px]">
+                    <div className="mt-6 flex flex-col items-center justify-end min-h-[110px] transition-transform duration-300 ease-out group-hover:-translate-y-1">
                       <a
                         href={WA_LINK}
                         target="_blank"
@@ -1078,7 +1279,7 @@ export default function Home() {
 
         {/* Section: Cara Kerja Kemitraan */}
         <section id="cara-kerja" className="py-20">
-          <div className="mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-7xl px-4">
             {/* Header (atas) */}
             <div className="max-w-3xl">
               <h2 className="font-montserrat text-[50px] leading-[48px] font-bold text-slate-900">
@@ -1087,9 +1288,9 @@ export default function Home() {
               </h2>
 
               <p className="mt-4 font-montserrat text-[16px] leading-[24px] text-slate-600">
-                Bergabung jadi mitra Home Steril itu mudah. Hanya dengan tiga langkah
-                sederhana, Anda bisa langsung memulai usaha jasa cuci kasur dengan brand
-                terpercaya.
+                Bergabung jadi mitra Home Steril itu mudah. Hanya dengan tiga
+                langkah sederhana, Anda bisa langsung memulai usaha jasa cuci
+                kasur dengan brand terpercaya.
               </p>
             </div>
 
@@ -1115,17 +1316,26 @@ export default function Home() {
                 <div
                   key={s.no}
                   className="
-                    rounded-[20px]
-                    bg-[#EED9D9]
-                    px-8
-                    py-10
-                  "
+    group
+    rounded-[20px]
+    bg-[#EED9D9]
+    px-8
+    py-10
+    transition-all
+    duration-300
+    ease-out
+    hover:-translate-y-2
+    hover:shadow-xl
+    hover:ring-2
+    hover:ring-red-700/15
+    active:scale-[0.99]
+  "
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-700 font-montserrat text-[16px] font-bold text-white">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-700 font-montserrat text-[16px] font-bold text-white transition-transform duration-300 ease-out group-hover:scale-110">
                     {s.no}
                   </div>
 
-                  <div className="mt-4 font-montserrat text-[18px] font-bold text-slate-900">
+                  <div className="mt-4 font-montserrat text-[18px] font-bold text-slate-900 transition-colors duration-300 group-hover:text-red-700">
                     {s.title}
                   </div>
 
@@ -1162,8 +1372,8 @@ export default function Home() {
                   </h2>
 
                   <p className="mt-4 font-montserrat text-[16px] leading-[24px] text-slate-700">
-                    Bergabunglah sekarang dan nikmati semua paket serta
-                    dukungan eksklusif yang sudah kami siapkan.
+                    Bergabunglah sekarang dan nikmati semua paket serta dukungan
+                    eksklusif yang sudah kami siapkan.
                   </p>
 
                   <a
@@ -1197,7 +1407,7 @@ export default function Home() {
 
         {/* Section: Area Cakupan */}
         <section id="area-cakupan" className="py-20">
-          <div className="mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
               <h2 className="font-montserrat text-[40px] leading-[40px] font-bold tracking-normal text-slate-900">
@@ -1205,7 +1415,8 @@ export default function Home() {
               </h2>
 
               <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[18px] leading-[24px] font-normal tracking-normal text-slate-600">
-                Kami melayani area Jakarta dan sekitarnya dengan standar pelayanan terbaik
+                Kami melayani area Jakarta dan sekitarnya dengan standar
+                pelayanan terbaik
               </p>
             </div>
 
@@ -1219,58 +1430,96 @@ export default function Home() {
                   { title: "Depok", desc: "Layanan tersedia 24/7" },
                   { title: "Tangerang", desc: "Layanan tersedia 24/7" },
                   { title: "Bekasi", desc: "Layanan tersedia 24/7" },
-                ].map((item) => (
-                  <div
-                    key={item.title}
-                    className="
-                      flex items-center justify-between
-                      rounded-2xl bg-white
-                      px-5 py-4
-                      shadow-sm ring-1 ring-black/5
-                    "
-                  >
-                    <div className="flex items-center gap-4">
-                      {/* Icon box */}
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-red-700 text-white">
-                        {/* Map icon (simple) */}
-                        <svg
-                          width="22"
-                          height="22"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
+                ].map((item) => {
+                  const isActive = activeCity === (item.title as CityKey);
+
+                  return (
+                    <button
+                      key={item.title}
+                      type="button"
+                      onClick={() =>
+                        setActiveCity((prev) =>
+                          prev === (item.title as CityKey)
+                            ? null
+                            : (item.title as CityKey),
+                        )
+                      }
+                      className={`
+        group w-full text-left
+        flex items-center justify-between
+        rounded-2xl bg-white
+        px-5 py-4
+        shadow-sm ring-1 ring-black/5
+        transition-all duration-300 ease-out
+        hover:-translate-y-1 hover:shadow-xl hover:ring-2 hover:ring-red-700/10
+        active:scale-[0.99]
+        ${isActive ? "ring-2 ring-red-700/30 shadow-xl" : ""}
+      `}
+                    >
+                      <div className="flex items-center gap-4">
+                        {/* Icon box */}
+                        <div
+                          className={`
+            flex h-11 w-11 items-center justify-center rounded-xl
+            bg-red-700 text-white
+            transition-transform duration-300 ease-out
+            group-hover:scale-110
+            ${isActive ? "scale-110" : ""}
+          `}
                         >
-                          <path
-                            d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M9 3v15M15 6v15"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
+                          <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M9 3v15M15 6v15"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+
+                        {/* Text */}
+                        <div className="leading-tight">
+                          <div
+                            className={`
+              font-montserrat text-[16px] font-bold text-slate-900
+              transition-colors duration-300
+              group-hover:text-red-700
+              ${isActive ? "text-red-700" : ""}
+            `}
+                          >
+                            {item.title}
+                          </div>
+                          <div className="font-montserrat text-[13px] font-normal text-slate-600">
+                            {item.desc}
+                          </div>
+                        </div>
                       </div>
 
-                      {/* Text */}
-                      <div className="leading-tight">
-                        <div className="font-montserrat text-[16px] font-bold text-slate-900">
-                          {item.title}
-                        </div>
-                        <div className="font-montserrat text-[13px] font-normal text-slate-600">
-                          {item.desc}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Dot */}
-                    <span className="h-2.5 w-2.5 rounded-full bg-slate-500/80" />
-                  </div>
-                ))}
+                      {/* Dot */}
+                      <span
+                        className={`
+          h-2.5 w-2.5 rounded-full
+          transition-all duration-300
+          ${isActive ? "bg-red-700 scale-110" : "bg-slate-400"}
+          group-hover:bg-red-700 group-hover:scale-110
+        `}
+                      />
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Right: Map */}
@@ -1278,12 +1527,12 @@ export default function Home() {
                 {/* Badge */}
                 <div
                   className="
-                    absolute right-6 top-6 z-10
-                    rounded-2xl bg-red-700
-                    px-5 py-3
-                    text-center
-                    shadow-md
-                  "
+            absolute right-6 top-6 z-10
+            rounded-2xl bg-red-700
+            px-5 py-3
+            text-center
+            shadow-md
+          "
                 >
                   <div className="font-montserrat text-[18px] font-extrabold leading-[18px] text-white">
                     JABODETABEK
@@ -1294,1359 +1543,1690 @@ export default function Home() {
                 </div>
 
                 {/* Map image */}
-                <div className="overflow-hidden rounded-[22px] bg-white shadow-sm ring-1 ring-black/5">
+                <div className="group overflow-hidden rounded-[22px] bg-white shadow-sm ring-1 ring-black/5 transition-all duration-300 ease-out hover:shadow-xl hover:ring-2 hover:ring-red-700/10">
                   <img
                     src="/peta-jabodetabek.png"
                     alt="Peta area cakupan Home Steril Jabodetabek"
-                    className="w-full h-auto object-contain"
+                    className="w-full h-auto object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    style={{
+                      transform: mapTransform,
+                      transformOrigin: "center center",
+                    }}
                   />
                 </div>
               </div>
             </div>
           </div>
         </section>
-{/* Section: Testimoni Mitra */}
-<section id="testimoni" className="py-20">
-  <div className="mx-auto max-w-6xl px-4">
-    <h2 className="text-center font-montserrat text-[40px] font-bold">
-      Testimoni Mitra <span className="text-red-700">HOME STERIL</span>
-    </h2>
+        {/* Section: Testimoni Mitra */}
+        <section id="testimoni" className="py-20">
+          <div className="mx-auto max-w-7xl px-4">
+            <h2 className="text-center font-montserrat text-[40px] font-bold">
+              Testimoni Mitra <span className="text-red-700">HOME STERIL</span>
+            </h2>
 
-    <p className="mt-4 text-center text-slate-600">
-      Pengalaman nyata mitra kami menjalankan bisnis bersama Home Steril
-    </p>
+            <p className="mt-4 text-center text-slate-600">
+              Pengalaman nyata mitra kami menjalankan bisnis bersama Home Steril
+            </p>
 
-    <div className="mt-10">
-      <TestimoniSlider />
-    </div>
-  </div>
-</section>
-{/* Section: Apa yang Anda Dapatkan */ }
-<section id="apa-yang-didapatkan" className="py-20">
-  <div className="mx-auto max-w-6xl px-4">
-    <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-      {/* Left */}
-      <div>
-        <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
-          Apa yang Anda <span className="text-red-700">Dapatkan?</span>
-        </h2>
-
-        <p className="mt-4 max-w-xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
-          Home Steril memberikan lebih dari sekadar layanan, <br />
-          kami mendampingi setiap langkah Anda.
-        </p>
-
-        <div className="mt-10 space-y-7">
-          {[
-            "Hak pakai brand HOME STERIL",
-            "Materi promosi & marketing kit",
-            "Training operasional & layanan",
-            "Dukungan customer service",
-            "Jaringan pelanggan dari platform",
-          ].map((text) => (
-            <div key={text} className="flex items-center gap-5">
-              {/* Icon check image */}
-              <div className="h-11 w-11 shrink-0">
-                <Image
-                  src="/ceklis 2.png"
-                  alt="Checklist"
-                  width={44}
-                  height={44}
-                  className="h-11 w-11 object-contain"
-                />
-              </div>
-              <div className="font-montserrat text-[15px] leading-[20px] font-normal text-slate-700">
-                {text}
-              </div>
+            <div className="mt-10">
+              <TestimoniSlider />
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        </section>
+        {/* Section: Apa yang Anda Dapatkan */}
+        <section id="apa-yang-didapatkan" className="py-20">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+              {/* Left */}
+              <div>
+                <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+                  Apa yang Anda <span className="text-red-700">Dapatkan?</span>
+                </h2>
 
-      {/* Right */}
-      <div className="flex justify-center md:justify-end">
-        <div className="relative w-full max-w-[460px] overflow-hidden rounded-[28px] bg-slate-100 shadow-sm ring-1 ring-black/5">
-          <img
-            src="/apa-yang-didapatkan.png"
-            alt="Mitra Home Steril"
-            className="h-[500px] w-full object-cover"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-{/* Section: Garansi Kepuasan */}
-<section id="garansi" className="py-20">
-  <div className="mx-auto max-w-6xl px-4">
-    {/* Header */}
-    <div className="text-center">
-      <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
-        Garansi Kepuasan{" "}
-        <span className="text-red-700">100% Mitra HOME STERIL</span>
-      </h2>
-
-      <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
-        Kami berkomitmen memberikan lebih dari sekadar layanan,
-        <br />
-        karena kepuasan mitra adalah prioritas utama kami.
-      </p>
-    </div>
-
-    {/* Content */}
-    <div className="mt-14 grid grid-cols-1 items-center gap-10 md:grid-cols-2">
-      {/* Left: Badge */}
-      <div className="flex justify-center md:justify-start">
-        <div className="relative w-full max-w-[340px] md:ml-8">
-          <img
-            src="/satisfaction.png"
-            alt="100% Satisfaction Guaranteed"
-            className="w-full h-auto object-contain"
-          />
-        </div>
-      </div>
-
-      {/* Right: Cards */}
-      <div className="space-y-6">
-        {/* Top 2 cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {/* Card 1 */}
-          <div className="rounded-[18px] bg-white p-6 shadow-sm ring-1 ring-black/10">
-            <div className="flex items-start gap-4">
-              {/* ✅ ICON WRAPPER (dibesarkan) */}
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-slate-100">
-                {/* ✅ ICON (isi penuh + scale untuk ngakal padding transparan) */}
-                <img
-                  src="/icon user.png"
-                  alt="Dukungan Responsif"
-                  className="h-full w-full object-contain scale-[1.35]"
-                />
-              </div>
-
-              <div className="min-w-0">
-                <div className="font-montserrat text-[16px] font-bold text-slate-900 leading-[20px]">
-                  Dukungan Responsif
-                  <br />&amp; Terbuka
-                </div>
-
-                <p className="mt-3 font-montserrat text-[14px] leading-[20px] text-slate-600">
-                  Tim kami selalu siap membantu setiap pertanyaan dan kebutuhan
-                  mitra.
+                <p className="mt-4 max-w-xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
+                  Home Steril memberikan lebih dari sekadar layanan, <br />
+                  kami mendampingi setiap langkah Anda.
                 </p>
-              </div>
-            </div>
-          </div>
 
-          {/* Card 2 */}
-          <div className="rounded-[18px] bg-white p-6 shadow-sm ring-1 ring-black/10">
-            <div className="flex items-start gap-4">
-              {/* ✅ ICON WRAPPER (dibesarkan) */}
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-slate-100">
-                {/* ✅ ICON */}
-                <img
-                  src="/icon gift.png"
-                  alt="Bonus Layanan"
-                  className="h-full w-full object-contain scale-[1.35]"
-                />
-              </div>
-
-              <div className="min-w-0">
-                <div className="font-montserrat text-[16px] font-bold text-slate-900 leading-[20px]">
-                  Bonus Layanan
-                  <br />
-                  Tambahan
-                </div>
-
-                <p className="mt-3 font-montserrat text-[14px] leading-[20px] text-slate-600">
-                  Dapatkan konsultasi bisnis dan update strategi promosi gratis
-                  selama 1 bulan pertama.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom wide card */}
-        <div className="rounded-[18px] bg-white p-6 shadow-sm ring-1 ring-black/10">
-          <div className="flex items-start gap-4">
-            {/* ✅ ICON WRAPPER (dibesarkan) */}
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-red-700">
-              {/* ✅ ICON */}
-              <img
-                src="/icon heart.png"
-                alt="Pendampingan Ulang Gratis"
-                className="h-full w-full object-contain scale-[1.35]"
-              />
-            </div>
-
-            <div className="min-w-0">
-              <div className="font-montserrat text-[16px] font-bold text-slate-900">
-                Pendampingan Ulang Gratis
-              </div>
-
-              <p className="mt-3 font-montserrat text-[14px] leading-[20px] text-slate-600 max-w-[520px]">
-                Jika pelatihan atau sistem belum sesuai harapan, kami siap
-                memberikan bimbingan ulang secara gratis hingga Anda merasa siap
-                menjalankan bisnis dengan percaya diri.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* end right */}
-    </div>
-  </div>
-</section>
-{/* Section: Perbandingan Kemitraan */}
-<section id="perbandingan" className="py-20">
-  <div className="mx-auto max-w-6xl px-4">
-    {/* Header */}
-    <div className="text-center">
-      <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
-        Mengapa kemitraan{" "}
-        <span className="text-red-700">HOME STERIL</span> Lebih Unggul
-      </h2>
-
-      <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
-        Pilihan cerdas bagi Anda yang ingin memulai bisnis kebersihan dengan
-        dukungan nyata, sistem yang siap tumbuh, <br />
-        dan hasil yang terpercaya.
-      </p>
-    </div>
-
-    {/* Table */}
-    <div className="mt-14">
-      {/* Head row */}
-      <div className="grid grid-cols-12 items-center gap-6">
-        <div className="col-span-12 md:col-span-4" />
-        <div className="col-span-12 md:col-span-4 text-center font-montserrat text-[14px] tracking-wide text-slate-700">
-          HOME STERIL
-        </div>
-        <div className="col-span-12 md:col-span-4 text-center font-montserrat text-[14px] tracking-wide text-slate-700">
-          Kemitraan Lain
-        </div>
-      </div>
-
-      {/* Rows wrapper */}
-      <div className="mt-6 space-y-4">
-        {/* Row 1 */}
-        <div className="grid grid-cols-12 items-stretch gap-6">
-          <div className="col-span-12 md:col-span-4 flex items-center">
-            <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900">
-              Pendampingan Mitra
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-                {/* check */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M20 6L9 17l-5-5"
-                    stroke="white"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center ring-1 ring-black/10">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-800/10">
-                {/* x */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M18 6L6 18M6 6l12 12"
-                    stroke="#991B1B"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Row 2 */}
-        <div className="grid grid-cols-12 items-stretch gap-6">
-          <div className="col-span-12 md:col-span-4 flex items-center">
-            <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900">
-              Dukungan Promosi Digital
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M20 6L9 17l-5-5"
-                    stroke="white"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center ring-1 ring-black/10">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-800/10">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M18 6L6 18M6 6l12 12"
-                    stroke="#991B1B"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Row 3 */}
-        <div className="grid grid-cols-12 items-stretch gap-6">
-          <div className="col-span-12 md:col-span-4 flex items-center">
-            <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900">
-              Kualitas Pelatihan
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center text-center font-montserrat text-[14px] leading-[20px]">
-              Pelatihan teknis dan
-              <br />
-              manajemen lengkap
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center text-center font-montserrat text-[14px] leading-[20px] ring-1 ring-black/10">
-              Terbatas pada teknis dasar
-            </div>
-          </div>
-        </div>
-
-        {/* Row 4 */}
-        <div className="grid grid-cols-12 items-stretch gap-6">
-          <div className="col-span-12 md:col-span-4 flex items-center">
-            <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900">
-              Garansi Kepuasan
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M20 6L9 17l-5-5"
-                    stroke="white"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center ring-1 ring-black/10">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-800/10">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M18 6L6 18M6 6l12 12"
-                    stroke="#991B1B"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Row 5 */}
-        <div className="grid grid-cols-12 items-stretch gap-6">
-          <div className="col-span-12 md:col-span-4 flex items-center">
-            <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900">
-              Reputasi &amp; Kepercayaan Pelanggan
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center text-center font-montserrat text-[14px] leading-[20px]">
-              Terbukti dengan rating
-              <br />
-              tertinggi layanan kebersihan
-            </div>
-          </div>
-
-          <div className="col-span-12 md:col-span-4">
-            <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center text-center font-montserrat text-[14px] leading-[20px] ring-1 ring-black/10">
-              Belum terbukti memiliki
-              <br />
-              kredibilitas
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-{/* Section: CTA - Waktunya Naik Kelas */}
-<section id="cta-naik-kelas" className="py-16">
-  <div className="mx-auto max-w-6xl px-4">
-    <div className="relative overflow-hidden rounded-[28px]">
-      {/* Background Image */}
-      <img
-        src="/cta red.png"
-        alt="CTA Background"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-
-      {/* Content */}
-      <div className="relative grid grid-cols-1 items-center gap-10 px-10 py-12 md:grid-cols-2 md:px-14">
-        {/* Left */}
-        <div>
-          <h3 className="font-montserrat text-[34px] leading-[40px] font-bold text-white">
-            Waktunya Naik Kelas
-            <br />
-            Bersama Home Steril
-          </h3>
-
-          <p className="mt-4 max-w-xl font-montserrat text-[16px] leading-[22px] text-white/90">
-            Mulai langkah pertama Anda membangun bisnis kebersihan yang tumbuh,
-            terarah, dan berdaya saing tinggi.
-          </p>
-        </div>
-
-        {/* Right */}
-        <div className="flex md:justify-end">
-          <a
-            href="https://api.whatsapp.com/"
-            className="inline-flex items-center justify-center gap-3 rounded-full border border-white/70 bg-white/10 px-8 py-4 font-montserrat text-[15px] font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"
-          >
-            Mulai Bergabung Hari Ini
-            <span className="text-[18px] leading-none">›</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-{/* Section: Klien Terpercaya */}
-<section id="klien-terpercaya" className="py-20">
-  <div className="mx-auto max-w-6xl px-4">
-    {/* Header */}
-    <div className="text-center">
-      <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
-        Klien <span className="text-red-700">Terpercaya</span>
-      </h2>
-
-      <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
-        HOME STERIL telah bekerja sama dan dipercaya oleh berbagai perusahaan terkemuka di Indonesia
-      </p>
-    </div>
-
-    {/* Logo */}
-    <div className="mt-14">
-      <div className="grid grid-cols-2 items-center justify-items-center gap-y-10 gap-x-8 sm:grid-cols-4">
-        {/* Telkomsel */}
-        <img
-          src="telkomsel.png"
-          alt="Telkomsel"
-          className="h-[50px] w-auto object-contain opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
-          loading="lazy"
-        />
-
-        {/* JAKPRO */}
-        <img
-          src="/jakpro.png"
-          alt="JAKPRO"
-          className="h-[50px] w-auto object-contain opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
-          loading="lazy"
-        />
-
-        {/* Transjakarta */}
-        <img
-          src="/transjakarta.png"
-          alt="Transjakarta"
-          className="h-[70px] w-auto object-contain opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
-          loading="lazy"
-        />
-
-        {/* TOWER */}
-        <img
-          src="/tower.png"
-          alt="TOWER"
-          className="h-[50px] w-auto object-contain opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
-          loading="lazy"
-        />
-      </div>
-    </div>
-  </div>
-</section>
-{/* Section: FAQ */}
-<section id="faq" className="py-20">
-  <div className="mx-auto max-w-6xl px-4">
-    {/* Header */}
-    <div className="text-center">
-      <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
-        Pertanyaan <span className="text-red-700">yang Sering Diajukan</span>
-      </h2>
-
-      <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
-        Temukan jawaban untuk pertanyaan umum tentang kemitraan HOME STERIL
-      </p>
-    </div>
-
-    {/* FAQ Grid */}
-    <div className="mt-14 grid grid-cols-1 gap-x-16 gap-y-8 md:grid-cols-2">
-      {/* LEFT */}
-      <div className="space-y-6">
-        {/* Q1 */}
-        <details className="group">
-          <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
-              <svg
-                className="transition-transform duration-200 group-open:rotate-180"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6 9l6 6 6-6"
-                  stroke="#111827"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-
-            <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
-              Apa keuntungan utama bergabung sebagai mitra Home Steril?
-            </span>
-          </summary>
-
-          <div className="pl-[52px] pr-2 pb-3">
-            <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
-              Anda mendapatkan dukungan sistem operasional yang sudah jadi (SOP, alur kerja, standar layanan),
-              akses brand HOME STERIL, serta bantuan pemasaran untuk mempercepat akuisisi pelanggan. Fokus Anda
-              tinggal eksekusi layanan dengan kualitas konsisten.
-            </p>
-          </div>
-        </details>
-
-        {/* Q2 */}
-        <details className="group">
-          <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
-              <svg
-                className="transition-transform duration-200 group-open:rotate-180"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6 9l6 6 6-6"
-                  stroke="#111827"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-
-            <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
-              Bagaimana proses bergabung menjadi mitra?
-            </span>
-          </summary>
-
-          <div className="pl-[52px] pr-2 pb-3">
-            <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
-              Prosesnya umumnya: isi formulir pendaftaran → konsultasi kebutuhan wilayah/kapasitas →
-              verifikasi & kesepakatan kerja sama → onboarding (training + SOP + tools) → mulai operasional.
-              Tim kami akan mendampingi di setiap tahap.
-            </p>
-          </div>
-        </details>
-
-        {/* Q3 */}
-        <details className="group">
-          <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
-              <svg
-                className="transition-transform duration-200 group-open:rotate-180"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6 9l6 6 6-6"
-                  stroke="#111827"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-
-            <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
-              Apakah saya harus memiliki pengalaman di bidang kebersihan?
-            </span>
-          </summary>
-
-          <div className="pl-[52px] pr-2 pb-3">
-            <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
-              Tidak wajib. Yang penting Anda siap belajar, disiplin menjalankan SOP, dan berkomitmen pada
-              standar kualitas. Training operasional & layanan akan membantu Anda memahami teknik kerja,
-              komunikasi ke pelanggan, sampai kontrol kualitas.
-            </p>
-          </div>
-        </details>
-      </div>
-
-      {/* RIGHT */}
-      <div className="space-y-6">
-        {/* Q4 */}
-        <details className="group">
-          <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
-              <svg
-                className="transition-transform duration-200 group-open:rotate-180"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6 9l6 6 6-6"
-                  stroke="#111827"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-
-            <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
-              Apa saja fasilitas yang saya dapatkan setelah bergabung?
-            </span>
-          </summary>
-
-          <div className="pl-[52px] pr-2 pb-3">
-            <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
-              Anda memperoleh paket dukungan: hak pakai brand, materi promosi & marketing kit, training
-              operasional, panduan standar layanan, dukungan customer service, serta akses jaringan/lead
-              dari platform (sesuai ketersediaan wilayah & kapasitas operasional).
-            </p>
-          </div>
-        </details>
-
-        {/* Q5 */}
-        <details className="group">
-          <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
-              <svg
-                className="transition-transform duration-200 group-open:rotate-180"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6 9l6 6 6-6"
-                  stroke="#111827"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-
-            <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
-              Apakah Home Steril membantu dalam promosi bisnis mitra?
-            </span>
-          </summary>
-
-          <div className="pl-[52px] pr-2 pb-3">
-            <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
-              Ya. Kami menyiapkan materi promosi, arahan strategi pemasaran, dan dukungan kampanye (sesuai
-              program yang berjalan). Tujuannya agar mitra lebih cepat dikenal dan memperoleh permintaan
-              layanan secara konsisten.
-            </p>
-          </div>
-        </details>
-
-        {/* Q6 */}
-        <details className="group">
-          <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
-              <svg
-                className="transition-transform duration-200 group-open:rotate-180"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6 9l6 6 6-6"
-                  stroke="#111827"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-
-            <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
-              Kapan saya bisa mulai menjalankan operasional setelah bergabung?
-            </span>
-          </summary>
-
-          <div className="pl-[52px] pr-2 pb-3">
-            <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
-              Setelah onboarding selesai. Biasanya Anda bisa mulai operasional setelah training, setup alat
-              & tim (jika ada), serta memastikan standar layanan siap dijalankan. Tim kami akan membantu
-              memastikan Anda “ready” sebelum menerima order pertama.
-            </p>
-          </div>
-        </details>
-      </div>
-    </div>
-  </div>
-</section>
-{/* Section: Panel Diskusi */}
-<section id="diskusi" className="py-20">
-  <div className="mx-auto max-w-6xl px-4">
-    <div className="rounded-[22px] bg-white shadow-sm ring-1 ring-black/5 px-6 py-10 md:px-10">
-      {/* Header */}
-      <div className="text-center">
-        <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
-          Panel Diskusi <span className="text-red-700">Mitra HOME STERIL</span>
-        </h2>
-
-        <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
-          Ruang interaktif bagi para mitra untuk berbagi pengalaman, strategi, dan solusi bisnis kebersihan
-          bersama tim profesional Home Steril
-        </p>
-      </div>
-
-      {/* Login prompt */}
-      <div className="mt-10 flex flex-col items-center gap-3">
-        <div className="font-montserrat text-[14px] text-slate-600">
-          Silakan masuk untuk memberikan pertanyaan
-        </div>
-
-        <button
-          type="button"
-          className="inline-flex items-center gap-2 rounded-[10px] border border-slate-200 bg-white px-4 py-2 text-[14px] font-medium text-slate-900 shadow-sm hover:bg-slate-50"
-        >
-          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-100">
-            G
-          </span>
-          Login dengan Google
-        </button>
-      </div>
-
-      {/* List */}
-      {(() => {
-        const threads = [
-          {
-            id: "t1",
-            user: {
-              name: "Budi Santoso",
-              initials: "BS",
-              avatar: "/budi.png", // kosongkan "" kalau belum ada
-            },
-            time: "3 jam yang lalu",
-            question:
-              "Apakah Home Steril membantu dalam membuat konten promosi di media sosial?",
-            likes: 6,
-            replies: [
-              {
-                id: "t1r1",
-                user: {
-                  name: "HOME STERIL",
-                  initials: "HS",
-                  avatar: "/admin.png",
-                  isOfficial: true,
-                },
-                time: "2 jam yang lalu",
-                message:
-                  "Ya, kami bantu! Setiap bulan mitra akan mendapat template desain dan contoh caption promosi yang bisa langsung digunakan atau disesuaikan dengan karakter bisnis masing-masing.",
-                likes: 10,
-              },
-            ],
-          },
-          {
-            id: "t2",
-            user: {
-              name: "Maya Putri",
-              initials: "MP",
-              avatar: "/maya.png",
-            },
-            time: "5 jam yang lalu",
-            question:
-              "Bagaimana cara menjaga kualitas layanan agar pelanggan tetap repeat order?",
-            likes: 4,
-            replies: [],
-          },
-          {
-            id: "t3",
-            user: {
-              name: "Nurul Amaliah",
-              initials: "NA",
-              avatar: "/nurul.png",
-            },
-            time: "3 bulan yang lalu",
-            question:
-              "Saya baru bergabung, bagaimana kalau ada kendala saat menjalankan operasional di lapangan?",
-            likes: 2,
-            replies: [
-              {
-                id: "t3r1",
-                user: {
-                  name: "HOME STERIL",
-                  initials: "HS",
-                  avatar: "/admin.png",
-                  isOfficial: true,
-                },
-                time: "2 jam yang lalu",
-                message:
-                  "Tenang, tim support kami selalu aktif di grup komunitas mitra. Anda bisa konsultasi langsung, dan jika dibutuhkan kami juga bisa bantu pendampingan jarak jauh untuk menyelesaikan masalah secara cepat.",
-                likes: 2,
-              },
-            ],
-          },
-        ];
-
-        function Avatar({
-          name,
-          initials,
-          avatar,
-          isOfficial,
-        }: {
-          name: string;
-          initials: string;
-          avatar?: string;
-          isOfficial?: boolean;
-        }) {
-          return (
-            <div
-              className={[
-                "relative h-12 w-12 overflow-hidden rounded-full",
-                isOfficial ? "ring-2 ring-red-700/20" : "ring-1 ring-black/5",
-                "bg-slate-200",
-              ].join(" ")}
-              title={name}
-            >
-              {avatar ? (
-                <img
-                  src={avatar}
-                  alt={name}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center text-[12px] font-bold text-slate-700">
-                  {initials}
-                </div>
-              )}
-            </div>
-          );
-        }
-
-        return (
-          <div className="mt-10 space-y-6">
-            {threads.map((t) => (
-              <div
-                key={t.id}
-                className="rounded-[18px] bg-white p-6 shadow-sm ring-1 ring-black/10"
-              >
-                {/* Question */}
-                <div className="flex items-start gap-4">
-                  <Avatar
-                    name={t.user.name}
-                    initials={t.user.initials}
-                    avatar={t.user.avatar}
-                  />
-
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="font-montserrat text-[16px] font-bold text-slate-900">
-                          {t.user.name}
-                        </div>
-                        <div className="mt-1 font-montserrat text-[14px] leading-[20px] text-slate-700">
-                          {t.question}
-                        </div>
+                <div className="mt-10 space-y-7">
+                  {[
+                    "Hak pakai brand HOME STERIL",
+                    "Materi promosi & marketing kit",
+                    "Training operasional & layanan",
+                    "Dukungan customer service",
+                    "Jaringan pelanggan dari platform",
+                  ].map((text) => (
+                    <div
+                      key={text}
+                      className="
+                group
+                flex items-center gap-5
+                rounded-2xl bg-white
+                px-5 py-4
+                ring-1 ring-black/5 shadow-sm
+                transition-all duration-300 ease-out
+                hover:-translate-y-1 hover:shadow-xl hover:ring-2 hover:ring-red-700/10
+                active:scale-[0.99]
+              "
+                    >
+                      {/* Icon check image */}
+                      <div
+                        className="
+                  h-11 w-11 shrink-0
+                  transition-transform duration-300 ease-out
+                  group-hover:scale-110
+                "
+                      >
+                        <Image
+                          src="/ceklis 2.png"
+                          alt="Checklist"
+                          width={44}
+                          height={44}
+                          className="h-11 w-11 object-contain"
+                        />
                       </div>
 
-                      <div className="shrink-0 text-right font-montserrat text-[12px] text-slate-500">
-                        {t.time}
+                      <div
+                        className="
+                  font-montserrat text-[15px] leading-[20px] font-normal text-slate-700
+                  transition-colors duration-300
+                  group-hover:text-red-700
+                "
+                      >
+                        {text}
                       </div>
                     </div>
+                  ))}
+                </div>
+              </div>
 
-                    <div className="mt-3 flex flex-wrap items-center gap-4 font-montserrat text-[12px] text-slate-500">
-                      <div className="inline-flex items-center gap-2">
-                        <span className="text-amber-500">👍</span>
-                        <span>{t.likes}</span>
+              {/* Right */}
+              <div className="flex justify-center md:justify-end">
+                <div
+                  className="
+            group
+            relative w-full max-w-[460px]
+            overflow-hidden rounded-[28px]
+            bg-slate-100 shadow-sm ring-1 ring-black/5
+            transition-all duration-300 ease-out
+            hover:shadow-xl hover:ring-2 hover:ring-red-700/10
+          "
+                >
+                  <img
+                    src="/apa-yang-didapatkan.png"
+                    alt="Mitra Home Steril"
+                    className="h-[600px] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* Section: Garansi Kepuasan */}
+        <section id="garansi" className="py-20">
+          <div className="mx-auto max-w-7xl px-4">
+            {/* Header */}
+            <div className="text-center">
+              <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+                Garansi Kepuasan{" "}
+                <span className="text-red-700">100% Mitra HOME STERIL</span>
+              </h2>
+
+              <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
+                Kami berkomitmen memberikan lebih dari sekadar layanan,
+                <br />
+                karena kepuasan mitra adalah prioritas utama kami.
+              </p>
+            </div>
+
+            {/* Content */}
+            <div className="mt-14 grid grid-cols-1 items-center gap-10 md:grid-cols-[0.9fr_1.1fr]">
+              {/* Left: Badge */}
+              <div className="flex justify-center md:justify-start">
+                <div className="relative w-full max-w-[340px] md:ml-8 transition-transform duration-300 ease-out hover:scale-[1.03]">
+                  <img
+                    src="/satisfaction.png"
+                    alt="100% Satisfaction Guaranteed"
+                    className="w-full h-auto object-contain"
+                  />
+                </div>
+              </div>
+
+              {/* Right: Cards */}
+              <div className="space-y-6">
+                {/* Top 2 cards */}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  {/* Card 1 */}
+                  <div
+                    className="
+              group
+              rounded-[18px] bg-white p-6
+              shadow-sm ring-1 ring-black/10
+              transition-all duration-300 ease-out
+              hover:-translate-y-1 hover:shadow-xl hover:ring-red-700/20
+              active:scale-[0.99]
+            "
+                  >
+                    <div className="flex items-start gap-4">
+                      <div
+                        className="
+                  flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-slate-100
+                  transition-transform duration-300 ease-out
+                  group-hover:scale-110
+                "
+                      >
+                        <img
+                          src="/icon user.png"
+                          alt="Dukungan Responsif"
+                          className="h-full w-full object-contain scale-[1.35]"
+                        />
                       </div>
-                      <button type="button" className="hover:text-slate-700">
-                        Balas
-                      </button>
-                      {t.replies.length > 0 ? (
-                        <button type="button" className="hover:text-slate-700">
-                          Sembunyikan {t.replies.length} balasan
-                        </button>
-                      ) : null}
+
+                      <div className="min-w-0">
+                        <div className="font-montserrat text-[15px] font-bold text-slate-900 leading-[20px] transition-colors duration-300 group-hover:text-red-700">
+                          Dukungan Responsif
+                          <br />
+                          &amp; Terbuka
+                        </div>
+
+                        <p className="mt-3 font-montserrat text-[14px] leading-[20px] text-slate-600">
+                          Tim kami selalu siap membantu setiap pertanyaan dan
+                          kebutuhan mitra.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card 2 */}
+                  <div
+                    className="
+              group
+              rounded-[18px] bg-white p-6
+              shadow-sm ring-1 ring-black/10
+              transition-all duration-300 ease-out
+              hover:-translate-y-1 hover:shadow-xl hover:ring-red-700/20
+              active:scale-[0.99]
+            "
+                  >
+                    <div className="flex items-start gap-4">
+                      <div
+                        className="
+                  flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-slate-100
+                  transition-transform duration-300 ease-out
+                  group-hover:scale-110
+                "
+                      >
+                        <img
+                          src="/icon gift.png"
+                          alt="Bonus Layanan"
+                          className="h-full w-full object-contain scale-[1.35]"
+                        />
+                      </div>
+
+                      <div className="min-w-0">
+                        <div className="font-montserrat text-[16px] font-bold text-slate-900 leading-[20px] transition-colors duration-300 group-hover:text-red-700">
+                          Bonus Layanan
+                          <br />
+                          Tambahan
+                        </div>
+
+                        <p className="mt-3 font-montserrat text-[14px] leading-[20px] text-slate-600">
+                          Dapatkan konsultasi bisnis dan update strategi promosi
+                          gratis selama 1 bulan pertama.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Replies */}
-                {t.replies.length > 0 && (
-                  <div className="mt-5 space-y-4">
-                    {t.replies.map((r) => (
-                      <div
-                        key={r.id}
-                        className="rounded-[16px] bg-slate-50 p-5 ring-1 ring-black/5"
+                {/* Bottom wide card */}
+                <div
+                  className="
+            group
+            rounded-[18px] bg-white p-6
+            shadow-sm ring-1 ring-black/10
+            transition-all duration-300 ease-out
+            hover:-translate-y-1 hover:shadow-xl hover:ring-red-700/20
+            active:scale-[0.99]
+          "
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="
+                flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-red-700
+                transition-transform duration-300 ease-out
+                group-hover:scale-110
+              "
+                    >
+                      <img
+                        src="/icon heart.png"
+                        alt="Pendampingan Ulang Gratis"
+                        className="h-full w-full object-contain scale-[1.35]"
+                      />
+                    </div>
+
+                    <div className="min-w-0">
+                      <div className="font-montserrat text-[16px] font-bold text-slate-900 transition-colors duration-300 group-hover:text-red-700">
+                        Pendampingan Ulang Gratis
+                      </div>
+
+                      <p className="mt-3 font-montserrat text-[14px] leading-[20px] text-slate-600 max-w-[620px]">
+                        Jika pelatihan atau sistem belum sesuai harapan, kami
+                        siap memberikan bimbingan ulang secara gratis hingga
+                        Anda merasa siap menjalankan bisnis dengan percaya diri.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* end right */}
+            </div>
+          </div>
+        </section>
+        {/* Section: Perbandingan Kemitraan */}
+        <section id="perbandingan" className="py-20">
+          <div className="mx-auto max-w-7xl px-4">
+            {/* Header */}
+            <div className="text-center">
+              <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+                Mengapa kemitraan{" "}
+                <span className="text-red-700">HOME STERIL</span> Lebih Unggul
+              </h2>
+
+              <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
+                Pilihan cerdas bagi Anda yang ingin memulai bisnis kebersihan
+                dengan dukungan nyata, sistem yang siap tumbuh, <br />
+                dan hasil yang terpercaya.
+              </p>
+            </div>
+
+            {/* Table */}
+            <div className="mt-14">
+              {/* Head row */}
+              <div className="grid grid-cols-12 items-center gap-6">
+                <div className="col-span-12 md:col-span-4" />
+                <div className="col-span-12 md:col-span-4 text-center font-montserrat text-[14px] tracking-wide text-slate-700">
+                  HOME STERIL
+                </div>
+                <div className="col-span-12 md:col-span-4 text-center font-montserrat text-[14px] tracking-wide text-slate-700">
+                  Kemitraan Lain
+                </div>
+              </div>
+
+              {/* Rows wrapper */}
+              <div className="mt-6 space-y-4">
+                {/* Row 1 */}
+                <div className="group grid grid-cols-12 items-stretch gap-6 transition-all duration-300 ease-out hover:-translate-y-[2px]">
+                  <div className="col-span-12 md:col-span-4 flex items-center">
+                    <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900 transition-colors duration-300 group-hover:text-red-700">
+                      Pendampingan Mitra
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 ease-out group-hover:scale-110">
+                        {/* check */}
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M20 6L9 17l-5-5"
+                            stroke="white"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center ring-1 ring-black/10 transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-800/10 transition-transform duration-300 ease-out group-hover:scale-110">
+                        {/* x */}
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M18 6L6 18M6 6l12 12"
+                            stroke="#991B1B"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Row 2 */}
+                <div className="group grid grid-cols-12 items-stretch gap-6 transition-all duration-300 ease-out hover:-translate-y-[2px]">
+                  <div className="col-span-12 md:col-span-4 flex items-center">
+                    <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900 transition-colors duration-300 group-hover:text-red-700">
+                      Dukungan Promosi Digital
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 ease-out group-hover:scale-110">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M20 6L9 17l-5-5"
+                            stroke="white"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center ring-1 ring-black/10 transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-800/10 transition-transform duration-300 ease-out group-hover:scale-110">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M18 6L6 18M6 6l12 12"
+                            stroke="#991B1B"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Row 3 */}
+                <div className="group grid grid-cols-12 items-stretch gap-6 transition-all duration-300 ease-out hover:-translate-y-[2px]">
+                  <div className="col-span-12 md:col-span-4 flex items-center">
+                    <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900 transition-colors duration-300 group-hover:text-red-700">
+                      Kualitas Pelatihan
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center text-center font-montserrat text-[14px] leading-[20px] transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      Pelatihan teknis dan
+                      <br />
+                      manajemen lengkap
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center text-center font-montserrat text-[14px] leading-[20px] ring-1 ring-black/10 transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      Terbatas pada teknis dasar
+                    </div>
+                  </div>
+                </div>
+
+                {/* Row 4 */}
+                <div className="group grid grid-cols-12 items-stretch gap-6 transition-all duration-300 ease-out hover:-translate-y-[2px]">
+                  <div className="col-span-12 md:col-span-4 flex items-center">
+                    <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900 transition-colors duration-300 group-hover:text-red-700">
+                      Garansi Kepuasan
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 ease-out group-hover:scale-110">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M20 6L9 17l-5-5"
+                            stroke="white"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center ring-1 ring-black/10 transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-800/10 transition-transform duration-300 ease-out group-hover:scale-110">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M18 6L6 18M6 6l12 12"
+                            stroke="#991B1B"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Row 5 */}
+                <div className="group grid grid-cols-12 items-stretch gap-6 transition-all duration-300 ease-out hover:-translate-y-[2px]">
+                  <div className="col-span-12 md:col-span-4 flex items-center">
+                    <div className="font-montserrat text-[16px] leading-[20px] font-bold text-slate-900 transition-colors duration-300 group-hover:text-red-700">
+                      Reputasi &amp; Kepercayaan Pelanggan
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-red-800 px-6 py-4 text-white flex items-center justify-center text-center font-montserrat text-[14px] leading-[20px] transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      Terbukti dengan rating
+                      <br />
+                      tertinggi layanan kebersihan
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="h-full rounded-[14px] bg-white px-6 py-4 text-slate-700 flex items-center justify-center text-center font-montserrat text-[14px] leading-[20px] ring-1 ring-black/10 transition-all duration-300 ease-out shadow-sm hover:shadow-xl hover:-translate-y-[1px] hover:ring-2 hover:ring-red-700/15">
+                      Belum terbukti memiliki
+                      <br />
+                      kredibilitas
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section: CTA - Waktunya Naik Kelas */}
+        <section id="cta-naik-kelas" className="py-16">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="relative overflow-hidden rounded-[28px] group">
+              {/* Background Image */}
+              <img
+                src="/cta red.png"
+                alt="CTA Background"
+                className="
+          absolute inset-0 h-full w-full object-cover
+          transition-transform duration-[1200ms] ease-out
+          group-hover:scale-[1.03]
+        "
+              />
+
+              {/* Soft overlay (optional tapi bikin depth lebih cakep) */}
+              <div className="absolute inset-0 bg-black/10" />
+
+              {/* Content */}
+              <div className="relative grid grid-cols-1 items-center gap-10 px-10 py-12 md:grid-cols-2 md:px-14">
+                {/* Left */}
+                <div>
+                  <h3
+                    className="
+              font-montserrat text-[34px] leading-[40px] font-bold text-white
+              transition-transform duration-300 ease-out
+              group-hover:-translate-y-[2px]
+            "
+                  >
+                    Waktunya Naik Kelas
+                    <br />
+                    Bersama Home Steril
+                  </h3>
+
+                  <p
+                    className="
+              mt-4 max-w-xl font-montserrat text-[16px] leading-[22px] text-white/90
+              transition-opacity duration-300
+              group-hover:opacity-100
+            "
+                  >
+                    Mulai langkah pertama Anda membangun bisnis kebersihan yang
+                    tumbuh, terarah, dan berdaya saing tinggi.
+                  </p>
+                </div>
+
+                {/* Right */}
+                <div className="flex md:justify-end">
+                  <a
+                    href="https://api.whatsapp.com/"
+                    className="
+              inline-flex items-center justify-center gap-3
+              rounded-full
+              border border-white/70
+              bg-white/10
+              px-8 py-4
+              font-montserrat text-[15px] font-semibold text-white
+              backdrop-blur-sm
+              transition-all duration-300 ease-out
+              hover:bg-white/20
+              hover:-translate-y-1
+              hover:shadow-[0_10px_30px_rgba(255,255,255,0.25)]
+              active:translate-y-0
+            "
+                  >
+                    Mulai Bergabung Hari Ini
+                    <span
+                      className="
+                text-[18px] leading-none
+                transition-transform duration-300
+                group-hover:translate-x-1
+              "
+                    >
+                      ›
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* Section: Klien Terpercaya */}
+        <section id="klien-terpercaya" className="py-20">
+          <div className="mx-auto max-w-7xl px-4">
+            {/* Header */}
+            <div className="text-center">
+              <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+                Klien <span className="text-red-700">Terpercaya</span>
+              </h2>
+
+              <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
+                HOME STERIL telah bekerja sama dan dipercaya oleh berbagai
+                perusahaan terkemuka di Indonesia
+              </p>
+            </div>
+
+            {/* Logo */}
+            <div className="mt-14">
+              <div className="grid grid-cols-2 items-center justify-items-center gap-y-10 gap-x-8 sm:grid-cols-4">
+                {/* Telkomsel */}
+                <img
+                  src="telkomsel.png"
+                  alt="Telkomsel"
+                  className="
+            h-[50px] w-auto object-contain
+            opacity-70 grayscale
+            transition-all duration-300 ease-out
+            hover:opacity-100 hover:grayscale-0
+            hover:-translate-y-1
+            hover:drop-shadow-[0_10px_18px_rgba(0,0,0,0.10)]
+            active:scale-[0.98]
+          "
+                  loading="lazy"
+                />
+
+                {/* JAKPRO */}
+                <img
+                  src="/jakpro.png"
+                  alt="JAKPRO"
+                  className="
+            h-[50px] w-auto object-contain
+            opacity-70 grayscale
+            transition-all duration-300 ease-out
+            hover:opacity-100 hover:grayscale-0
+            hover:-translate-y-1
+            hover:drop-shadow-[0_10px_18px_rgba(0,0,0,0.10)]
+            active:scale-[0.98]
+          "
+                  loading="lazy"
+                />
+
+                {/* Transjakarta */}
+                <img
+                  src="/transjakarta.png"
+                  alt="Transjakarta"
+                  className="
+            h-[70px] w-auto object-contain
+            opacity-70 grayscale
+            transition-all duration-300 ease-out
+            hover:opacity-100 hover:grayscale-0
+            hover:-translate-y-1
+            hover:drop-shadow-[0_10px_18px_rgba(0,0,0,0.10)]
+            active:scale-[0.98]
+          "
+                  loading="lazy"
+                />
+
+                {/* TOWER */}
+                <img
+                  src="/tower.png"
+                  alt="TOWER"
+                  className="
+            h-[50px] w-auto object-contain
+            opacity-70 grayscale
+            transition-all duration-300 ease-out
+            hover:opacity-100 hover:grayscale-0
+            hover:-translate-y-1
+            hover:drop-shadow-[0_10px_18px_rgba(0,0,0,0.10)]
+            active:scale-[0.98]
+          "
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* Section: FAQ */}
+        <section id="faq" className="py-20">
+          <div className="mx-auto max-w-7xl px-4">
+            {/* Header */}
+            <div className="text-center">
+              <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+                Pertanyaan{" "}
+                <span className="text-red-700">yang Sering Diajukan</span>
+              </h2>
+
+              <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
+                Temukan jawaban untuk pertanyaan umum tentang kemitraan HOME
+                STERIL
+              </p>
+            </div>
+
+            {/* FAQ Grid */}
+            <div className="mt-14 grid grid-cols-1 gap-x-16 gap-y-8 md:grid-cols-2">
+              {/* LEFT */}
+              <div className="space-y-6">
+                {/* Q1 */}
+                <details className="group">
+                  <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                      <svg
+                        className="transition-transform duration-200 group-open:rotate-180"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
                       >
+                        <path
+                          d="M6 9l6 6 6-6"
+                          stroke="#111827"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+
+                    <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
+                      Apa keuntungan utama bergabung sebagai mitra Home Steril?
+                    </span>
+                  </summary>
+
+                  <div className="pl-[52px] pr-2 pb-3">
+                    <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
+                      Anda mendapatkan dukungan sistem operasional yang sudah
+                      jadi (SOP, alur kerja, standar layanan), akses brand HOME
+                      STERIL, serta bantuan pemasaran untuk mempercepat akuisisi
+                      pelanggan. Fokus Anda tinggal eksekusi layanan dengan
+                      kualitas konsisten.
+                    </p>
+                  </div>
+                </details>
+
+                {/* Q2 */}
+                <details className="group">
+                  <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                      <svg
+                        className="transition-transform duration-200 group-open:rotate-180"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M6 9l6 6 6-6"
+                          stroke="#111827"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+
+                    <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
+                      Bagaimana proses bergabung menjadi mitra?
+                    </span>
+                  </summary>
+
+                  <div className="pl-[52px] pr-2 pb-3">
+                    <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
+                      Prosesnya umumnya: isi formulir pendaftaran → konsultasi
+                      kebutuhan wilayah/kapasitas → verifikasi & kesepakatan
+                      kerja sama → onboarding (training + SOP + tools) → mulai
+                      operasional. Tim kami akan mendampingi di setiap tahap.
+                    </p>
+                  </div>
+                </details>
+
+                {/* Q3 */}
+                <details className="group">
+                  <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                      <svg
+                        className="transition-transform duration-200 group-open:rotate-180"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M6 9l6 6 6-6"
+                          stroke="#111827"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+
+                    <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
+                      Apakah saya harus memiliki pengalaman di bidang
+                      kebersihan?
+                    </span>
+                  </summary>
+
+                  <div className="pl-[52px] pr-2 pb-3">
+                    <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
+                      Tidak wajib. Yang penting Anda siap belajar, disiplin
+                      menjalankan SOP, dan berkomitmen pada standar kualitas.
+                      Training operasional & layanan akan membantu Anda memahami
+                      teknik kerja, komunikasi ke pelanggan, sampai kontrol
+                      kualitas.
+                    </p>
+                  </div>
+                </details>
+              </div>
+
+              {/* RIGHT */}
+              <div className="space-y-6">
+                {/* Q4 */}
+                <details className="group">
+                  <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                      <svg
+                        className="transition-transform duration-200 group-open:rotate-180"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M6 9l6 6 6-6"
+                          stroke="#111827"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+
+                    <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
+                      Apa saja fasilitas yang saya dapatkan setelah bergabung?
+                    </span>
+                  </summary>
+
+                  <div className="pl-[52px] pr-2 pb-3">
+                    <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
+                      Anda memperoleh paket dukungan: hak pakai brand, materi
+                      promosi & marketing kit, training operasional, panduan
+                      standar layanan, dukungan customer service, serta akses
+                      jaringan/lead dari platform (sesuai ketersediaan wilayah &
+                      kapasitas operasional).
+                    </p>
+                  </div>
+                </details>
+
+                {/* Q5 */}
+                <details className="group">
+                  <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                      <svg
+                        className="transition-transform duration-200 group-open:rotate-180"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M6 9l6 6 6-6"
+                          stroke="#111827"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+
+                    <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
+                      Apakah Home Steril membantu dalam promosi bisnis mitra?
+                    </span>
+                  </summary>
+
+                  <div className="pl-[52px] pr-2 pb-3">
+                    <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
+                      Ya. Kami menyiapkan materi promosi, arahan strategi
+                      pemasaran, dan dukungan kampanye (sesuai program yang
+                      berjalan). Tujuannya agar mitra lebih cepat dikenal dan
+                      memperoleh permintaan layanan secara konsisten.
+                    </p>
+                  </div>
+                </details>
+
+                {/* Q6 */}
+                <details className="group">
+                  <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                      <svg
+                        className="transition-transform duration-200 group-open:rotate-180"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M6 9l6 6 6-6"
+                          stroke="#111827"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+
+                    <span className="font-montserrat text-[15px] leading-[22px] font-normal text-slate-800">
+                      Kapan saya bisa mulai menjalankan operasional setelah
+                      bergabung?
+                    </span>
+                  </summary>
+
+                  <div className="pl-[52px] pr-2 pb-3">
+                    <p className="font-montserrat text-[14px] leading-[22px] text-slate-600">
+                      Setelah onboarding selesai. Biasanya Anda bisa mulai
+                      operasional setelah training, setup alat & tim (jika ada),
+                      serta memastikan standar layanan siap dijalankan. Tim kami
+                      akan membantu memastikan Anda “ready” sebelum menerima
+                      order pertama.
+                    </p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Panel Diskusi */}
+        <section id="diskusi" className="py-20">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="rounded-[22px] bg-white shadow-sm ring-1 ring-black/5 px-6 py-10 md:px-10 transition-all duration-300 ease-out hover:shadow-lg hover:ring-black/10">
+              {/* Header */}
+              <div className="text-center">
+                <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+                  Panel Diskusi{" "}
+                  <span className="text-red-700">Mitra HOME STERIL</span>
+                </h2>
+
+                <p className="mt-4 mx-auto max-w-3xl font-montserrat text-[16px] leading-[22px] font-normal text-slate-600">
+                  Ruang interaktif bagi para mitra untuk berbagi pengalaman,
+                  strategi, dan solusi bisnis kebersihan bersama tim profesional
+                  Home Steril
+                </p>
+              </div>
+
+              {/* Login prompt */}
+              <div className="mt-10 flex flex-col items-center gap-3">
+                <div className="font-montserrat text-[14px] text-slate-600">
+                  Silakan masuk untuk memberikan pertanyaan
+                </div>
+
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-2 rounded-[10px] border border-slate-200 bg-white px-4 py-2 text-[14px] font-medium text-slate-900 shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md hover:border-slate-300 active:translate-y-0 active:scale-[0.99]"
+                >
+                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 transition-transform duration-300 ease-out group-hover:scale-105">
+                    G
+                  </span>
+                  Login dengan Google
+                </button>
+              </div>
+
+              {/* List */}
+              {(() => {
+                const threads = [
+                  {
+                    id: "t1",
+                    user: {
+                      name: "Budi Santoso",
+                      initials: "BS",
+                      avatar: "/budi.png", // kosongkan "" kalau belum ada
+                    },
+                    time: "3 jam yang lalu",
+                    question:
+                      "Apakah Home Steril membantu dalam membuat konten promosi di media sosial?",
+                    likes: 6,
+                    replies: [
+                      {
+                        id: "t1r1",
+                        user: {
+                          name: "HOME STERIL",
+                          initials: "HS",
+                          avatar: "/admin.png",
+                          isOfficial: true,
+                        },
+                        time: "2 jam yang lalu",
+                        message:
+                          "Ya, kami bantu! Setiap bulan mitra akan mendapat template desain dan contoh caption promosi yang bisa langsung digunakan atau disesuaikan dengan karakter bisnis masing-masing.",
+                        likes: 10,
+                      },
+                    ],
+                  },
+                  {
+                    id: "t2",
+                    user: {
+                      name: "Maya Putri",
+                      initials: "MP",
+                      avatar: "/maya.png",
+                    },
+                    time: "5 jam yang lalu",
+                    question:
+                      "Bagaimana cara menjaga kualitas layanan agar pelanggan tetap repeat order?",
+                    likes: 4,
+                    replies: [],
+                  },
+                  {
+                    id: "t3",
+                    user: {
+                      name: "Nurul Amaliah",
+                      initials: "NA",
+                      avatar: "/nurul.png",
+                    },
+                    time: "3 bulan yang lalu",
+                    question:
+                      "Saya baru bergabung, bagaimana kalau ada kendala saat menjalankan operasional di lapangan?",
+                    likes: 2,
+                    replies: [
+                      {
+                        id: "t3r1",
+                        user: {
+                          name: "HOME STERIL",
+                          initials: "HS",
+                          avatar: "/admin.png",
+                          isOfficial: true,
+                        },
+                        time: "2 jam yang lalu",
+                        message:
+                          "Tenang, tim support kami selalu aktif di grup komunitas mitra. Anda bisa konsultasi langsung, dan jika dibutuhkan kami juga bisa bantu pendampingan jarak jauh untuk menyelesaikan masalah secara cepat.",
+                        likes: 2,
+                      },
+                    ],
+                  },
+                ];
+
+                function Avatar({
+                  name,
+                  initials,
+                  avatar,
+                  isOfficial,
+                }: {
+                  name: string;
+                  initials: string;
+                  avatar?: string;
+                  isOfficial?: boolean;
+                }) {
+                  return (
+                    <div
+                      className={[
+                        "relative h-12 w-12 overflow-hidden rounded-full",
+                        isOfficial
+                          ? "ring-2 ring-red-700/20"
+                          : "ring-1 ring-black/5",
+                        "bg-slate-200",
+                        "transition-all duration-300 ease-out",
+                        "group-hover:shadow-md group-hover:-translate-y-0.5",
+                      ].join(" ")}
+                      title={name}
+                    >
+                      {avatar ? (
+                        <img
+                          src={avatar}
+                          alt={name}
+                          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center text-[12px] font-bold text-slate-700">
+                          {initials}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="mt-10 space-y-6">
+                    {threads.map((t) => (
+                      <div
+                        key={t.id}
+                        className="
+                  group
+                  rounded-[18px] bg-white p-6 shadow-sm ring-1 ring-black/10
+                  transition-all duration-300 ease-out
+                  hover:-translate-y-1 hover:shadow-lg hover:ring-red-700/10
+                  active:translate-y-0 active:scale-[0.998]
+                "
+                      >
+                        {/* Question */}
                         <div className="flex items-start gap-4">
                           <Avatar
-                            name={r.user.name}
-                            initials={r.user.initials}
-                            avatar={r.user.avatar}
-                            isOfficial={r.user.isOfficial}
+                            name={t.user.name}
+                            initials={t.user.initials}
+                            avatar={t.user.avatar}
                           />
 
                           <div className="min-w-0 flex-1">
                             <div className="flex items-start justify-between gap-4">
-                              <div className="flex items-center gap-2">
-                                <div className="font-montserrat text-[14px] font-bold text-slate-900">
-                                  {r.user.name}
+                              <div>
+                                <div className="font-montserrat text-[16px] font-bold text-slate-900 transition-colors duration-300 group-hover:text-red-700">
+                                  {t.user.name}
                                 </div>
-
-                                {r.user.isOfficial ? (
-                                  <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-0.5 text-[11px] font-semibold text-red-700 ring-1 ring-red-700/10">
-                                    Resmi
-                                  </span>
-                                ) : null}
+                                <div className="mt-1 font-montserrat text-[14px] leading-[20px] text-slate-700">
+                                  {t.question}
+                                </div>
                               </div>
 
-                              <div className="shrink-0 font-montserrat text-[12px] text-slate-500">
-                                {r.time}
+                              <div className="shrink-0 text-right font-montserrat text-[12px] text-slate-500">
+                                {t.time}
                               </div>
                             </div>
 
-                            <div className="mt-2 font-montserrat text-[14px] leading-[20px] text-slate-700">
-                              {r.message}
-                            </div>
-
-                            <div className="mt-3 flex items-center gap-4 font-montserrat text-[12px] text-slate-500">
-                              <div className="inline-flex items-center gap-2">
+                            <div className="mt-3 flex flex-wrap items-center gap-4 font-montserrat text-[12px] text-slate-500">
+                              <div className="inline-flex items-center gap-2 transition-transform duration-300 ease-out group-hover:scale-[1.02]">
                                 <span className="text-amber-500">👍</span>
-                                <span>{r.likes}</span>
+                                <span>{t.likes}</span>
                               </div>
+
                               <button
                                 type="button"
-                                className="hover:text-slate-700"
+                                className="transition-colors duration-300 hover:text-slate-700 hover:underline"
                               >
                                 Balas
                               </button>
-                              <button
-                                type="button"
-                                className="hover:text-slate-700"
-                              >
-                                Lihat 1 balasan
-                              </button>
+
+                              {t.replies.length > 0 ? (
+                                <button
+                                  type="button"
+                                  className="transition-colors duration-300 hover:text-slate-700 hover:underline"
+                                >
+                                  Sembunyikan {t.replies.length} balasan
+                                </button>
+                              ) : null}
                             </div>
                           </div>
                         </div>
+
+                        {/* Replies */}
+                        {t.replies.length > 0 && (
+                          <div className="mt-5 space-y-4">
+                            {t.replies.map((r) => (
+                              <div
+                                key={r.id}
+                                className="
+                          rounded-[16px] bg-slate-50 p-5 ring-1 ring-black/5
+                          transition-all duration-300 ease-out
+                          hover:-translate-y-0.5 hover:shadow-md hover:ring-red-700/10
+                        "
+                              >
+                                <div className="flex items-start gap-4">
+                                  <Avatar
+                                    name={r.user.name}
+                                    initials={r.user.initials}
+                                    avatar={r.user.avatar}
+                                    isOfficial={r.user.isOfficial}
+                                  />
+
+                                  <div className="min-w-0 flex-1">
+                                    <div className="flex items-start justify-between gap-4">
+                                      <div className="flex items-center gap-2">
+                                        <div className="font-montserrat text-[14px] font-bold text-slate-900">
+                                          {r.user.name}
+                                        </div>
+
+                                        {r.user.isOfficial ? (
+                                          <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-0.5 text-[11px] font-semibold text-red-700 ring-1 ring-red-700/10 transition-transform duration-300 ease-out hover:scale-[1.03]">
+                                            Admin
+                                          </span>
+                                        ) : null}
+                                      </div>
+
+                                      <div className="shrink-0 font-montserrat text-[12px] text-slate-500">
+                                        {r.time}
+                                      </div>
+                                    </div>
+
+                                    <div className="mt-2 font-montserrat text-[14px] leading-[20px] text-slate-700">
+                                      {r.message}
+                                    </div>
+
+                                    <div className="mt-3 flex items-center gap-4 font-montserrat text-[12px] text-slate-500">
+                                      <div className="inline-flex items-center gap-2 transition-transform duration-300 ease-out hover:scale-[1.02]">
+                                        <span className="text-amber-500">
+                                          👍
+                                        </span>
+                                        <span>{r.likes}</span>
+                                      </div>
+
+                                      <button
+                                        type="button"
+                                        className="transition-colors duration-300 hover:text-slate-700 hover:underline"
+                                      >
+                                        Balas
+                                      </button>
+
+                                      <button
+                                        type="button"
+                                        className="transition-colors duration-300 hover:text-slate-700 hover:underline"
+                                      >
+                                        Lihat 1 balasan
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ))}
-                  </div>
-                )}
-              </div>
-            ))}
 
-            {/* Arrow down */}
-            <div className="pt-2 flex justify-center">
-              <button
-                type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-700 ring-1 ring-black/10 hover:bg-slate-50"
-                aria-label="Scroll down"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M6 9l6 6 6-6"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
+                    {/* Arrow down */}
+                    <div className="pt-2 flex justify-center">
+                      <button
+                        type="button"
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-700 ring-1 ring-black/10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md active:translate-y-0 active:scale-[0.98]"
+                        aria-label="Scroll down"
+                      >
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          className="transition-transform duration-300 ease-out group-hover:translate-y-0.5"
+                        >
+                          <path
+                            d="M6 9l6 6 6-6"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </div>
-        );
-      })()}
-    </div>
-  </div>
-</section>
-{/* Section: Rating / Seberapa Bermanfaat Postingan Ini */}
-<section id="rating" className="py-16">
-  <div className="mx-auto max-w-6xl px-4">
-    <div className="rounded-[18px] bg-slate-100 px-6 py-10 text-center md:px-10">
-      <h2 className="font-montserrat text-[28px] leading-[34px] font-bold text-slate-900 md:text-[34px] md:leading-[40px]">
-        Seberapa Bermanfaat Postingan Ini?
-      </h2>
-
-      {/* Stars */}
-      <div className="mt-5 flex justify-center gap-2" aria-label="Rating 5 dari 5">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <svg
-            key={i}
-            width="34"
-            height="34"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            className="h-8 w-8 md:h-10 md:w-10"
-          >
-            <path
-              d="M12 2.6l2.82 5.72 6.32.92-4.57 4.45 1.08 6.29L12 17.95 6.35 19.98l1.08-6.29L2.86 9.24l6.32-.92L12 2.6z"
-              fill="#FACC15"
-            />
-          </svg>
-        ))}
-      </div>
-
-      {/* Score */}
-      <div className="mt-4 flex items-baseline justify-center gap-3">
-        <div className="font-montserrat text-[36px] leading-[40px] font-extrabold text-amber-500 md:text-[44px] md:leading-[48px]">
-          5.0
-        </div>
-        <div className="font-montserrat text-[16px] leading-[22px] font-normal text-slate-700">
-          dari 5 bintang
-        </div>
-      </div>
-
-      <div className="mt-3 font-montserrat text-[15px] leading-[20px] text-slate-500">
-        Berdasarkan 250 rating pembaca
-      </div>
-    </div>
-  </div>
-</section>
-{/* Section: CTA Akhir */}
-<section id="cta-akhir" className="py-20">
-  <div className="mx-auto max-w-6xl px-4">
-    <div className="relative overflow-hidden rounded-[28px] bg-red-700">
-      {/* Decorative shapes */}
-      <div className="absolute -left-10 bottom-6 h-40 w-40 rounded-full bg-white/10" />
-      <div className="absolute -top-16 right-24 h-48 w-48 rounded-full bg-white/10" />
-
-      <div className="relative grid grid-cols-1 items-center gap-10 p-10 md:grid-cols-2 md:p-14">
-        {/* Left content */}
-        <div className="text-white">
-          <h2 className="font-montserrat text-[36px] leading-[42px] font-bold">
-            Siap Memulai Bisnis Kebersihan
-            <br />
-            <span className="text-white">Bersama HOME STERIL?</span>
-          </h2>
-
-          <p className="mt-4 max-w-lg font-montserrat text-[16px] leading-[24px] text-white/90">
-            Jangan tunda peluang Anda. Dapatkan sistem, pendampingan,
-            dan dukungan brand yang sudah terbukti dipercaya klien besar
-            di Indonesia.
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-4">
-            <a
-              href="https://api.whatsapp.com/"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-montserrat text-[14px] font-semibold text-red-700 transition hover:bg-white/90"
+        </section>
+        {/* Section: Rating / Seberapa Bermanfaat Postingan Ini */}
+        <section id="rating" className="py-16">
+          <div className="mx-auto max-w-7xl px-4">
+            <div
+              className="
+        rounded-[18px] bg-slate-100 px-6 py-10 text-center md:px-10
+        transition-all duration-300 ease-out
+        hover:-translate-y-1 hover:shadow-lg
+      "
             >
-              Daftar Mitra Sekarang
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              <h2 className="font-montserrat text-[28px] leading-[34px] font-bold text-slate-900 md:text-[34px] md:leading-[40px]">
+                Seberapa Bermanfaat Postingan Ini?
+              </h2>
+
+              {/* Stars */}
+              <div
+                className="mt-5 flex justify-center gap-2"
+                aria-label="Rating 5 dari 5"
               >
-                <path
-                  d="M5 12h14M13 5l6 7-6 7"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <svg
+                    key={i}
+                    width="34"
+                    height="34"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    className="
+              h-8 w-8 md:h-10 md:w-10
+              transition-all duration-300 ease-out
+              hover:scale-110
+              hover:drop-shadow-[0_6px_12px_rgba(250,204,21,0.55)]
+            "
+                  >
+                    <path
+                      d="M12 2.6l2.82 5.72 6.32.92-4.57 4.45 1.08 6.29L12 17.95 6.35 19.98l1.08-6.29L2.86 9.24l6.32-.92L12 2.6z"
+                      fill="#FACC15"
+                    />
+                  </svg>
+                ))}
+              </div>
+
+              {/* Score */}
+              <div className="mt-4 flex items-baseline justify-center gap-3">
+                <div
+                  className="
+            font-montserrat text-[36px] leading-[40px] font-extrabold text-amber-500
+            md:text-[44px] md:leading-[48px]
+            transition-transform duration-300 ease-out
+            hover:scale-105
+          "
+                >
+                  5.0
+                </div>
+                <div className="font-montserrat text-[16px] leading-[22px] font-normal text-slate-700">
+                  dari 5 bintang
+                </div>
+              </div>
+
+              <div className="mt-3 font-montserrat text-[15px] leading-[20px] text-slate-500">
+                Berdasarkan 250 rating pembaca
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* Section: CTA Akhir */}
+        <section id="cta-akhir" className="py-20">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="relative overflow-hidden rounded-[28px] bg-red-700">
+              {/* Decorative shapes */}
+              <div className="absolute -left-10 bottom-6 h-40 w-40 rounded-full bg-white/10" />
+              <div className="absolute -top-16 right-24 h-48 w-48 rounded-full bg-white/10" />
+
+              <div className="relative grid grid-cols-1 items-center gap-10 p-10 md:grid-cols-2 md:p-14">
+                {/* Left content */}
+                <div className="text-white">
+                  <h2 className="font-montserrat text-[36px] leading-[42px] font-bold">
+                    Siap Memulai Bisnis Kebersihan
+                    <br />
+                    <span className="text-white">Bersama HOME STERIL?</span>
+                  </h2>
+
+                  <p className="mt-4 max-w-lg font-montserrat text-[16px] leading-[24px] text-white/90">
+                    Jangan tunda peluang Anda. Dapatkan sistem, pendampingan,
+                    dan dukungan brand yang sudah terbukti dipercaya klien besar
+                    di Indonesia.
+                  </p>
+
+                  <div className="mt-8 flex flex-wrap gap-4">
+                    <a
+                      href="https://api.whatsapp.com/"
+                      className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-montserrat text-[14px] font-semibold text-red-700 transition hover:bg-white/90"
+                    >
+                      Daftar Mitra Sekarang
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5 12h14M13 5l6 7-6 7"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </a>
+
+                    <a
+                      href="#faq"
+                      className="inline-flex items-center rounded-full border border-white/40 px-6 py-3 font-montserrat text-[14px] font-medium text-white transition hover:bg-white/10"
+                    >
+                      Lihat FAQ
+                    </a>
+                  </div>
+                </div>
+
+                {/* Right image */}
+                <div className="relative flex justify-center md:justify-end">
+                  <img
+                    src="/cta-cleaner.png"
+                    alt="Mitra Home Steril"
+                    className="w-full max-w-[360px] object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="border-t border-slate-200 bg-white">
+          <div className="mx-auto max-w-7xl px-4 py-14">
+            <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+              {/* Brand / About */}
+              <div>
+                <img
+                  src="/logo-home-steril.png"
+                  alt="Home Steril"
+                  className="h-10 w-auto"
                 />
-              </svg>
-            </a>
 
-            <a
-              href="#faq"
-              className="inline-flex items-center rounded-full border border-white/40 px-6 py-3 font-montserrat text-[14px] font-medium text-white transition hover:bg-white/10"
-            >
-              Lihat FAQ
-            </a>
+                <div className="mt-4 font-montserrat text-[14px] leading-[22px] text-slate-700">
+                  <div className="font-semibold text-slate-900">
+                    Home Steril Indonesia
+                  </div>
+                  <div className="text-slate-700">
+                    PT. Infiniti Digital Indonesia
+                  </div>
+
+                  <p className="mt-4 italic text-slate-600">
+                    “Kami adalah mitra kebersihan, perawatan dan perbaikan rumah
+                    - kantor Anda yang dapat diandalkan. Dengan komitmen untuk
+                    kualitas dan kepuasan pelanggan, kami menyediakan layanan
+                    rumah - kantor yang profesional dan terpercaya. Hubungi kami
+                    hari ini untuk pengalaman kebersihan yang tak tertandingi!”
+                  </p>
+                </div>
+              </div>
+
+              {/* Contact */}
+              <div>
+                <div className="font-montserrat text-[14px] font-bold tracking-wide text-slate-900">
+                  HUBUNGI KAMI
+                </div>
+
+                <div className="mt-5 font-montserrat text-[14px] leading-[22px] text-slate-700">
+                  <div className="font-semibold text-slate-900">Alamat:</div>
+                  <div className="mt-1 text-slate-700">
+                    Home Steril Jabodetabek, Sneakershoot Building (samping
+                    Resto Cubuk Bamboo),
+                    <br />
+                    Jl. Raya Gandul No.29A, Depok City, West Java 16512
+                  </div>
+
+                  <div className="mt-5 font-semibold text-slate-900">
+                    Kontak:
+                  </div>
+                  <div className="mt-1">
+                    Whatsapp/Telepon:{" "}
+                    <a
+                      href="tel:+6288908769669"
+                      className="font-semibold text-slate-800 hover:text-red-700"
+                    >
+                      +62-889-0876-9669
+                    </a>
+                    <br />
+                    Email:{" "}
+                    <a
+                      href="mailto:info@home-steril.com"
+                      className="font-semibold text-slate-800 hover:text-red-700"
+                    >
+                      info@home-steril.com
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Menu + Social */}
+              <div>
+                <div className="font-montserrat text-[14px] font-bold tracking-wide text-slate-900">
+                  MENU
+                </div>
+
+                <div className="mt-5 grid grid-cols-2 gap-8">
+                  <ul className="space-y-2 font-montserrat text-[14px] text-slate-700">
+                    <li>
+                      <a
+                        href="https://home-steril.com/"
+                        className="hover:text-red-700"
+                      >
+                        Beranda
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#faq" className="hover:text-red-700">
+                        FAQ
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://home-steril.com/contact"
+                        className="hover:text-red-700"
+                      >
+                        Hubungi Kami
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://home-steril.com/contact"
+                        className="hover:text-red-700"
+                      >
+                        Gabung Mitra
+                      </a>
+                    </li>
+                  </ul>
+
+                  <ul className="space-y-2 font-montserrat text-[14px] text-slate-700">
+                    <li>
+                      <a
+                        href="https://home-steril.com/services"
+                        className="hover:text-red-700"
+                      >
+                        Layanan
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://home-steril.com/about"
+                        className="hover:text-red-700"
+                      >
+                        Tentang Kami
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://home-steril.com/blog"
+                        className="hover:text-red-700"
+                      >
+                        Blog
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Social icons */}
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <a
+                    href="https://www.facebook.com/profile.php?id=100064338030557&mibextid=ZbWKwL"
+                    aria-label="Facebook"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
+                  >
+                    {/* facebook icon */}
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M22 12a10 10 0 10-11.5 9.9v-7H8v-3h2.5V9.7c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.5V12H18l-.5 3h-2.7v7A10 10 0 0022 12z" />
+                    </svg>
+                  </a>
+
+                  <a
+                    href="https://www.instagram.com/home.steril/"
+                    aria-label="Instagram"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
+                  >
+                    {/* instagram icon */}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M12 17a5 5 0 100-10 5 5 0 000 10z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M17.5 6.5h.01"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </a>
+
+                  <a
+                    href="https://www.tiktok.com/@home.steril?_t=8kGeKzEzZjz&_r=1"
+                    aria-label="TikTok"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
+                  >
+                    {/* tiktok icon (simple) */}
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M16 3c.6 2.8 2.2 4.4 5 5v4c-2.7 0-4.4-.9-6-2.2V17a6 6 0 11-6-6c.6 0 1.2.1 1.7.2V15a2 2 0 10-2.2 2A2 2 0 0013 15V3h3z" />
+                    </svg>
+                  </a>
+
+                  <a
+                    href="https://youtube.com/@homesteril?si=cWZYEb9RHy61Negk"
+                    aria-label="YouTube"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
+                  >
+                    {/* youtube icon */}
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M21.8 8s-.2-1.6-.9-2.3c-.9-.9-2-.9-2.5-1C15 4.4 12 4.4 12 4.4h0s-3 0-6.4.3c-.5.1-1.6.1-2.5 1C2.4 6.4 2.2 8 2.2 8S2 9.9 2 11.8v.4C2 14.1 2.2 16 2.2 16s.2 1.6.9 2.3c.9.9 2.1.9 2.6 1 1.9.2 6.3.3 6.3.3s3 0 6.4-.3c.5-.1 1.6-.1 2.5-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-.4c0-1.9-.2-3.8-.2-3.8zM10 15V9l6 3-6 3z" />
+                    </svg>
+                  </a>
+
+                  <a
+                    href="https://www.linkedin.com/company/home-steril?originalSubdomain=id"
+                    aria-label="LinkedIn"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
+                  >
+                    {/* linkedin icon */}
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M6.5 6.5A2 2 0 114.5 4.5a2 2 0 012 2zM5 8h3v12H5V8zm5 0h3v1.6h.1A3.3 3.3 0 0116 7.9c3.2 0 3.8 2.1 3.8 4.9V20h-3v-6.1c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3V20h-3V8z" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="mt-12 border-t border-slate-200 pt-5">
+              <div className="flex flex-col gap-3 font-montserrat text-[13px] text-slate-600 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-wrap gap-6">
+                  <a
+                    href="https://home-steril.com/privacy-policy"
+                    className="hover:text-red-700"
+                  >
+                    Kebijakan Privasi
+                  </a>
+                  <a
+                    href="https://home-steril.com/term-and-condition"
+                    className="hover:text-red-700"
+                  >
+                    Syarat dan Ketentuan
+                  </a>
+                </div>
+
+                <div>© Copyright 2026 Home Steril Indonesia.</div>
+              </div>
+
+              {/* SEO keywords block */}
+              <div className="mt-6 text-[12px] leading-[18px] text-slate-500">
+                wet cleaning kasur, Cuci springbed, cuci spring bed, laundry
+                kasur terdekat, laundry kasur, jasa bersih kasur, jasa bersihkan
+                kasur, jasa pembersih kasur, laundry springbed, laundry spring
+                bed, cuci ambal, harga cuci spring bed, harga cuci springbed,
+                pembersih spring bed, jasa bersih spring bed, jasa bersih
+                springbed, jasa bersihkan springbed, harga jasa cuci springbed,
+                harga laundry spring bed, harga laundry springbed, jasa cleaning
+                kasur, Harga Cuci Kasur, Cuci Kasur Murah, Cuci kasur terdekat,
+                Bersihkan Kasur, membersihkan kasur, mencuci kasur, pembersih
+                kasur, laundry springbed, pembersih kasur spring bed, Bed
+                Cleaning, Mattress cleaning, Springbed cleaning, spring bed
+                cleaning, mattress cleaning, Bed laundry, service cuci kasur,
+                tempat cuci kasur terdekat, tukang bersihin kasur, tukang cuci
+                kasur, tukang cuci spring bed.
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Right image */}
-        <div className="relative flex justify-center md:justify-end">
-          <img
-            src="/cta-cleaner.png"
-            alt="Mitra Home Steril"
-            className="w-full max-w-[360px] object-contain"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-{/* Footer */}
-<footer className="border-t border-slate-200 bg-white">
-  <div className="mx-auto max-w-6xl px-4 py-14">
-    <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
-      {/* Brand / About */}
-      <div>
-        <img src="/logo-home-steril.png" alt="Home Steril" className="h-10 w-auto" />
-
-        <div className="mt-4 font-montserrat text-[14px] leading-[22px] text-slate-700">
-          <div className="font-semibold text-slate-900">Home Steril Indonesia</div>
-          <div className="text-slate-700">PT. Infiniti Digital Indonesia</div>
-
-          <p className="mt-4 italic text-slate-600">
-            “Kami adalah mitra kebersihan, perawatan dan perbaikan rumah - kantor Anda yang dapat
-            diandalkan. Dengan komitmen untuk kualitas dan kepuasan pelanggan, kami menyediakan
-            layanan rumah - kantor yang profesional dan terpercaya. Hubungi kami hari ini untuk
-            pengalaman kebersihan yang tak tertandingi!”
-          </p>
-        </div>
-      </div>
-
-      {/* Contact */}
-      <div>
-        <div className="font-montserrat text-[14px] font-bold tracking-wide text-slate-900">
-          HUBUNGI KAMI
-        </div>
-
-        <div className="mt-5 font-montserrat text-[14px] leading-[22px] text-slate-700">
-          <div className="font-semibold text-slate-900">Alamat:</div>
-          <div className="mt-1 text-slate-700">
-            Home Steril Jabodetabek, Sneakershoot Building (samping Resto Cubuk Bamboo),<br />
-            Jl. Raya Gandul No.29A, Depok City, West Java 16512
-          </div>
-
-          <div className="mt-5 font-semibold text-slate-900">Kontak:</div>
-          <div className="mt-1">
-            Whatsapp/Telepon:{" "}
-            <a
-              href="tel:+6288908769669"
-              className="font-semibold text-slate-800 hover:text-red-700"
-            >
-              +62-889-0876-9669
-            </a>
-            <br />
-            Email:{" "}
-            <a
-              href="mailto:info@home-steril.com"
-              className="font-semibold text-slate-800 hover:text-red-700"
-            >
-              info@home-steril.com
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Menu + Social */}
-      <div>
-        <div className="font-montserrat text-[14px] font-bold tracking-wide text-slate-900">
-          MENU
-        </div>
-
-        <div className="mt-5 grid grid-cols-2 gap-8">
-          <ul className="space-y-2 font-montserrat text-[14px] text-slate-700">
-            <li>
-              <a href="https://home-steril.com/" className="hover:text-red-700">Beranda</a>
-            </li>
-            <li>
-              <a href="#faq" className="hover:text-red-700">FAQ</a>
-            </li>
-            <li>
-              <a href="https://home-steril.com/contact" className="hover:text-red-700">Hubungi Kami</a>
-            </li>
-            <li>
-              <a href="https://home-steril.com/contact" className="hover:text-red-700">Gabung Mitra</a>
-            </li>
-          </ul>
-
-          <ul className="space-y-2 font-montserrat text-[14px] text-slate-700">
-            <li>
-              <a href="https://home-steril.com/services" className="hover:text-red-700">Layanan</a>
-            </li>
-            <li>
-              <a href="https://home-steril.com/about" className="hover:text-red-700">Tentang Kami</a>
-            </li>
-            <li>
-              <a href="https://home-steril.com/blog" className="hover:text-red-700">Blog</a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Social icons */}
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+          {/* WhatsApp Floating Button */}
           <a
-            href="https://www.facebook.com/profile.php?id=100064338030557&mibextid=ZbWKwL"
-            aria-label="Facebook"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
+            href="https://wa.me/62888908769669?text=Halo%20Home%20Steril,%20saya%20ingin%20info%20kemitraan."
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat WhatsApp Home Steril"
+            className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition hover:scale-105"
           >
-            {/* facebook icon */}
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M22 12a10 10 0 10-11.5 9.9v-7H8v-3h2.5V9.7c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.5V12H18l-.5 3h-2.7v7A10 10 0 0022 12z" />
-            </svg>
+            <img
+              src="/logo-wa.png"
+              alt="WhatsApp"
+              className="h-14 w-14 object-contain"
+            />
           </a>
-
-          <a
-            href="https://www.instagram.com/home.steril/"
-            aria-label="Instagram"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
-          >
-            {/* instagram icon */}
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5z"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-              <path
-                d="M12 17a5 5 0 100-10 5 5 0 000 10z"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-              <path
-                d="M17.5 6.5h.01"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </a>
-
-          <a
-            href="https://www.tiktok.com/@home.steril?_t=8kGeKzEzZjz&_r=1"
-            aria-label="TikTok"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
-          >
-            {/* tiktok icon (simple) */}
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M16 3c.6 2.8 2.2 4.4 5 5v4c-2.7 0-4.4-.9-6-2.2V17a6 6 0 11-6-6c.6 0 1.2.1 1.7.2V15a2 2 0 10-2.2 2A2 2 0 0013 15V3h3z" />
-            </svg>
-          </a>
-
-          <a
-            href="https://youtube.com/@homesteril?si=cWZYEb9RHy61Negk"
-            aria-label="YouTube"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
-          >
-            {/* youtube icon */}
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M21.8 8s-.2-1.6-.9-2.3c-.9-.9-2-.9-2.5-1C15 4.4 12 4.4 12 4.4h0s-3 0-6.4.3c-.5.1-1.6.1-2.5 1C2.4 6.4 2.2 8 2.2 8S2 9.9 2 11.8v.4C2 14.1 2.2 16 2.2 16s.2 1.6.9 2.3c.9.9 2.1.9 2.6 1 1.9.2 6.3.3 6.3.3s3 0 6.4-.3c.5-.1 1.6-.1 2.5-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-.4c0-1.9-.2-3.8-.2-3.8zM10 15V9l6 3-6 3z" />
-            </svg>
-          </a>
-
-          <a
-            href="https://www.linkedin.com/company/home-steril?originalSubdomain=id"
-            aria-label="LinkedIn"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-black/90"
-          >
-            {/* linkedin icon */}
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6.5 6.5A2 2 0 114.5 4.5a2 2 0 012 2zM5 8h3v12H5V8zm5 0h3v1.6h.1A3.3 3.3 0 0116 7.9c3.2 0 3.8 2.1 3.8 4.9V20h-3v-6.1c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3V20h-3V8z" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    {/* Divider */}
-    <div className="mt-12 border-t border-slate-200 pt-5">
-      <div className="flex flex-col gap-3 font-montserrat text-[13px] text-slate-600 md:flex-row md:items-center md:justify-between">
-        <div className="flex flex-wrap gap-6">
-          <a href="https://home-steril.com/privacy-policy" className="hover:text-red-700">
-            Kebijakan Privasi
-          </a>
-          <a href="https://home-steril.com/term-and-condition" className="hover:text-red-700">
-            Syarat dan Ketentuan
-          </a>
-        </div>
-
-        <div>© Copyright 2026 Home Steril Indonesia.</div>
-      </div>
-      {/* SEO keywords block */}
-      <div className="mt-6 text-[12px] leading-[18px] text-slate-500">
-        wet cleaning kasur, Cuci springbed, cuci spring bed, laundry kasur terdekat, laundry kasur,
-        jasa bersih kasur, jasa bersihkan kasur, jasa pembersih kasur, laundry springbed, laundry
-        spring bed, cuci ambal, harga cuci spring bed, harga cuci springbed, pembersih spring bed,
-        jasa bersih spring bed, jasa bersih springbed, jasa bersihkan springbed, harga jasa cuci
-        springbed, harga laundry spring bed, harga laundry springbed, jasa cleaning kasur, Harga
-        Cuci Kasur, Cuci Kasur Murah, Cuci kasur terdekat, Bersihkan Kasur, membersihkan kasur,
-        mencuci kasur, pembersih kasur, laundry springbed, pembersih kasur spring bed, Bed Cleaning,
-        Mattress cleaning, Springbed cleaning, spring bed cleaning, mattress cleaning, Bed laundry,
-        service cuci kasur, tempat cuci kasur terdekat, tukang bersihin kasur, tukang cuci kasur,
-        tukang cuci spring bed.
-      </div>
-    </div>
-  </div>
-  {/* WhatsApp Floating Button */}
-<a
-  href="https://wa.me/62888908769669?text=Halo%20Home%20Steril,%20saya%20ingin%20info%20kemitraan."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Chat WhatsApp Home Steril"
-  className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition hover:scale-105"
->
-  <img
-    src="/logo-wa.png"
-    alt="WhatsApp"
-    className="h-14 w-14 object-contain"
-  />
-</a>
-</footer>
+        </footer>
       </main>
     </div>
   );
