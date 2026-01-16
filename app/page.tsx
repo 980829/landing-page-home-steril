@@ -2478,99 +2478,86 @@ return (
     </div>
   </div>
 </section>
-{/* Section: CTA - Waktunya Naik Kelas */}
-<section id="cta-naik-kelas" className="py-16">
+{/* Section: CTA - Waktunya Naik Kelas*/}
+<section id="cta-naik-kelas" className="py-10 sm:py-14 md:py-16">
   <div className="mx-auto max-w-7xl px-4">
     <div
       className="
-        relative overflow-hidden rounded-[28px] group
-        min-h-[520px] md:min-h-[360px]
+        relative overflow-hidden rounded-[28px] bg-red-700
+        min-h-[clamp(520px,72vh,680px)]
+        sm:min-h-[clamp(420px,56vh,560px)]
+        md:min-h-[360px]
       "
     >
-      {/* Background Image */}
-      <img
-        src="/cta red.png"
-        alt="CTA Background"
-        className="
-          absolute inset-0 h-full w-full object-cover
-          transition-transform duration-[1200ms] ease-out
-          group-hover:scale-[1.03]
-        "
-      />
+      {/* Decorative shapes */}
+      <div className="absolute -left-12 bottom-8 h-44 w-44 rounded-full bg-white/10" />
+      <div className="absolute -top-20 right-16 h-52 w-52 rounded-full bg-white/10" />
+      <div className="absolute left-10 top-10 h-24 w-24 rounded-full bg-black/10 md:hidden" />
+      <div className="absolute bottom-10 right-10 h-32 w-32 rounded-full bg-black/10 md:hidden" />
+
+      {/* overlay */}
+      <div className="absolute inset-0 bg-black/5" />
 
       {/* Content */}
       <div
         className="
-    relative z-10 h-full
-    grid grid-cols-1 content-between md:items-center gap-8
-    px-6 pb-10 pt-24
-    md:grid-cols-2 md:px-14 md:py-12
-  "
+          relative z-10 h-full
+          grid grid-cols-1 items-start gap-8
+          p-8 sm:p-10
+          md:grid-cols-2 md:items-center md:gap-10 md:p-14
+        "
       >
-{/* Left */}
-<div className="mt-12 md:mt-0">
-  <h3
-    className="
-      font-montserrat text-[24px] leading-[30px] md:text-[30px] md:leading-[38px]
-      font-bold text-white
-      transition-transform duration-300 ease-out
-      group-hover:-translate-y-[2px]
-    "
-  >
-    Waktunya Naik Kelas
-    <br />
-    Bersama Home Steril
-  </h3>
+        {/* Left */}
+        <div className="text-white">
+          <h3 className="font-montserrat font-bold text-[28px] leading-[34px] sm:text-[34px] sm:leading-[40px] md:text-[36px] md:leading-[42px]">
+            Waktunya Naik Kelas
+            <br />
+            <span className="text-white">Bersama Home Steril</span>
+          </h3>
 
-  <p
-    className="
-      mt-4 max-w-xl
-      font-montserrat text-[14px] leading-[20px] md:text-[16px] md:leading-[22px]
-      text-white/90
-    "
-  >
-    Mulai langkah pertama Anda membangun bisnis kebersihan yang tumbuh,
-    terarah, dan berdaya saing tinggi.
-  </p>
-</div>
+          <p className="mt-4 max-w-lg font-montserrat text-[14px] leading-[22px] text-white/90 sm:text-[16px] sm:leading-[24px]">
+            Mulai langkah pertama Anda membangun bisnis kebersihan yang tumbuh,
+            terarah, dan berdaya saing tinggi.
+          </p>
 
-        {/* Right */}
-        <div className="flex md:justify-end translate-y-1 md:translate-y-0">
+          {/* CTA (Mobile)*/}
+          <div className="mt-20 sm:mt-10 md:hidden flex flex-col gap-3">
+            <a
+              href="https://api.whatsapp.com/"
+              className="
+                inline-flex w-full items-center justify-center gap-2
+                rounded-full bg-white px-6 py-3
+                font-montserrat text-[14px] font-semibold text-red-700
+                transition hover:bg-white/90
+              "
+            >
+              Mulai Bergabung Hari Ini
+              <span className="text-[16px] leading-none">›</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Right*/}
+        <div className="hidden md:flex md:items-center md:justify-end">
           <a
             href="https://api.whatsapp.com/"
             className="
-              inline-flex items-center justify-center gap-3
-              rounded-full
-              border border-white/70
-              bg-white/10
-              px-7 py-3.5 md:px-8 md:py-4
-              font-montserrat text-[14px] md:text-[15px] font-semibold text-white
-              backdrop-blur-sm
-              transition-all duration-300 ease-out
-              hover:bg-white/20
-              hover:-translate-y-1
-              hover:shadow-[0_10px_30px_rgba(255,255,255,0.25)]
-              active:translate-y-0
-              active:scale-[0.99]
+              inline-flex items-center justify-center gap-2
+              rounded-full bg-white px-7 py-3.5
+              font-montserrat text-[14px] font-semibold text-red-700
+              transition hover:bg-white/90
+              shadow-[0_18px_50px_rgba(0,0,0,0.18)]
             "
           >
             Mulai Bergabung Hari Ini
-            <span
-              className="
-                text-[18px] leading-none
-                transition-transform duration-300
-                group-hover:translate-x-1
-                active:translate-x-1
-              "
-            >
-              ›
-            </span>
+            <span className="text-[16px] leading-none">›</span>
           </a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
         {/* Section: Klien Terpercaya */}
         <section id="klien-terpercaya" className="py-20">
           <div className="mx-auto max-w-7xl px-4">
