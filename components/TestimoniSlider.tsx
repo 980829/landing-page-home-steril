@@ -25,7 +25,7 @@ export default function TestimoniSlider() {
         role: "Mitra HOME STERIL Depok",
         quote:
           "SOP dan tools-nya lengkap. Saya tinggal fokus layanan, sementara sistem booking dan support-nya dibantu. Sangat praktis.",
-        image: "/testimoni 2.png",
+        image: "/Testimoni 2.png",
       },
       {
         name: "Agus",
@@ -39,7 +39,7 @@ export default function TestimoniSlider() {
         role: "Mitra HOME STERIL Bekasi",
         quote:
           "Saya suka karena ada pendampingan. Kalau ada kendala di lapangan, responnya cepat. Jadi lebih percaya diri kelola tim.",
-        image: "/testimoni 2.png",
+        image: "/Testimoni 2.png",
       },
       {
         name: "Doni",
