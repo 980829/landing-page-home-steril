@@ -17,8 +17,8 @@ function StatCard({
 }) {
   return (
     <div className="
-      w-[90%] sm:w-[200px]
-      h-[72px]
+      w-full sm:w-[200px]
+      h-[76px] sm:h-[72px]
       rounded-xl
       border border-slate-100
       bg-white
@@ -86,9 +86,20 @@ export default function Home() {
         setOpenJasa(false);
       }
     }
- document.addEventListener("mousedown", handleClickOutside);
-return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Prevent background scroll when mobile menu / modal is open
+  useEffect(() => {
+    const shouldLock = openMobile || openVideo;
+    document.documentElement.classList.toggle("overflow-hidden", shouldLock);
+    document.body.classList.toggle("overflow-hidden", shouldLock);
+    return () => {
+      document.documentElement.classList.remove("overflow-hidden");
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [openMobile, openVideo]);
 
 return (
   <div className="min-h-screen bg-white">
@@ -402,12 +413,12 @@ return (
         <section className="grid grid-cols-1 gap-10 py-10 md:grid-cols-2 md:py-14">
           {/* Left */}
           <div className="flex flex-col justify-center">
-            <h1 className="font-montserrat text-[40px] leading-[40px] font-bold tracking-normal text-slate-900">
+            <h1 className="font-montserrat text-3xl leading-tight sm:text-4xl sm:leading-[44px] lg:text-[44px] lg:leading-[48px] font-bold tracking-normal text-slate-900">
               <span className="text-slate-950">BANGUN BISNIS ANDA</span>{" "}
               <span className="text-red-700">BERSAMA HOME STERIL</span>
             </h1>
 
-            <p className="mt-4 text-lg md:text-xl font-semibold text-slate-800">
+            <p className="mt-4 text-base sm:text-lg md:text-xl font-semibold text-slate-800">
               Platform Kemitraan Jasa Kebersihan Modern & Terpercaya
             </p>
 
@@ -692,7 +703,7 @@ return (
                       </div>
                     </div>
 
-                    <div className="mt-4 text-center text-base font-extrabold whitespace-nowrap">
+                    <div className="mt-4 px-2 text-center text-base font-extrabold whitespace-normal">
                       {x.t}
                     </div>
                     <p className="mt-2 text-center text-sm leading-relaxed text-white/90">
@@ -871,15 +882,15 @@ return (
         </section>
 
         {/* Section: Kenapa Harus Bergabung Sekarang */}
-        <section id="bergabung-sekarang" className="py-15">
-          <div className="mx-auto max-w-7xl px-20">
+        <section id="bergabung-sekarang" className="py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20">
             <div className="grid grid-cols-1 items-center gap-3 md:grid-cols-2">
 {/* Left: Image */}
 {/* Wrapper utama */}
 <div className="relative mx-auto w-full max-w-[400px]">
   {/* Container gambar + badge DI DALAM */}
   <div className="relative overflow-hidden rounded-[32px]">
-    <div className="relative w-full h-[520px] md:w-[400px] md:h-[595px]">
+    <div className="relative w-full h-[460px] sm:h-[520px] md:w-[400px] md:h-[595px]">
       <Image
         src="/join-man.png"
         alt="Peluang kemitraan Home Steril"
@@ -1280,7 +1291,7 @@ return (
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
-              <h2 className="font-montserrat text-[40px] leading-[40px] font-bold tracking-normal text-slate-900">
+              <h2 className="font-montserrat text-2xl leading-tight sm:text-3xl sm:leading-[34px] md:text-[40px] md:leading-[44px] font-bold tracking-normal text-slate-900">
                 Paket Franchise{" "}
                 <span className="text-red-700">HOME STERIL</span>
               </h2>
@@ -1455,7 +1466,7 @@ return (
           <div className="mx-auto max-w-7xl px-4">
             {/* Header (atas) */}
             <div className="max-w-3xl">
-              <h2 className="font-montserrat text-[50px] leading-[48px] font-bold text-slate-900">
+              <h2 className="font-montserrat text-2xl leading-tight sm:text-4xl sm:leading-[44px] lg:text-[50px] lg:leading-[54px] font-bold text-slate-900">
                 Bagaimana Sistem Kemitraan{" "}
                 <span className="text-red-700">Kami Bekerja?</span>
               </h2>
@@ -1587,7 +1598,7 @@ return (
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
-              <h2 className="font-montserrat text-[40px] leading-[40px] font-bold tracking-normal text-slate-900">
+              <h2 className="font-montserrat text-2xl leading-tight sm:text-3xl sm:leading-[34px] md:text-[40px] md:leading-[44px] font-bold tracking-normal text-slate-900">
                 Area Cakupan <span className="text-red-700">HOME STERIL</span>
               </h2>
 
@@ -1738,7 +1749,7 @@ return (
         {/* Section: Testimoni Mitra */}
         <section id="testimoni" className="py-20">
           <div className="mx-auto max-w-7xl px-4">
-            <h2 className="text-center font-montserrat text-[40px] font-bold">
+            <h2 className="text-center font-montserrat text-2xl sm:text-3xl md:text-[40px] font-bold">
               Testimoni Mitra <span className="text-red-700">HOME STERIL</span>
             </h2>
 
@@ -1757,7 +1768,7 @@ return (
             <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
               {/* Left */}
               <div>
-                <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+                <h2 className="font-montserrat text-2xl leading-tight sm:text-3xl sm:leading-[36px] lg:text-[44px] lg:leading-[48px] font-bold tracking-normal text-slate-900">
                   Apa yang Anda <span className="text-red-700">Dapatkan?</span>
                 </h2>
 
@@ -1845,7 +1856,7 @@ return (
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
-              <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+              <h2 className="font-montserrat text-2xl leading-tight sm:text-3xl sm:leading-[36px] lg:text-[44px] lg:leading-[48px] font-bold tracking-normal text-slate-900">
                 Garansi Kepuasan{" "}
                 <span className="text-red-700">100% Mitra HOME STERIL</span>
               </h2>
@@ -2565,7 +2576,7 @@ return (
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
-              <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+              <h2 className="font-montserrat text-2xl leading-tight sm:text-3xl sm:leading-[36px] lg:text-[44px] lg:leading-[48px] font-bold tracking-normal text-slate-900">
                 Klien <span className="text-red-700">Terpercaya</span>
               </h2>
 
@@ -2650,7 +2661,7 @@ return (
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
-              <h2 className="font-montserrat text-[44px] leading-[48px] font-bold tracking-normal text-slate-900">
+              <h2 className="font-montserrat text-2xl leading-tight sm:text-3xl sm:leading-[36px] lg:text-[44px] lg:leading-[48px] font-bold tracking-normal text-slate-900">
                 Pertanyaan{" "}
                 <span className="text-red-700">yang Sering Diajukan</span>
               </h2>
