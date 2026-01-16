@@ -584,7 +584,7 @@ return (
           </div>
         )}
         {/* Section Keuntungan Jadi Mitra HOME STERIL */}
-        <section id="kemitraan" className="py-16">
+        <section id="kemitraan" className="py-12 md:py-16">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
             {/* Left: Image */}
             <div className="relative">
@@ -717,7 +717,7 @@ return (
         </section>
 
         {/* Section: Siapa Kami */}
-        <section id="tentang-kami" className="py-20">
+        <section id="tentang-kami" className="py-14 md:py-20">
           <div className="mx-auto max-w-4xl px-4 text-center">
             {/* Heading */}
             <h2
@@ -773,7 +773,7 @@ return (
         </section>
 
         {/* Section: Visi & Misi */}
-        <section id="visi-misi" className="py-20">
+        <section id="visi-misi" className="py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="rounded-3xl bg-slate-50 px-6 py-14 md:px-12">
               {/* Heading */}
@@ -882,7 +882,7 @@ return (
         </section>
 
         {/* Section: Kenapa Harus Bergabung Sekarang */}
-        <section id="bergabung-sekarang" className="py-16 sm:py-20">
+        <section id="bergabung-sekarang" className="py-12 sm:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20">
             <div className="grid grid-cols-1 items-center gap-3 md:grid-cols-2">
 {/* Left: Image */}
@@ -959,7 +959,7 @@ return (
                   <span className="text-red-700">Bergabung Sekarang?</span>
                 </h2>
 
-                {/* PARAGRAF (Montserrat 18px, LH 24px, Regular 400) */}
+                {/* PARAGRAF */}
                 <p
                   className="
                     mt-4
@@ -1011,7 +1011,7 @@ return (
     group
     rounded-2xl
     bg-white
-    p-1
+    p-5 sm:p-6
     shadow-sm
     ring-1 ring-black/5
     w-full
@@ -1061,7 +1061,7 @@ return (
         </section>
 
         {/* Section: Google Review / Testimoni */}
-<section id="review" className="py-24">
+<section id="review" className="py-14 md:py-24">
   <div className="mx-auto max-w-7xl px-5">
     <div className="max-w-4xl">
       <h2 className="
@@ -1287,7 +1287,7 @@ return (
         </section>
 
         {/* Section: Paket Franchise */}
-        <section id="paket-franchise" className="py-20">
+        <section id="paket-franchise" className="py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
@@ -1462,7 +1462,7 @@ return (
         </section>
 
         {/* Section: Cara Kerja Kemitraan */}
-        <section id="cara-kerja" className="py-20">
+        <section id="cara-kerja" className="py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4">
             {/* Header (atas) */}
             <div className="max-w-3xl">
@@ -1533,7 +1533,7 @@ return (
         </section>
 
 {/* Section: CTA Franchise */}
-<section className="relative py-24">
+<section className="relative py-14 md:py-24">
   <div className="mx-auto max-w-7xl px-4">
     <div className="relative overflow-hidden rounded-[28px]">
       {/* Background image */}
@@ -1594,7 +1594,7 @@ return (
 </section>
 
         {/* Section: Area Cakupan */}
-        <section id="area-cakupan" className="py-20">
+        <section id="area-cakupan" className="py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
@@ -1747,7 +1747,7 @@ return (
           </div>
         </section>
         {/* Section: Testimoni Mitra */}
-        <section id="testimoni" className="py-20">
+        <section id="testimoni" className="py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4">
             <h2 className="text-center font-montserrat text-2xl sm:text-3xl md:text-[40px] font-bold">
               Testimoni Mitra <span className="text-red-700">HOME STERIL</span>
@@ -1763,7 +1763,7 @@ return (
           </div>
         </section>
         {/* Section: Apa yang Anda Dapatkan */}
-        <section id="apa-yang-didapatkan" className="py-20">
+        <section id="apa-yang-didapatkan" className="py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4">
             <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
               {/* Left */}
@@ -1852,7 +1852,7 @@ return (
           </div>
         </section>
         {/* Section: Garansi Kepuasan */}
-        <section id="garansi" className="py-20">
+        <section id="garansi" className="py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
@@ -2013,7 +2013,7 @@ return (
           </div>
         </section>
 {/* Section: Perbandingan Kemitraan */}
-<section id="perbandingan" className="py-20">
+<section id="perbandingan" className="py-14 md:py-20">
   <div className="mx-auto max-w-7xl px-4">
     {/* Header */}
     <div className="text-center">
@@ -2484,8 +2484,8 @@ return (
     <div
       className="
         relative overflow-hidden rounded-[28px] bg-red-700
-        min-h-[clamp(520px,72vh,680px)]
-        sm:min-h-[clamp(420px,56vh,560px)]
+        min-h-[clamp(340px,45vh,520px)]
+        sm:min-h-[clamp(360px,52vh,480px)]
         md:min-h-[360px]
       "
     >
@@ -2503,7 +2503,7 @@ return (
         className="
           relative z-10 h-full
           grid grid-cols-1 items-start gap-8
-          p-8 sm:p-10
+          p-6 sm:p-8
           md:grid-cols-2 md:items-center md:gap-10 md:p-14
         "
       >
@@ -2521,16 +2521,19 @@ return (
           </p>
 
           {/* CTA (Mobile)*/}
-          <div className="mt-20 sm:mt-10 md:hidden flex flex-col gap-3">
-            <a
-              href="https://api.whatsapp.com/"
-              className="
-                inline-flex w-full items-center justify-center gap-2
-                rounded-full bg-white px-6 py-3
-                font-montserrat text-[14px] font-semibold text-red-700
-                transition hover:bg-white/90
-              "
-            >
+          <div className="mt-10 sm:mt-8 md:hidden flex flex-col gap-3">
+          <a
+            href="https://api.whatsapp.com/"
+            className="
+              inline-flex w-full items-center justify-center gap-2
+              rounded-full border border-white/80
+              bg-white/0 px-6 py-3
+              font-montserrat text-[14px] font-semibold text-white
+              backdrop-blur-[1px]
+              transition
+              hover:bg-white/10 hover:border-white
+            "
+          >
               Mulai Bergabung Hari Ini
               <span className="text-[16px] leading-none">›</span>
             </a>
@@ -2543,11 +2546,13 @@ return (
             href="https://api.whatsapp.com/"
             className="
               inline-flex items-center justify-center gap-2
-              rounded-full bg-white px-7 py-3.5
-              font-montserrat text-[14px] font-semibold text-red-700
-              transition hover:bg-white/90
-              shadow-[0_18px_50px_rgba(0,0,0,0.18)]
-            "
+              rounded-full border border-white/80
+              bg-white/0 px-7 py-3.5
+              font-montserrat text-[14px] font-semibold text-white
+              backdrop-blur-[1px]
+              transition
+              hover:bg-white/10 hover:border-white
+              shadow-[0_18px_50px_rgba(0,0,0,0.18)]"
           >
             Mulai Bergabung Hari Ini
             <span className="text-[16px] leading-none">›</span>
@@ -2559,7 +2564,7 @@ return (
 </section>
 
         {/* Section: Klien Terpercaya */}
-        <section id="klien-terpercaya" className="py-20">
+        <section id="klien-terpercaya" className="py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
@@ -2644,7 +2649,7 @@ return (
           </div>
         </section>
         {/* Section: FAQ */}
-        <section id="faq" className="py-20">
+        <section id="faq" className="py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4">
             {/* Header */}
             <div className="text-center">
@@ -3215,7 +3220,7 @@ return (
 </section>
 
         {/* Section: Rating / Seberapa Bermanfaat Postingan Ini */}
-        <section id="rating" className="py-16">
+        <section id="rating" className="py-12 md:py-16">
           <div className="mx-auto max-w-7xl px-4">
             <div
               className="
@@ -3281,7 +3286,7 @@ return (
           </div>
         </section>
         {/* Section: CTA Akhir */}
-        <section id="cta-akhir" className="py-20">
+        <section id="cta-akhir" className="py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4">
             <div className="relative overflow-hidden rounded-[28px] bg-red-700">
               {/* Decorative shapes */}
