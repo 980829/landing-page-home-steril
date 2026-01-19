@@ -108,7 +108,7 @@ return (
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <a href="/" className="h-9 w-auto object-contain">
+          <a href="https://home-steril.com/" className="h-9 w-auto object-contain">
             <Image
               src="/logo-home-steril.png"
               alt="Home Steril"
@@ -535,14 +535,14 @@ return (
   <StatCard
     title="Tim"
     main={<span className="font-extrabold text-red-700">100+</span>}
-    right="Tim Mitra"
+    right="Tim Teknisi"
     icon={<span className="text-purple-600 text-lg">👥</span>}
   />
 
   <StatCard
     title="Dukungan"
     main={<span className="font-extrabold text-red-700">100%</span>}
-    right="Pelatihan Mitra"
+    right="Pelatihan Teknisi"
     icon={<span className="text-green-600 text-lg">🎓</span>}
   />
               </div>
@@ -603,10 +603,11 @@ return (
 
             {/* Right: Title + Cards */}
             <div>
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.05] text-slate-900">
-                Keuntungan Jadi <br />
-                <span className="text-red-700">Mitra HOME STERIL</span>
-              </h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.05] text-slate-900">
+              <div>Keuntungan jadi</div>
+              <div>Mitra Bisnis</div>
+              <div className="text-red-700">HOME STERIL</div>
+            </h2>
 
               <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[
@@ -1060,33 +1061,35 @@ return (
           </div>
         </section>
 
-        {/* Section: Google Review / Testimoni */}
+{/* Section: Google Review / Testimoni */}
 <section id="review" className="py-14 md:py-24">
   <div className="mx-auto max-w-7xl px-5">
     <div className="max-w-4xl">
-      <h2 className="
+      <h2
+        className="
         font-montserrat 
         text-[40px] leading-[40px] font-bold tracking-normal text-slate-900
         whitespace-normal md:whitespace-nowrap
-      ">
+      "
+      >
         Tertinggi di Layanan{" "}
         <span className="text-red-700 whitespace-normal md:whitespace-nowrap">
           Jasa Kebersihan Rumah &amp; Kantor
         </span>
       </h2>
 
-              <p className="mt-4 font-montserrat text-[18px] leading-[24px] font-normal tracking-normal text-slate-600">
-                Dipercaya oleh ratusan pelanggan karena kualitas, ketepatan
-                waktu, dan hasil kerja yang memuaskan. Lihat apa kata mereka
-                tentang pengalaman bersama kami.
-              </p>
+      <p className="mt-4 font-montserrat text-[18px] leading-[24px] font-normal tracking-normal text-slate-600">
+        Dipercaya oleh ratusan pelanggan karena kualitas, ketepatan waktu, dan
+        hasil kerja yang memuaskan. Lihat apa kata mereka tentang pengalaman
+        bersama kami.
+      </p>
 
-              {/* Button pindah ke bawah */}
-              <a
-                href="https://maps.app.goo.gl/PASTE_LINK_GOOGLE_MAPS_KAMU"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
+      {/* Button pindah ke bawah */}
+      <a
+        href="https://www.google.com/maps/place/Home-Steril+%7CCuci+Kasur+-Laundry+Kasur+-Cuci+Sofa+-Vacuum+Tungau+-Jasa+Bersih+Bersih+Rumah+-Kuras+Toren+-Pembantu+Harian,+Home+Steril+Jabodetabek,+Jalan+Raya+Gandul,+Gandul,+Kota+Depok,+Jawa+Barat/@-6.3257633,106.7913025,6621m/data=!3m1!1e3!4m5!3m4!1s0x2e69f1479a03efd5:0x89641142eeac2f8!8m2!3d-6.3271646!4d106.7961089?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="
                   mt-6
                   inline-flex
                   w-fit
@@ -1104,114 +1107,122 @@ return (
                   shadow-sm
                   hover:bg-red-50
                 "
-              >
-                Lihat Google Review
-              </a>
-            </div>
+      >
+        Lihat Google Review
+      </a>
+    </div>
 
-            {/* Stats */}
-            <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
-              {[
-                {
-                  img: "/rating.png",
-                  alt: "Rating",
-                  main: "5.0",
-                  sub: "Rating Rata-rata",
-                },
-                {
-                  img: "/review-positif.png",
-                  alt: "Review Positif",
-                  main: "1,203",
-                  sub: "Review Positif",
-                },
-                {
-                  img: "/terbaik.png",
-                  alt: "Terbaik",
-                  main: "#1",
-                  sub: "Terbaik di Indonesia",
-                },
-              ].map((s) => (
-                <div
-                  key={s.sub}
-                  className="
-    group
-    flex
-    items-center
-    gap-4
-    rounded-2xl
-    bg-white
-    px-5
-    py-4
-    shadow-md
-    ring-1 ring-black/5
-    transition-all
-    duration-300
-    ease-out
-    hover:-translate-y-1
-    hover:shadow-xl
-    hover:ring-2
-    hover:ring-red-700/15
+    {/* Stats */}
+    <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+      {[
+        {
+          img: "/rating.png",
+          alt: "Rating",
+          main: "5.0",
+          sub: "Rating Rata-rata",
+        },
+        {
+          img: "/review-positif.png",
+          alt: "Review Positif",
+          main: "+3.300",
+          sub: "Review Positif",
+        },
+        {
+          img: "/terbaik.png",
+          alt: "Terbaik",
+          main: "#1",
+          sub: "Terbaik di Indonesia",
+        },
+      ].map((s) => (
+        <div
+          key={s.sub}
+          className="
+                  group
+                  flex
+                  items-center
+                  gap-4
+                  rounded-2xl
+                  bg-white
+                  px-5
+                  py-4
+                  shadow-md
+                  ring-1 ring-black/5
+                  transition-all
+                  duration-300
+                  ease-out
+                  hover:-translate-y-1
+                  hover:shadow-xl
+                  hover:ring-2
+                  hover:ring-red-700/15
   "
-                >
-                  {/* Icon */}
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-700 transition-transform duration-300 ease-out group-hover:scale-110">
-                    <Image
-                      src={s.img}
-                      alt={s.alt}
-                      width={22}
-                      height={22}
-                      className="object-contain"
-                    />
-                  </div>
+        >
+          {/* Icon */}
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-700 transition-transform duration-300 ease-out group-hover:scale-110">
+            <Image
+              src={s.img}
+              alt={s.alt}
+              width={22}
+              height={22}
+              className="object-contain"
+            />
+          </div>
 
-                  {/* Text */}
-                  <div className="leading-tight">
-                    <div className="font-montserrat text-[22px] font-bold text-slate-900">
-                      {s.main}
-                    </div>
-                    <div className="font-montserrat text-[14px] font-normal text-slate-600">
-                      {s.sub}
-                    </div>
-                  </div>
-                </div>
-              ))}
+          {/* Text */}
+          <div className="leading-tight">
+            <div className="font-montserrat text-[22px] font-bold text-slate-900">
+              {s.main}
             </div>
+            <div className="font-montserrat text-[14px] font-normal text-slate-600">
+              {s.sub}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
 
-            {/* Reviews */}
-            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-              {[
-                {
-                  initial: "S",
-                  name: "Sarah Wijaya",
-                  time: "2 minggu yang lalu",
-                  rating: 5,
-                  text: "Pertama kali coba jasa cuci kasur Home Steril dan hasilnya memuaskan sekali. Kasur yang tadinya punya noda dan bau apek jadi bersih, wangi, dan cepat kering. Pelayanannya profesional, teknisi datang tepat waktu dan ramah. Sangat direkomendasikan untuk yang cari laundry kasur terpercaya di Jabodetabek!",
-                },
-                {
-                  initial: "B",
-                  name: "Budi Santoso",
-                  time: "1 bulan yang lalu",
-                  rating: 5,
-                  text: "Anak saya sering bersin-bersin karena alergi debu. Setelah pakai jasa laundry kasur Home Steril, tungau benar-benar hilang dan tidurnya jadi lebih nyaman. Teknologi vakum keringnya luar biasa, proses cepat dan tidak merepotkan. Sekarang kasur lebih higienis dan aman untuk keluarga.",
-                },
-                {
-                  initial: "M",
-                  name: "Maya Putri",
-                  time: "3 minggu yang lalu",
-                  rating: 5,
-                  text: "Saya suka karena Home Steril memberi layanan gratis transport dan garansi cuci ulang. Sangat praktis, saya tinggal booking, tim datang ke rumah, dan dalam sehari kasur sudah bisa dipakai lagi. Harga terjangkau, hasilnya sebanding bahkan lebih dari ekspektasi. Recommended banget!",
-                },
-                {
-                  initial: "A",
-                  name: "Ahmad Rizki",
-                  time: "2 minggu yang lalu",
-                  rating: 5,
-                  text: "Sudah beberapa kali menggunakan jasa cuci kasur Home Steril dan selalu puas dengan hasilnya. Rating tinggi di Google memang benar adanya, pelayanan ramah, profesional, dan kualitas terbaik. Kasur jadi bersih maksimal, wangi, dan terasa seperti baru lagi.",
-                },
-              ].map((r) => (
-                <div
-                  key={r.name}
-                  className="
+    {/* Reviews */}
+    <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+      {[
+        {
+          initial: "R",
+          name: "Rahmyel",
+          time: "2 minggu yang lalu",
+          rating: 5,
+          reviewUrl:
+            "https://www.google.com/maps/contrib/111235702987455232909/place/ChIJ1e8DmkfxaS4R-MLqLhRBlgg/@-6.5161631,106.599894,847186m/data=!3m1!1e3!4m6!1m5!8m4!1e1!2s111235702987455232909!3m1!1e1?hl=id&entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D",
+          text: "Home service yg paling fleksibel.. Pelayanan nya baik, admin informatif dan sabar melayani.. petugas yg hadir (nama: Jaja) orangnya jujur, hasil nya bersih, alat alatnya komplit, sampai dapat sinar uv juga stelah pembersihan. Terima kasih",
+        },
+        {
+          initial: "S",
+          name: "Salman Naufal",
+          time: "1 bulan yang lalu",
+          rating: 5,
+          reviewUrl:
+            "https://www.google.com/maps/contrib/116770709428187991930/place/ChIJ1e8DmkfxaS4R-MLqLhRBlgg/@22.2582781,52.7149363,12626512m/data=!3m1!1e3!4m6!1m5!8m4!1e1!2s116770709428187991930!3m1!1e1?hl=id&entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D",
+          text: "Saya sangat puas dari service special cleaning and wet cleaning sofa dari home steril. Terutama pelayanan cleaning dari Pak Muis, Bu Siska, dan Mas Riki benar-benar memuaskan. Mereka bekerja dengan teliti, cepat, dan hasilnya sangat bersih. Setiap dari mereka menunjukkan profesionalisme yang tinggi, ramah, serta memperhatikan detail sehingga area yang dibersihkan terasa jauh lebih nyaman. Terima kasih atas layanan yang luar biasa—sangat direkomendasikan!",
+        },
+        {
+          initial: "D",
+          name: "Devy Wilson",
+          time: "1 minggu yang lalu",
+          rating: 5,
+          reviewUrl:
+            "https://www.google.com/maps/contrib/106670683795192094836/place/ChIJ1e8DmkfxaS4R-MLqLhRBlgg/@-6.3271646,106.7961089,828m/data=!3m1!1e3!4m6!1m5!8m4!1e1!2s106670683795192094836!3m1!1e1?hl=id&entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D",
+          text: "Thanks Home Steril for the great service, I'm very happy with my bathroom renovation. The result turned out just as expected, n the work was done neatly and professional^^",
+        },
+        {
+          initial: "U",
+          name: "Umi Uum",
+          time: "1 minggu yang lalu",
+          rating: 5,
+          reviewUrl:
+            "https://www.google.com/maps/contrib/112891109205964328072/place/ChIJ1e8DmkfxaS4R-MLqLhRBlgg/@-6.3271646,106.7961089,828m/data=!3m1!1e3!4m6!1m5!8m4!1e1!2s112891109205964328072!3m1!1e1?hl=id&entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D",
+          text: "Terima kasih home steril yang sudah memberikan pelayanan dry sofa dan kasur di rumah saya. Hasilnya bersih, rapi, dan memuaskan,Terima kasih juga untuk mas Sidiq yang sudah membersihkan dengan teliti dan merapikannya dengan baik. pelayanannya ramah dan Profesional. Sangat direkomendaskan👍🏻",
+        },
+      ].map((r) => (
+        <div
+          key={r.name}
+          className="
     group
     rounded-2xl
     bg-white
@@ -1226,65 +1237,85 @@ return (
     hover:ring-2
     hover:ring-red-700/10
   "
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                      {/* Avatar */}
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-700 text-white font-montserrat font-bold transition-transform duration-300 ease-out group-hover:scale-105">
-                        {r.initial}
-                      </div>
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-4">
+              {/* Avatar */}
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-700 text-white font-montserrat font-bold transition-transform duration-300 ease-out group-hover:scale-105">
+                {r.initial}
+              </div>
 
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <div className="font-montserrat font-bold text-slate-900">
-                            {r.name}
-                          </div>
-
-                          {/* Verified badge (image) */}
-                          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-200">
-                            <Image
-                              src="/verified.png"
-                              alt="Verified"
-                              width={12}
-                              height={12}
-                              className="object-contain"
-                            />
-                          </span>
-                        </div>
-
-                        {/* Stars + time (INLINE, TANPA component) */}
-                        <div className="mt-1 flex items-center gap-2">
-                          <div className="flex items-center gap-0.5">
-                            {Array.from({ length: 5 }).map((_, i) => (
-                              <span
-                                key={i}
-                                className={
-                                  i < r.rating
-                                    ? "text-yellow-500"
-                                    : "text-slate-300"
-                                }
-                              >
-                                ★
-                              </span>
-                            ))}
-                          </div>
-
-                          <span className="font-montserrat text-[12px] text-slate-500">
-                            {r.time}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <div className="font-montserrat font-bold text-slate-900">
+                    {r.name}
                   </div>
 
-                  <p className="mt-4 font-montserrat text-[14px] leading-[20px] text-slate-600">
-                    {r.text}
-                  </p>
+                  {/* Verified badge (image) */}
+                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-200">
+                    <Image
+                      src="/verified.png"
+                      alt="Verified"
+                      width={12}
+                      height={12}
+                      className="object-contain"
+                    />
+                  </span>
                 </div>
-              ))}
+
+                {/* Stars + time (INLINE, TANPA component) */}
+                <div className="mt-1 flex items-center gap-2">
+                  <div className="flex items-center gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span
+                        key={i}
+                        className={
+                          i < r.rating ? "text-yellow-500" : "text-slate-300"
+                        }
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+
+                  <span className="font-montserrat text-[12px] text-slate-500">
+                    {r.time}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+
+          <p className="mt-4 font-montserrat text-[14px] leading-[20px] text-slate-600">
+            {r.text}
+          </p>
+
+          {r.reviewUrl && (
+            <div className="mt-4">
+              <a
+                href={r.reviewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+        inline-flex items-center gap-2
+        rounded-full border border-slate-200 bg-white
+        px-3 py-1.5
+        font-montserrat text-[12px] font-semibold text-slate-700
+        transition-colors
+        hover:border-red-200 hover:text-red-700
+      "
+                aria-label={`Lihat review ${r.name} di Google Maps`}
+              >
+                Lihat di Google <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
 
         {/* Section: Paket Franchise */}
         <section id="paket-franchise" className="py-14 md:py-20">
@@ -1292,7 +1323,7 @@ return (
             {/* Header */}
             <div className="text-center">
               <h2 className="font-montserrat text-2xl leading-tight sm:text-3xl sm:leading-[34px] md:text-[40px] md:leading-[44px] font-bold tracking-normal text-slate-900">
-                Paket Franchise{" "}
+                Paket Mitra Bisnis{" "}
                 <span className="text-red-700">HOME STERIL</span>
               </h2>
 
@@ -3392,10 +3423,17 @@ return (
                 <div className="mt-5 font-montserrat text-[14px] leading-[22px] text-slate-700">
                   <div className="font-semibold text-slate-900">Alamat:</div>
                   <div className="mt-1 text-slate-700">
-                    Home Steril Jabodetabek, Sneakershoot Building (samping
-                    Resto Cubuk Bamboo),
-                    <br />
-                    Jl. Raya Gandul No.29A, Depok City, West Java 16512
+                    <a
+                      href="https://www.google.com/maps/place/Home-Steril+%7CCuci+Kasur+-Laundry+Kasur+-Cuci+Sofa+-Vacuum+Tungau+-Jasa+Bersih+Bersih+Rumah+-Kuras+Toren+-Pembantu+Harian/@-6.3271646,106.793534,17z/data=!3m1!4b1!4m6!3m5!1s0x2e69f1479a03efd5:0x89641142eeac2f8!8m2!3d-6.3271646!4d106.7961089!16s%2Fg%2F11ht5h7_31?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block hover:text-red-700 transition-colors"
+                      aria-label="Buka alamat Home Steril di Google Maps"
+                    >
+                      Home Steril Jabodetabek, Sneakershoot Building (samping Resto Cubuk Bamboo),
+                      <br />
+                      Jl. Raya Gandul No.29A, Depok City, West Java 16512
+                    </a>
                   </div>
 
                   <div className="mt-5 font-semibold text-slate-900">
