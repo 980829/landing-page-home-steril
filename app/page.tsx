@@ -8,61 +8,77 @@ function StatCard({
   value,
   lines,
   icon,
+  href,
+  noContainer = false,
 }: {
   value: React.ReactNode;
   lines: React.ReactNode[];
   icon?: React.ReactNode;
+  href?: string;
+  noContainer?: boolean;
 }) {
+  const Wrapper: any = href ? "a" : "div";
+
   return (
-    <div
+    <Wrapper
+      {...(href ? { href, target: "_blank", rel: "noopener noreferrer" } : {})}
       className="
-        w-full
+        group w-full
         rounded-2xl
         border border-slate-200
         bg-white
-        px-5 py-4
+        px-4 py-3
         shadow-sm
+        transition-all duration-200 ease-out
+        hover:-translate-y-0.5 hover:shadow-lg hover:border-slate-300
       "
     >
-      <div className="flex items-center gap-4">
-        {/* Icon */}
-        <div
-          className="
-            flex h-10 w-10 shrink-0 items-center justify-center
-            rounded-2xl
-            bg-slate-50
-            border border-slate-200
-          "
-        >
-          {icon}
-        </div>
+      <div className="flex flex-col items-center text-center gap-1">
+{/* ICON */}
+{icon && (
+  noContainer ? (
+    <div className="mb-1 flex items-center justify-center">
+      {icon}
+    </div>
+  ) : (
+    <div
+      className="
+        mb-1
+        flex h-10 w-10 items-center justify-center
+        rounded-full
+        bg-slate-50
+        border border-slate-200
+        transition-transform duration-200
+        group-hover:scale-105
+      "
+    >
+      {icon}
+    </div>
+  )
+)}
 
-        {/* Value */}
-        <div className="shrink-0 text-[18px] sm:text-[20px] leading-none font-bold text-red-700">
+
+        {/* VALUE */}
+        <div className="text-[18px] sm:text-[20px] leading-none font-extrabold text-red-700 tabular-nums">
           {value}
         </div>
 
-        {/* Text */}
-        <div className="min-w-0 flex-1 pr-1">
-          <div className="space-y-0.5 leading-[1.15]">
-            {lines.map((line, i) => (
-              <div
-                key={i}
-                className={
-                  i === 0
-                    ? "text-[12px] sm:text-[13px] font-semibold text-slate-900 whitespace-normal break-normal"
-                    : "text-[12px] sm:text-[13px] font-medium text-slate-600 whitespace-normal break-normal"
-                }
-              >
-                {line}
-              </div>
-            ))}
-          </div>
+        {/* LINE 1 */}
+        <div className="text-[13px] sm:text-[14px] leading-tight font-semibold text-slate-900">
+          {lines?.[0]}
+        </div>
+
+        {/* LINE 2 */}
+        <div className="text-[11px] sm:text-[12px] leading-tight font-normal text-slate-500">
+          {lines?.[1]}
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }
+
+
+
 
 
 
@@ -71,6 +87,7 @@ export default function Home() {
   const [openMobile, setOpenMobile] = useState(false);
   const [openVideo, setOpenVideo] = useState(false);
   type CityKey =
+    | "Bali"
     | "Bandung"
     | "Sukabumi"
     | "Cirebon"
@@ -89,10 +106,18 @@ export default function Home() {
     badgeSub: string;
   }> = [
     {
+      key: "Bali",
+      title: "Bali",
+      desc: "Layanan tersedia 24/7",
+      image: "/maps/bali.webp",
+      badgeTitle: "BALI",
+      badgeSub: "Coverage Area",
+    },
+    {
       key: "Bandung",
       title: "Bandung",
       desc: "Layanan tersedia 24/7",
-      image: "/maps/bandung.webp",
+      image: "/maps/bandung.png",
       badgeTitle: "BANDUNG",
       badgeSub: "Coverage Area",
     },
@@ -100,7 +125,7 @@ export default function Home() {
       key: "Sukabumi",
       title: "Sukabumi",
       desc: "Layanan tersedia 24/7",
-      image: "/maps/sukabumi.webp",
+      image: "/maps/sukabumi.png",
       badgeTitle: "SUKABUMI",
       badgeSub: "Coverage Area",
     },
@@ -108,7 +133,7 @@ export default function Home() {
       key: "Cirebon",
       title: "Cirebon",
       desc: "Layanan tersedia 24/7",
-      image: "/maps/cirebon.webp",
+      image: "/maps/cirebon.png",
       badgeTitle: "CIREBON",
       badgeSub: "Coverage Area",
     },
@@ -116,7 +141,7 @@ export default function Home() {
       key: "Cikarang",
       title: "Cikarang",
       desc: "Layanan tersedia 24/7",
-      image: "/maps/cikarang.webp",
+      image: "/maps/cikarang.png",
       badgeTitle: "CIKARANG",
       badgeSub: "Coverage Area",
     },
@@ -124,7 +149,7 @@ export default function Home() {
       key: "Serang",
       title: "Serang",
       desc: "Layanan tersedia 24/7",
-      image: "/maps/serang.webp",
+      image: "/maps/serang.png",
       badgeTitle: "SERANG",
       badgeSub: "Coverage Area",
     },
@@ -132,7 +157,7 @@ export default function Home() {
       key: "Banten",
       title: "Banten",
       desc: "Layanan tersedia 24/7",
-      image: "/maps/banten.webp",
+      image: "/maps/banten.png",
       badgeTitle: "BANTEN",
       badgeSub: "Coverage Area",
     },
@@ -140,7 +165,7 @@ export default function Home() {
       key: "Cipanas",
       title: "Cipanas",
       desc: "Layanan tersedia 24/7",
-      image: "/maps/cipanas.webp",
+      image: "/maps/cipanas.png",
       badgeTitle: "CIPANAS",
       badgeSub: "Coverage Area",
     },
@@ -148,7 +173,7 @@ export default function Home() {
       key: "Karawang",
       title: "Karawang",
       desc: "Layanan tersedia 24/7",
-      image: "/maps/karawang.webp",
+      image: "/maps/karawang.png",
       badgeTitle: "KARAWANG",
       badgeSub: "Coverage Area",
     },
@@ -476,7 +501,7 @@ return (
         <div className="mt-2 border-t border-slate-200 pt-3">
           <a
             href="https://api.whatsapp.com/send/?phone=62888908769669&text=Halo+Home+Steril%2C+saya+ingin+info+kemitraan.&type=phone_number&app_absent=0"
-            className="inline-flex w-full items-center justify-center rounded-xl bg-red-700 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-red-800"
+            className="inline-flex w-full items-center justify-center rounded-xl bg-red-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-800"
             onClick={() => setOpenMobile(false)}
           >
             Pesan Sekarang
@@ -545,7 +570,7 @@ return (
 
           {/* Right */}
           <div className="relative">
-            <div className="relative overflow-hidden rounded-[28px] sm:p-4 lg:p-6">
+            <div className="relative overflow-hidden rounded-[28px]">
               {/* Frame gambar */}
               <div
                 className="
@@ -580,7 +605,7 @@ return (
                     w-[92%] max-w-[360px] sm:w-auto sm:max-w-none
                     rounded-full border border-white/40
                     bg-black/25 backdrop-blur-[2px]
-                    px-4 py-3 sm:px-6
+                    px-4 py-2 sm:px-6
                     font-montserrat text-[12px] sm:text-[14px] font-medium text-white
                     text-center leading-snug whitespace-normal sm:whitespace-nowrap
                     transition-all duration-300 ease-out
@@ -589,7 +614,7 @@ return (
                     active:scale-[0.99]
                   "
                 >
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition-transform duration-300 ease-out hover:scale-110">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/60 bg-white/10 transition-transform duration-300 ease-out hover:scale-110">
                     ▶
                   </span>
                   Lihat Bagaimana Sistem Kami Bekerja
@@ -597,12 +622,22 @@ return (
               </div>
 
               {/* Stats row */}
-              <div className="mt-5 grid grid-cols-1 gap-3 sm:mt-6 sm:grid-cols-3 sm:gap-4">
-                <StatCard
-                  value="5.0"
-                  lines={["3.300+", "Rating review"]}
-                  icon={<span className="text-yellow-500 text-lg">★</span>}
-                />
+              <div className="mt-3 sm:mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+<StatCard
+  value="5.0"
+  lines={["3.300+", "Rating review"]}
+  noContainer
+  icon={
+    <Image
+      src="/bintang-5.webp"
+      alt="Rating-5 Bintang"
+      width={60}
+      height={60}
+      className="h-10 w-auto object-contain"
+    />
+  }
+/>
+
 
                 <StatCard
                   value="100+"
@@ -612,7 +647,7 @@ return (
 
                 <StatCard
                   value="100%"
-                  lines={["Dukungan", "Pelatihan", "Operasional"]}
+                  lines={["Dukungan", "Pelatihan Operasional"]}
                   icon={<span className="text-green-600 text-lg">🎓</span>}
                 />
               </div>
@@ -964,7 +999,7 @@ return (
                         absolute top-2 right-2
                         md:top-3 md:right-3
                         rounded-2xl bg-red-800
-                        px-4 py-3 md:px-5 md:py-4
+                        px-4 py-2 md:px-5 md:py-4
                         text-center text-white
                         shadow-md
                       "
@@ -982,7 +1017,7 @@ return (
                     sm:left-2 sm:bottom-5
                     md:left-5 md:bottom-4
                     rounded-2xl bg-white
-                    px-4 py-3 md:px-5 md:py-4
+                    px-4 py-2 md:px-5 md:py-4
                     shadow-md ring-1 ring-black/5
                   "
                 >
@@ -1742,7 +1777,7 @@ return (
                           group w-full text-left
                           flex items-center justify-between
                           rounded-2xl bg-white
-                          px-4 py-3
+                          px-4 py-2
                           shadow-sm ring-1 ring-black/5
                           transition-all duration-300 ease-out
                           hover:-translate-y-0.5 hover:shadow-lg hover:ring-2 hover:ring-red-700/10
@@ -2754,7 +2789,7 @@ return (
                 {/* Q1 */}
                 <details className="group">
                   <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
                       <svg
                         className="transition-transform duration-200 group-open:rotate-180"
                         width="18"
@@ -2793,7 +2828,7 @@ return (
                 {/* Q2 */}
                 <details className="group">
                   <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
                       <svg
                         className="transition-transform duration-200 group-open:rotate-180"
                         width="18"
@@ -2831,7 +2866,7 @@ return (
                 {/* Q3 */}
                 <details className="group">
                   <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
                       <svg
                         className="transition-transform duration-200 group-open:rotate-180"
                         width="18"
@@ -2874,7 +2909,7 @@ return (
                 {/* Q4 */}
                 <details className="group">
                   <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
                       <svg
                         className="transition-transform duration-200 group-open:rotate-180"
                         width="18"
@@ -2913,7 +2948,7 @@ return (
                 {/* Q5 */}
                 <details className="group">
                   <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
                       <svg
                         className="transition-transform duration-200 group-open:rotate-180"
                         width="18"
@@ -2951,7 +2986,7 @@ return (
                 {/* Q6 */}
                 <details className="group">
                   <summary className="flex cursor-pointer items-center gap-4 rounded-xl py-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#E8C9C5]">
                       <svg
                         className="transition-transform duration-200 group-open:rotate-180"
                         width="18"
