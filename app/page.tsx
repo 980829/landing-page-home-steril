@@ -5,77 +5,169 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import TestimoniSlider from "@/components/TestimoniSlider";
 
 function StatCard({
-  title,
-  main,
-  right,
+  value,
+  lines,
   icon,
 }: {
-  title: string;
-  main: ReactNode;
-  right?: string;
-  icon?: ReactNode;
+  value: React.ReactNode;
+  lines: React.ReactNode[];
+  icon?: React.ReactNode;
 }) {
   return (
-    <div className="
-      w-full sm:w-[200px]
-      h-[76px] sm:h-[72px]
-      rounded-xl
-      border border-slate-100
-      bg-white
-      px-4 py-3
-      shadow-sm
-      flex items-center gap-3
-    ">
-      <div className="
-        flex h-9 w-9
-        shrink-0
-        items-center justify-center
-        rounded-lg
-        bg-slate-50
+    <div
+      className="
+        w-full
+        rounded-2xl
         border border-slate-200
-      ">
-        {icon}
-      </div>
+        bg-white
+        px-5 py-4
+        shadow-sm
+      "
+    >
+      <div className="flex items-center gap-4">
+        {/* Icon */}
+        <div
+          className="
+            flex h-10 w-10 shrink-0 items-center justify-center
+            rounded-2xl
+            bg-slate-50
+            border border-slate-200
+          "
+        >
+          {icon}
+        </div>
 
-      <div className="flex flex-col">
-        <span className="text-slate-700 text-[14px] font-medium">
-          {title}
-        </span>
+        {/* Value */}
+        <div className="shrink-0 text-[18px] sm:text-[20px] leading-none font-bold text-red-700">
+          {value}
+        </div>
 
-        <div className="flex items-baseline gap-1">
-          {main}
-
-          {right && (
-            <span className="text-slate-600 text-[12px] font-medium">
-              {right}
-            </span>
-          )}
+        {/* Text */}
+        <div className="min-w-0 flex-1 pr-1">
+          <div className="space-y-0.5 leading-[1.15]">
+            {lines.map((line, i) => (
+              <div
+                key={i}
+                className={
+                  i === 0
+                    ? "text-[12px] sm:text-[13px] font-semibold text-slate-900 whitespace-normal break-normal"
+                    : "text-[12px] sm:text-[13px] font-medium text-slate-600 whitespace-normal break-normal"
+                }
+              >
+                {line}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
+
+
 export default function Home() {
   const [openJasaMobile, setOpenJasaMobile] = useState(false);
   const [openMobile, setOpenMobile] = useState(false);
   const [openVideo, setOpenVideo] = useState(false);
-  type CityKey = "Jakarta" | "Bogor" | "Depok" | "Tangerang" | "Bekasi";
+  type CityKey =
+    | "Bandung"
+    | "Sukabumi"
+    | "Cirebon"
+    | "Cikarang"
+    | "Serang"
+    | "Banten"
+    | "Cipanas"
+    | "Karawang";
 
-  const CITY_PRESET: Record<CityKey, { x: number; y: number; scale: number }> =
+  const CITIES: Array<{
+    key: CityKey;
+    title: string;
+    desc: string;
+    image: string;
+    badgeTitle: string;
+    badgeSub: string;
+  }> = [
     {
-      Jakarta: { x: -60, y: 20, scale: 1.45 },
-      Bogor: { x: -40, y: -10, scale: 1.45 },
-      Depok: { x: -30, y: 10, scale: 1.45 },
-      Tangerang: { x: -10, y: 20, scale: 1.45 },
-      Bekasi: { x: -80, y: 10, scale: 1.45 },
-    };
+      key: "Bandung",
+      title: "Bandung",
+      desc: "Layanan tersedia 24/7",
+      image: "/maps/bandung.webp",
+      badgeTitle: "BANDUNG",
+      badgeSub: "Coverage Area",
+    },
+    {
+      key: "Sukabumi",
+      title: "Sukabumi",
+      desc: "Layanan tersedia 24/7",
+      image: "/maps/sukabumi.webp",
+      badgeTitle: "SUKABUMI",
+      badgeSub: "Coverage Area",
+    },
+    {
+      key: "Cirebon",
+      title: "Cirebon",
+      desc: "Layanan tersedia 24/7",
+      image: "/maps/cirebon.webp",
+      badgeTitle: "CIREBON",
+      badgeSub: "Coverage Area",
+    },
+    {
+      key: "Cikarang",
+      title: "Cikarang",
+      desc: "Layanan tersedia 24/7",
+      image: "/maps/cikarang.webp",
+      badgeTitle: "CIKARANG",
+      badgeSub: "Coverage Area",
+    },
+    {
+      key: "Serang",
+      title: "Serang",
+      desc: "Layanan tersedia 24/7",
+      image: "/maps/serang.webp",
+      badgeTitle: "SERANG",
+      badgeSub: "Coverage Area",
+    },
+    {
+      key: "Banten",
+      title: "Banten",
+      desc: "Layanan tersedia 24/7",
+      image: "/maps/banten.webp",
+      badgeTitle: "BANTEN",
+      badgeSub: "Coverage Area",
+    },
+    {
+      key: "Cipanas",
+      title: "Cipanas",
+      desc: "Layanan tersedia 24/7",
+      image: "/maps/cipanas.webp",
+      badgeTitle: "CIPANAS",
+      badgeSub: "Coverage Area",
+    },
+    {
+      key: "Karawang",
+      title: "Karawang",
+      desc: "Layanan tersedia 24/7",
+      image: "/maps/karawang.webp",
+      badgeTitle: "KARAWANG",
+      badgeSub: "Coverage Area",
+    },
+  ];
 
-  const [activeCity, setActiveCity] = useState<CityKey | null>(null);
+  const [activeCity, setActiveCity] = useState<CityKey>("Bandung");
+  const [isSwitching, setIsSwitching] = useState(false);
 
-  const mapTransform = activeCity
-    ? `translate(${CITY_PRESET[activeCity].x}px, ${CITY_PRESET[activeCity].y}px) scale(${CITY_PRESET[activeCity].scale})`
-    : "translate(0px, 0px) scale(1)";
+  const activeData = CITIES.find((c) => c.key === activeCity) ?? CITIES[0];
+
+  function handleSelectCity(next: CityKey) {
+    if (next === activeCity) return;
+
+    setIsSwitching(true);
+    window.setTimeout(() => {
+      setActiveCity(next);
+      setIsSwitching(false);
+    }, 180);
+  }
 
   const [openJasa, setOpenJasa] = useState(false);
   const jasaRef = useRef<HTMLDivElement | null>(null);
@@ -410,7 +502,7 @@ return (
 
       {/* Hero */}
       <main className="mx-auto max-w-7xl px-4">
-        <section className="grid grid-cols-1 gap-10 py-10 md:grid-cols-2 md:py-14">
+        <section className="grid grid-cols-1 items-center gap-10 py-10 md:grid-cols-2 md:py-14 lg:gap-14">
           {/* Left */}
           <div className="flex flex-col justify-center">
             <h1 className="font-montserrat text-3xl leading-tight sm:text-4xl sm:leading-[44px] lg:text-[44px] lg:leading-[48px] font-bold tracking-normal text-slate-900">
@@ -419,26 +511,27 @@ return (
             </h1>
 
             <p className="mt-4 text-base sm:text-lg md:text-xl font-semibold text-slate-800">
-              Platform Kemitraan Jasa Kebersihan Modern & Terpercaya
+              Platform kemitraan bisnis Jasa Kebersihan dan Perawatan Rumah, Kantor &amp; Gedung Terbaik dan Terpercaya
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
                 href="https://api.whatsapp.com/send/?phone=62888908769669&text=Halo+Home+Steril%2C+saya+ingin+info+kemitraan.&type=phone_number&app_absent=0"
                 className="
-            inline-flex items-center gap-3 rounded-2xl bg-red-700 px-5 py-3 text-sm font-semibold text-white shadow-md
-            transition-all duration-300 ease-out
-            hover:bg-red-800 hover:-translate-y-0.5 hover:shadow-lg
-            active:translate-y-0 active:scale-[0.99]
-          "
+                  group
+                  inline-flex items-center gap-3 rounded-2xl bg-red-700 px-5 py-3 text-sm font-semibold text-white shadow-md
+                  transition-all duration-300 ease-out
+                  hover:bg-red-800 hover:-translate-y-0.5 hover:shadow-lg
+                  active:translate-y-0 active:scale-[0.99]
+                "
               >
                 Daftar Kemitraan Sekarang
                 <span
                   className="
-              inline-flex h-8 w-8 items-center justify-center rounded-xl bg-white/15
-              transition-transform duration-300 ease-out
-              group-hover:translate-x-0.5
-            "
+                    inline-flex h-8 w-8 items-center justify-center rounded-xl bg-white/15
+                    transition-transform duration-300 ease-out
+                    group-hover:translate-x-0.5
+                  "
                 >
                   ➜
                 </span>
@@ -446,105 +539,82 @@ return (
             </div>
 
             <p className="mt-6 max-w-xl font-montserrat text-[18px] leading-[24px] font-normal text-slate-600">
-              Raih peluang usaha dengan sistem siap pakai — kami sediakan brand,
-              pelatihan, dan dukungan penuh untuk membantu Anda sukses dari hari
-              pertama.
+              Raih peluang usaha dengan sistem siap pakai. Dengan Brand Home Steril yang sudah terpercaya sejak tahun 2020. Kami bantu marketing dan carikan pelanggan, Anda fokus pada kualitas layanan ke pelanggan.
             </p>
           </div>
 
           {/* Right */}
-          <div className="relative md:translate-x-[20px]">
-            <div
-              className="
-          relative overflow-hidden rounded-[28px] p-6
-          transition-all duration-300 ease-out
-        "
-            >
+          <div className="relative">
+            <div className="relative overflow-hidden rounded-[28px] sm:p-4 lg:p-6">
               {/* Frame gambar */}
               <div
                 className="
-            relative w-full overflow-hidden rounded-2xl bg-[#E9E0D6]
-            transition-all duration-300 ease-out
-            hover:shadow-lg
-          "
+                  relative w-full overflow-hidden rounded-2xl bg-[#E9E0D6]
+                  transition-all duration-300 ease-out
+                  shadow-sm hover:shadow-lg
+                "
               >
                 {/* tinggi frame */}
-                <div className="relative h-[260px] sm:h-[300px]">
+                <div className="relative h-[260px] sm:h-[320px] lg:h-[360px]">
                   <Image
                     src="/mitra-home-steril.jpg"
                     alt="Mitra Home Steril"
                     fill
                     className="
-                object-contain
-                transition-transform duration-500 ease-out
-                hover:scale-[1.02]
-              "
+                      object-contain
+                      transition-transform duration-500 ease-out
+                      hover:scale-[1.02]
+                    "
                     priority
                   />
                 </div>
 
-                {/* tombol overlay transparan */}
-<button
-  id="video"
-  type="button"
-  onClick={() => setOpenVideo(true)}
-  className={`
-    absolute left-1/2 top-1/2
-    -translate-x-1/2 -translate-y-1/2
-    flex items-center justify-center gap-3
+                {/* tombol overlay */}
+                <button
+                  id="video"
+                  type="button"
+                  onClick={() => setOpenVideo(true)}
+                  className="
+                    absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                    flex items-center justify-center gap-3
+                    w-[92%] max-w-[360px] sm:w-auto sm:max-w-none
+                    rounded-full border border-white/40
+                    bg-black/25 backdrop-blur-[2px]
+                    px-4 py-3 sm:px-6
+                    font-montserrat text-[12px] sm:text-[14px] font-medium text-white
+                    text-center leading-snug whitespace-normal sm:whitespace-nowrap
+                    transition-all duration-300 ease-out
+                    hover:bg-white/10 hover:shadow-[0_10px_30px_rgba(255,255,255,0.18)]
+                    hover:scale-[1.02]
+                    active:scale-[0.99]
+                  "
+                >
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition-transform duration-300 ease-out hover:scale-110">
+                    ▶
+                  </span>
+                  Lihat Bagaimana Sistem Kami Bekerja
+                </button>
+              </div>
 
-    rounded-2xl md:rounded-full
-    border border-white/40
-
-    bg-transparent
-    backdrop-blur-0
-
-    md:bg-black/30
-    md:backdrop-blur-[2px]
-
-    px-4 py-3 md:px-6 md:py-3
-    font-montserrat text-[12px] md:text-[14px] font-medium text-white
-
-    w-[88%] md:w-auto
-    max-w-[320px] md:max-w-none
-    whitespace-normal md:whitespace-nowrap
-    text-center leading-snug
-
-    transition-all duration-300 ease-out
-    md:hover:bg-white/15 md:hover:shadow-[0_10px_30px_rgba(255,255,255,0.18)]
-    md:hover:scale-[1.02]
-    active:scale-[0.99]
-  `}
->
-  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition-transform duration-300 ease-out md:hover:scale-110">
-    ▶
-  </span>
-  Lihat Bagaimana Sistem Kami Bekerja
-</button>
-
-</div>
               {/* Stats row */}
- <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
-  <StatCard
-    title="Rating"
-    main={<span className="font-extrabold text-red-700">5.0</span>}
-    right="Rating review"
-    icon={<span className="text-yellow-500 text-lg">★</span>}
-  />
+              <div className="mt-5 grid grid-cols-1 gap-3 sm:mt-6 sm:grid-cols-3 sm:gap-4">
+                <StatCard
+                  value="5.0"
+                  lines={["3.300+", "Rating review"]}
+                  icon={<span className="text-yellow-500 text-lg">★</span>}
+                />
 
-  <StatCard
-    title="Tim"
-    main={<span className="font-extrabold text-red-700">100+</span>}
-    right="Tim Teknisi"
-    icon={<span className="text-purple-600 text-lg">👥</span>}
-  />
+                <StatCard
+                  value="100+"
+                  lines={["Tim", "Operasional"]}
+                  icon={<span className="text-purple-600 text-lg">👥</span>}
+                />
 
-  <StatCard
-    title="Dukungan"
-    main={<span className="font-extrabold text-red-700">100%</span>}
-    right="Pelatihan Teknisi"
-    icon={<span className="text-green-600 text-lg">🎓</span>}
-  />
+                <StatCard
+                  value="100%"
+                  lines={["Dukungan", "Pelatihan", "Operasional"]}
+                  icon={<span className="text-green-600 text-lg">🎓</span>}
+                />
               </div>
             </div>
           </div>
@@ -746,11 +816,7 @@ return (
                 text-slate-600
               "
             >
-              Home Steril adalah jasa laundry kasur terpercaya di Jabodetabek
-              dengan rating dan review tertinggi di Google Bisnis. Kami
-              menghadirkan layanan cuci kasur bergaransi dengan transportasi
-              gratis, teknologi vakum kering express, serta perlindungan anti
-              alergi untuk kenyamanan tidur Anda.
+              Home Steril adalah platform one-stop solution yang menyediakan berbagai layanan kebersihan dan perawatan untuk rumah, kantor, dan gedung sejak tahun 2020. Dengan reputasi yang solid, Home Steril telah melayani ribuan pelanggan dan meraih 3.300+ ulasan Google dengan rating sempurna.
             </p>
 
             {/* Paragraf 2 */}
@@ -764,11 +830,7 @@ return (
                 text-slate-600
               "
             >
-              Dengan standar profesional dan jaminan kualitas, Home Steril
-              memastikan hasil bersih maksimal, cepat kering, higienis, dan
-              nyaman digunakan kembali. Kami menjadi pilihan utama masyarakat
-              Jabodetabek untuk layanan cuci kasur terdekat, terpercaya, dan
-              terbaik.
+              Home Steril mengedepankan kualitas, transparansi, dan kepuasan pelanggan di setiap pekerjaan serta selalu memberikan Garansi di setiap layanan untuk memastikan properti Anda tetap bersih, aman, dan nyaman.
             </p>
           </div>
         </section>
@@ -834,10 +896,7 @@ return (
                       Visi
                     </h3>
                     <p className="mt-2 font-montserrat text-[18px] leading-[24px] font-normal text-slate-600">
-                      Menciptakan lingkungan hunian dan ruang kerja yang lebih
-                      bersih, sehat, dan higienis melalui layanan kemitraan
-                      kebersihan yang profesional, terpercaya, dan ramah
-                      lingkungan.
+                     Menjadi platform penyedia jasa kebersihan dan perawatan properti terdepan dan paling terpercaya di Indonesia, yang menjadi standar utama dalam menciptakan lingkungan hunian dan kerja yang bersih, sehat, serta aman.
                     </p>
                   </div>
                 </div>
@@ -866,6 +925,7 @@ return (
                         "Memberdayakan mitra dengan pelatihan dan dukungan yang efektif.",
                         "Menjangkau lebih banyak keluarga dan bisnis di berbagai kota.",
                         "Mengutamakan kualitas, kepercayaan, dan kepuasan pelanggan.",
+                        "Menyediakan Solusi Satu Pintu (One-Stop Solution): Menghadirkan ekosistem layanan yang komprehensif untuk memudahkan pemilik rumah, kantor, dan gedung dalam memenuhi seluruh kebutuhan perawatan properti mereka.",
                       ].map((text, i) => (
                         <div key={i} className="flex items-start gap-2">
                           <span className="w-5 flex-shrink-0 text-slate-600">
@@ -885,166 +945,156 @@ return (
         {/* Section: Kenapa Harus Bergabung Sekarang */}
         <section id="bergabung-sekarang" className="py-12 sm:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20">
-            <div className="grid grid-cols-1 items-center gap-3 md:grid-cols-2">
-{/* Left: Image */}
-{/* Wrapper utama */}
-<div className="relative mx-auto w-full max-w-[400px]">
-  {/* Container gambar + badge DI DALAM */}
-  <div className="relative overflow-hidden rounded-[32px]">
-    <div className="relative w-full h-[460px] sm:h-[520px] md:w-[400px] md:h-[595px]">
-      <Image
-        src="/join-man.png"
-        alt="Peluang kemitraan Home Steril"
-        fill
-        className="object-contain md:object-cover object-center md:object-[30%_center]"
-        priority={false}
-      />
+            <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2 md:gap-12">
+              {/* Left: Image */}
+              <div className="relative w-full max-w-[460px] md:max-w-none md:pr-2">
+                <div className="relative overflow-hidden rounded-[32px]">
+                  <div className="relative w-full h-[420px] sm:h-[520px] md:h-[595px]">
+                    <Image
+                      src="/join-man.png"
+                      alt="Peluang kemitraan Home Steril"
+                      fill
+                      className="object-contain md:object-cover object-center md:object-[30%_center]"
+                      priority={false}
+                    />
 
-      {/* Badge: top-right (MASUK ke dalam frame) */}
-      <div
-        className="
-          absolute
-          top-2 right-2
-          md:top-3 md:right-3
-          rounded-2xl
-          bg-red-800
-          px-4 py-3
-          md:px-5 md:py-4
-          text-center text-white
-          shadow-md
-        "
-      >
-        <div className="text-xs md:text-sm leading-none opacity-90">Pasar</div>
-        <div className="text-xl md:text-2xl font-extrabold leading-none">
-          Naik
-        </div>
-      </div>
-    </div>
-  </div>
+                    {/* Badge: top-right (inside frame) */}
+                    <div
+                      className="
+                        absolute top-2 right-2
+                        md:top-3 md:right-3
+                        rounded-2xl bg-red-800
+                        px-4 py-3 md:px-5 md:py-4
+                        text-center text-white
+                        shadow-md
+                      "
+                    >
+                      <div className="text-xs md:text-sm leading-none opacity-90">Pasar</div>
+                      <div className="text-xl md:text-2xl font-extrabold leading-none">Naik</div>
+                    </div>
+                  </div>
+                </div>
 
-  {/* Badge: bottom-left (tetap di luar frame) */}
-  <div
-    className="
-      absolute
-      left-2 bottom-3
-      md:left-5 md:bottom-1
-      sm:-left-1 sm:bottom-5
-      rounded-2xl
-      bg-white
-      px-4 py-3
-      md:px-5 md:py-4
-      shadow-md
-      ring-1 ring-black/5
-    "
-  >
-    <div className="text-base md:text-lg font-extrabold text-red-700 leading-none">
-      Ambil
-    </div>
-    <div className="text-xs md:text-sm text-red-700 opacity-90">Peluang</div>
-  </div>
-</div>
+                {/* Badge: bottom-left */}
+                <div
+                  className="
+                    absolute left-3 bottom-3
+                    sm:left-2 sm:bottom-5
+                    md:left-5 md:bottom-4
+                    rounded-2xl bg-white
+                    px-4 py-3 md:px-5 md:py-4
+                    shadow-md ring-1 ring-black/5
+                  "
+                >
+                  <div className="text-base md:text-lg font-extrabold text-red-700 leading-none">Ambil</div>
+                  <div className="text-xs md:text-sm text-red-700 opacity-90">Peluang</div>
+                </div>
+              </div>
+
               {/* Right: Content */}
               <div>
-                {/* HEADER (Montserrat 40px, LH 40px, Bold 700) */}
                 <h2
                   className="
                     font-montserrat
-                    text-[40px]
-                    leading-[40px]
-                    font-bold
-                    tracking-normal
-                    text-slate-900
+                    text-[32px] leading-[36px]
+                    sm:text-[40px] sm:leading-[40px]
+                    font-bold tracking-normal text-slate-900
                   "
                 >
                   Kenapa Harus{" "}
                   <span className="text-red-700">Bergabung Sekarang?</span>
                 </h2>
 
-                {/* PARAGRAF */}
                 <p
                   className="
                     mt-4
                     max-w-xl
                     font-montserrat
-                    text-[18px]
-                    leading-[24px]
-                    font-normal
-                    tracking-normal
-                    text-slate-600
+                    text-[18px] leading-[24px]
+                    font-normal tracking-normal text-slate-600
                   "
                 >
-                  Kesempatan terbaik tidak datang dua kali. Home Steril terus
-                  berkembang, dan saat ini adalah momen paling tepat untuk ikut
-                  tumbuh bersama kami.
+                  Kesempatan terbaik tidak datang dua kali. Home Steril terus berkembang, dan saat ini adalah momen paling tepat untuk ikut tumbuh bersama kami.
                 </p>
 
                 {/* Cards */}
-                <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
                   {[
                     {
-                      t: "Pasar Terus Tumbuh",
-                      d: "Permintaan jasa kebersihan meningkat pesat setiap tahun",
-                      iconSrc: "/pasar-tumbuh.png",
-                      iconAlt: "pasar terus tumbuh",
+                      t: "Reputasi Bintang 5 Home Steril di Google dengan ribuan ulasan positif",
+                      d: "Dengan Reputasi Brand yang tinggi dapat lebih mudah mendapatkan pelanggan baru",
+                      iconSrc: "/reputasi.webp",
+                      iconAlt: "Reputasi Bintang 5 Home Steril di Google dengan ribuan ulasan positif",
                     },
                     {
-                      t: "Persaingan Masih Rendah",
-                      d: "Jadi pionir di kota Anda sebelum pasar penuh",
-                      iconSrc: "/persaingan.png",
-                      iconAlt: "persaingan masih rendah",
+                      t: "Marketing & SEO Dihandle Sepenuhnya Google.",
+                      d: "Lupakan biaya iklan yang mahal. Home Steril mengoptimalkan strategi digital marketing dan SEO agar jasa yang Anda tangani selalu muncul di peringkat atas pencarian",
+                      iconSrc: "/SEO.webp",
+                      iconAlt: "Marketing & SEO Dihandle Sepenuhnya Google.",
                     },
                     {
-                      t: "Dukungan Lengkap",
-                      d: "Dapat training, tools, dan support sejak hari pertama",
-                      iconSrc: "/dukungan.png",
-                      iconAlt: "dukungan lengkap",
+                      t: "Ekosistem Jasa yang Sangat Luas (Cross-Selling)",
+                      d: "Dengan 17+ kategori layanan, potensi cross-selling sangat tinggi untuk setiap pelanggan",
+                      iconSrc: "/Ekosistem.webp",
+                      iconAlt: "Ekosistem Jasa yang Sangat Luas (Cross-Selling)",
                     },
                     {
-                      t: "Peluang Jadi Pionir",
-                      d: "Bangun reputasi lebih cepat bersama pertumbuhan Home Steril",
-                      iconSrc: "/pionir.png",
-                      iconAlt: "peluang jadi pionir",
+                      t: "Branding Kuat & Terpercaya",
+                      d: "Home Steril sudah dikenal sebagai platform one-stop solution. Menjadi bagian dari mitra kami akan meningkatkan brand value bisnis Anda dibandingkan kompetitor mandiri.",
+                      iconSrc: "/branding-kuat.webp",
+                      iconAlt: "Branding Kuat & Terpercaya",
+                    },
+                    {
+                      t: "Pertumbuhan Bisnis yang Stabil",
+                      d: "Industri kebersihan & perawatan rumah dan gedung adalah sektor yang terus dibutuhkan (evergreen). Bersama Home Steril, bisnis Anda akan memiliki keberlanjutan jangka panjang yang lebih terjamin.",
+                      iconSrc: "/pertumbuhan-bisnis.webp",
+                      iconAlt: "Pertumbuhan Bisnis yang Stabil",
+                    },
+                    {
+                      t: "Dukungan Komunitas & Update Skill",
+                      d: "Kesempatan untuk bertukar pengalaman dengan sesama mitra ahli dan mendapatkan arahan standar pengerjaan profesional kelas atas agar selalu unggul di pasaran.",
+                      iconSrc: "/komunitas.webp",
+                      iconAlt: "Dukungan Komunitas & Update Skill",
                     },
                   ].map((x) => (
                     <div
                       key={x.t}
                       className="
-    group
-    rounded-2xl
-    bg-white
-    p-5 sm:p-6
-    shadow-sm
-    ring-1 ring-black/5
-    w-full
-    max-w-[400px]
-    mx-auto
-    transition-all
-    duration-300
-    ease-out
-    hover:-translate-y-2
-    hover:shadow-xl
-    hover:ring-2
-    hover:ring-red-700/15
-  "
+                        group
+                        h-full
+                        rounded-2xl bg-white
+                        p-5 sm:p-6
+                        shadow-sm ring-1 ring-black/5
+                        transition-all duration-300 ease-out
+                        hover:-translate-y-1 hover:shadow-xl
+                        hover:ring-2 hover:ring-red-700/15
+                      "
                     >
-                      {/* ICON (Figma style) */}
-                      <div
-                        className="
-    h-12 w-12
-    transition-transform
-    duration-300
-    ease-out
-    group-hover:scale-110
-  "
-                      >
-                        <Image
-                          src={x.iconSrc}
-                          alt={x.iconAlt}
-                          width={48}
-                          height={48}
-                          className="h-12 w-12 object-contain"
-                        />
-                      </div>
+<div className="mb-4 flex justify-center sm:justify-start">
+  <div
+    className="
+      flex items-center justify-center
+      h-34 w-34 sm:h-16 sm:w-16
+      transition-transform duration-300 ease-out
+      group-hover:scale-110
+    "
+  >
+    <Image
+      src={x.iconSrc}
+      alt={x.iconAlt}
+      width={80}
+      height={80}
+      className="
+        h-full w-full object-contain
+        scale-[1.45] sm:scale-[1.25]
+        origin-center
+      "
+    />
+  </div>
+</div>
+
+
+
 
                       <div className="mt-3 font-montserrat text-lg font-bold text-slate-900">
                         {x.t}
@@ -1063,25 +1113,19 @@ return (
 
 {/* Section: Google Review / Testimoni */}
 <section id="review" className="py-14 md:py-24">
-  <div className="mx-auto max-w-7xl px-5">
+  <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20">
     <div className="max-w-4xl">
-      <h2
-        className="
-        font-montserrat 
-        text-[40px] leading-[40px] font-bold tracking-normal text-slate-900
-        whitespace-normal md:whitespace-nowrap
-      "
-      >
-        Tertinggi di Layanan{" "}
-        <span className="text-red-700 whitespace-normal md:whitespace-nowrap">
-          Jasa Kebersihan Rumah &amp; Kantor
-        </span>
-      </h2>
+<h2 className="font-montserrat text-[32px] leading-tight sm:text-[40px] font-bold text-slate-900">
+  <span className="block">
+    Rating tertinggi dan terbaik di Layanan 
+  </span>
+  <span className="block text-red-700">
+    Kebersihan & Perawatan Rumah
+  </span>
+</h2>
 
       <p className="mt-4 font-montserrat text-[18px] leading-[24px] font-normal tracking-normal text-slate-600">
-        Dipercaya oleh ratusan pelanggan karena kualitas, ketepatan waktu, dan
-        hasil kerja yang memuaskan. Lihat apa kata mereka tentang pengalaman
-        bersama kami.
+       Dipercaya oleh ribuan pelanggan karena kualitas, ketepatan waktu dan hasil kerja yang memuaskan. Lihat apa kata mereka tentang pengalaman menggunakan jasa Home Steril
       </p>
 
       {/* Button pindah ke bawah */}
@@ -1113,7 +1157,7 @@ return (
     </div>
 
     {/* Stats */}
-    <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+    <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
       {[
         {
           img: "/rating.png",
@@ -1145,7 +1189,9 @@ return (
                   bg-white
                   px-5
                   py-4
-                  shadow-md
+                  sm:px-6
+                  sm:py-5
+                  shadow-sm
                   ring-1 ring-black/5
                   transition-all
                   duration-300
@@ -1181,7 +1227,7 @@ return (
     </div>
 
     {/* Reviews */}
-    <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+    <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-5 sm:p-6">
       {[
         {
           initial: "R",
@@ -1226,8 +1272,8 @@ return (
     group
     rounded-2xl
     bg-white
-    p-6
-    shadow-md
+    p-5 sm:p-6
+    shadow-sm
     ring-1 ring-black/5
     transition-all
     duration-300
@@ -1340,48 +1386,79 @@ return (
             <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
               {[
                 {
-                  title: "Paket Starter",
-                  price: "Rp 5.000.000",
+                  title: "Paket Mitra Bersih",
+                  price: "Rp 25.000.000",
                   points: [
-                    "Hak penggunaan brand Home Steril",
-                    "Pelatihan dasar operasional & pelayanan pelanggan",
-                    "Starter kit perlengkapan kebersihan (basic tools)",
-                    "Akses dashboard & aplikasi pemesanan mitra",
-                    "Materi promosi digital",
+                    "Lisensi Brand Home Steril (1 tahun)",
+                    "Pelatihan SC & GC (2 hari)",
+                    "Dry Vacuum (1 unit)",
+                    "Mop set (2 set)",
+                    "Window cleaning (2 set)",
+                    "Tas Home Steril (2 pcs)",
+                    "Kaos polo HS (12 pcs)",
+                    "Topi HS (2 pcs)",
+                    "Rompi HS (2 pcs)",
+                    "Lampu UV (2 unit)",
+                    "Sapu (2 pcs)",
+                    "Microfiber (20 pcs)",
+                    "Kabel roll 20 meter (2 pcs)",
                   ],
                   cocok:
-                    "Individu yang ingin memulai bisnis jasa kebersihan rumahan dengan modal terjangkau.",
+                    "Cocok untuk mitra yang ingin memulai layanan General Cleaning, Deep/Special Cleaning, dan Toren dengan paket perlengkapan dasar.",
                   bonus: "Konsultasi bisnis gratis selama 1 bulan",
                 },
                 {
-                  title: "Paket Profesional",
-                  price: "Rp 8.500.000",
+                  title: "Paket Mitra Bersih Pro",
+                  price: "Rp 50.000.000",
                   points: [
-                    "Semua fasilitas Paket Starter",
-                    "Peralatan tambahan (vacuum cleaner & sprayer)",
-                    "Pelatihan manajemen tim dan kontrol kualitas",
-                    "Dukungan operasional 3 bulan pertama",
-                    "Pencantuman mitra di website resmi Home Steril",
+                    "Brand Home Steril (2 tahun)",
+                    "Pelatihan SC & GC (2 hari)",
+                    "Hydro vacuum Sirena (1 unit)",
+                    "Wet & Dry vacuum (1 unit)",
+                    "Sikat bor (1 unit)",
+                    "Botol pump (2 pcs)",
+                    "Dry Vacuum (2 unit)",
+                    "Mop set (2 set)",
+                    "Window cleaning (2 set)",
+                    "Tas Home Steril (3 pcs)",
+                    "Kaos polo HS (12 pcs)",
+                    "Topi HS (2 pcs)",
+                    "Rompi HS (2 pcs)",
+                    "Lampu UV (2 unit)",
+                    "Sapu (2 pcs)",
+                    "Microfiber (20 pcs)",
+                    "Kabel roll 20 meter (2 pcs)",
                   ],
                   cocok:
-                    "Mitra yang ingin mengelola tim dan menjangkau lebih banyak pelanggan.",
+                    "Cocok untuk mitra yang ingin menangani layanan lebih luas: General Cleaning, Deep/Special Cleaning, Toren, Filter air, Wet Cleaning kasur/sofa/karpet, dan Vacuum tungau.",
                   bonus: "Desain banner & konten promo eksklusif",
                 },
                 {
                   title: "Paket Ekspansi",
-                  price: "Rp 10.000.000",
+                  price: "Rp 135.000.000",
                   points: [
-                    "Semua fasilitas Paket Profesional",
-                    "Lisensi eksklusif area kecamatan/kota",
-                    "Bantuan rekrutmen & pelatihan tim lapangan",
-                    "Supervisi operasional langsung selama 6 bulan",
-                    "Akses ke pembaruan sistem & data pelanggan",
+                    "Brand Home Steril (3 tahun)",
+                    "Pelatihan SC & GC (2 hari)",
+                    "Hydro vacuum Sirena (1 unit)",
+                    "Wet & Dry vacuum (2 unit)",
+                    "Sikat bor (2 unit)",
+                    "Botol pump (4 pcs)",
+                    "Dry Vacuum (2 unit)",
+                    "Mop set (2 set)",
+                    "Window cleaning (2 set)",
+                    "Tas Home Steril (4 pcs)",
+                    "Kaos polo HS (24 pcs)",
+                    "Topi HS (4 pcs)",
+                    "Rompi HS (4 pcs)",
+                    "Lampu UV (4 unit)",
+                    "Sapu (2 pcs)",
+                    "Microfiber (30 pcs)",
+                    "Kabel roll 20 meter (2 pcs)",
                   ],
                   cocok:
-                    "Mitra yang ingin mengembangkan usaha dengan potensi jangka panjang.",
+                    "Cocok untuk mitra yang ingin ekspansi (All Services) dengan perlengkapan lebih banyak untuk scale-up tim dan cakupan area.",
                   bonus: "Pendampingan strategi pemasaran lokal",
-                },
-              ].map((p) => {
+                }].map((p) => {
                 const WA_LINK = "https://wa.me/628XXXXXXXXXX"; // <-- ganti nomor WA kamu
 
                 return (
@@ -1639,143 +1716,118 @@ return (
               </p>
             </div>
 
-            {/* Content */}
-            <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
-              {/* Left: List */}
-              <div className="space-y-4">
-                {[
-                  { title: "Jakarta", desc: "Layanan tersedia 24/7" },
-                  { title: "Bogor", desc: "Layanan tersedia 24/7" },
-                  { title: "Depok", desc: "Layanan tersedia 24/7" },
-                  { title: "Tangerang", desc: "Layanan tersedia 24/7" },
-                  { title: "Bekasi", desc: "Layanan tersedia 24/7" },
-                ].map((item) => {
-                  const isActive = activeCity === (item.title as CityKey);
-
-                  return (
-                    <button
-                      key={item.title}
-                      type="button"
-                      onClick={() =>
-                        setActiveCity((prev) =>
-                          prev === (item.title as CityKey)
-                            ? null
-                            : (item.title as CityKey),
-                        )
-                      }
-                      className={`
-        group w-full text-left
-        flex items-center justify-between
-        rounded-2xl bg-white
-        px-5 py-4
-        shadow-sm ring-1 ring-black/5
-        transition-all duration-300 ease-out
-        hover:-translate-y-1 hover:shadow-xl hover:ring-2 hover:ring-red-700/10
-        active:scale-[0.99]
-        ${isActive ? "ring-2 ring-red-700/30 shadow-xl" : ""}
-      `}
-                    >
-                      <div className="flex items-center gap-4">
-                        {/* Icon box */}
-                        <div
-                          className={`
-            flex h-11 w-11 items-center justify-center rounded-xl
-            bg-red-700 text-white
-            transition-transform duration-300 ease-out
-            group-hover:scale-110
-            ${isActive ? "scale-110" : ""}
-          `}
-                        >
-                          <svg
-                            width="22"
-                            height="22"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M9 3v15M15 6v15"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </div>
-
-                        {/* Text */}
-                        <div className="leading-tight">
-                          <div
-                            className={`
-              font-montserrat text-[16px] font-bold text-slate-900
-              transition-colors duration-300
-              group-hover:text-red-700
-              ${isActive ? "text-red-700" : ""}
-            `}
-                          >
-                            {item.title}
-                          </div>
-                          <div className="font-montserrat text-[13px] font-normal text-slate-600">
-                            {item.desc}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Dot */}
-                      <span
-                        className={`
-          h-2.5 w-2.5 rounded-full
-          transition-all duration-300
-          ${isActive ? "bg-red-700 scale-110" : "bg-slate-400"}
-          group-hover:bg-red-700 group-hover:scale-110
-        `}
-                      />
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Right: Map */}
-              <div className="relative">
-                {/* Badge */}
-                <div
-                  className="
-            absolute right-6 top-6 z-10
-            rounded-2xl bg-red-700
-            px-5 py-3
-            text-center
-            shadow-md
-          "
-                >
-                  <div className="font-montserrat text-[18px] font-extrabold leading-[18px] text-white">
-                    JABODETABEK
+                        {/* Content */}
+            <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-[360px_1fr] lg:items-stretch">
+              {/* Sidebar */}
+              <aside className="rounded-3xl bg-white shadow-sm ring-1 ring-black/5 p-4">
+                <div className="mb-3 px-2">
+                  <div className="font-montserrat text-[14px] font-semibold text-slate-900">
+                    Pilih Area
                   </div>
-                  <div className="font-montserrat text-[12px] font-medium text-white/90">
-                    Coverage Area
+                  <div className="font-montserrat text-[12px] font-medium text-slate-600">
+                    Klik kota untuk melihat peta cakupan
                   </div>
                 </div>
 
-                {/* Map image */}
-                <div className="group overflow-hidden rounded-[22px] bg-white shadow-sm ring-1 ring-black/5 transition-all duration-300 ease-out hover:shadow-xl hover:ring-2 hover:ring-red-700/10">
+                <div className="space-y-3">
+                  {CITIES.map((item) => {
+                    const isActive = activeCity === item.key;
+
+                    return (
+                      <button
+                        key={item.key}
+                        type="button"
+                        onClick={() => handleSelectCity(item.key)}
+                        className={`
+                          group w-full text-left
+                          flex items-center justify-between
+                          rounded-2xl bg-white
+                          px-4 py-3
+                          shadow-sm ring-1 ring-black/5
+                          transition-all duration-300 ease-out
+                          hover:-translate-y-0.5 hover:shadow-lg hover:ring-2 hover:ring-red-700/10
+                          active:scale-[0.99]
+                          ${isActive ? "ring-2 ring-red-700/30 shadow-lg" : ""}
+                        `}
+                      >
+                        <div className="flex items-center gap-4 min-w-0">
+                          <div
+                            className={`
+                              flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+                              bg-red-700 text-white
+                              transition-transform duration-300 ease-out
+                              group-hover:scale-110
+                              ${isActive ? "scale-110" : ""}
+                            `}
+                            aria-hidden="true"
+                          >
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                              <path
+                                d="M12 21s7-4.35 7-11a7 7 0 10-14 0c0 6.65 7 11 7 11z"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              />
+                              <path
+                                d="M12 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              />
+                            </svg>
+                          </div>
+
+                          <div className="min-w-0">
+                            <div className="font-montserrat text-[16px] font-bold text-slate-900 truncate">
+                              {item.title}
+                            </div>
+                            <div className="font-montserrat text-[12px] font-medium text-slate-600">
+                              {item.desc}
+                            </div>
+                          </div>
+                        </div>
+
+                        <span
+                          className={`
+                            h-2.5 w-2.5 rounded-full
+                            ${isActive ? "bg-red-700" : "bg-slate-300"}
+                          `}
+                          aria-hidden="true"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </aside>
+
+              {/* Main Map */}
+              <div className="relative overflow-hidden rounded-[26px] bg-white shadow-sm ring-1 ring-black/5">
+                {/* Badge */}
+                <div className="absolute right-6 top-6 z-10 rounded-2xl bg-red-700 px-5 py-3 text-center shadow-md">
+                  <div className="font-montserrat text-[18px] font-extrabold leading-[18px] text-white">
+                    {activeData.badgeTitle}
+                  </div>
+                  <div className="font-montserrat text-[12px] font-medium text-white/90">
+                    {activeData.badgeSub}
+                  </div>
+                </div>
+
+                {/* Image wrapper for animation */}
+                <div
+                  className={`
+                    p-3 sm:p-4
+                    transition-all duration-300 ease-out
+                    ${isSwitching ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"}
+                  `}
+                >
                   <img
-                    src="/peta-jabodetabek.png"
-                    alt="Peta area cakupan Home Steril Jabodetabek"
-                    className="w-full h-auto object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-                    style={{
-                      transform: mapTransform,
-                      transformOrigin: "center center",
-                    }}
+                    src={activeData.image}
+                    alt={`Peta area cakupan ${activeData.title}`}
+                    className="w-full h-auto object-contain"
                   />
                 </div>
               </div>
             </div>
-          </div>
+
+</div>
         </section>
         {/* Section: Testimoni Mitra */}
         <section id="testimoni" className="py-14 md:py-20">
